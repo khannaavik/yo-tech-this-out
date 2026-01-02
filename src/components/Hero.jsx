@@ -37,46 +37,88 @@ export function Hero() {
     }
   }, []);
 
-  // Apple-style scroll-scrub animation
+  // Optimized scroll-scrub: Only active when hero is in viewport
   useEffect(() => {
     if (!shouldUseScrub || typeof window === 'undefined') return;
 
     let rafId = null;
-    const handleScroll = () => {
-      if (rafId) return;
-      
-      rafId = requestAnimationFrame(() => {
-        if (!heroRef.current) {
-          rafId = null;
-          return;
-        }
+    let isVisible = true; // Hero starts visible
+    let scrollListener = null;
 
-        try {
-          const rect = heroRef.current.getBoundingClientRect();
-          const windowHeight = window.innerHeight || 0;
+    // Use IntersectionObserver to disable scroll scrub when hero is off-screen
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting;
           
-          // Calculate scroll progress as hero exits viewport (0 = top, 1 = fully scrolled past)
-          // Progress increases as user scrolls down past the hero
-          const scrollProgress = Math.max(0, Math.min(1, -rect.top / windowHeight));
-          setScrollProgress(scrollProgress);
-        } catch (e) {
-          setScrollProgress(0);
-        }
-        
-        rafId = null;
-      });
-    };
+          if (!isVisible) {
+            // Disable when off-screen (performance)
+            setScrollProgress(1);
+            if (scrollListener) {
+              window.removeEventListener('scroll', scrollListener);
+              scrollListener = null;
+            }
+            if (rafId) {
+              cancelAnimationFrame(rafId);
+              rafId = null;
+            }
+          } else if (!scrollListener) {
+            // Enable when visible
+            scrollListener = () => {
+              if (rafId) return;
+              
+              rafId = requestAnimationFrame(() => {
+                if (!heroRef.current || !isVisible) {
+                  rafId = null;
+                  return;
+                }
 
-    try {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      handleScroll(); // Initial calculation
-    } catch (e) {
-      console.warn('Could not set up hero scroll scrub:', e);
+                try {
+                  const rect = heroRef.current.getBoundingClientRect();
+                  const windowHeight = window.innerHeight || 0;
+                  
+                  // Only calculate if hero is reasonably close
+                  if (rect.bottom < -200 || rect.top > windowHeight + 200) {
+                    rafId = null;
+                    return;
+                  }
+                  
+                  const scrollProgress = Math.max(0, Math.min(1, -rect.top / windowHeight));
+                  setScrollProgress(scrollProgress);
+                } catch (e) {
+                  setScrollProgress(0);
+                }
+                
+                rafId = null;
+              });
+            };
+
+            try {
+              window.addEventListener('scroll', scrollListener, { passive: true });
+              scrollListener(); // Initial calculation
+            } catch (e) {
+              console.warn('Could not set up hero scroll scrub:', e);
+            }
+          }
+        });
+      },
+      {
+        rootMargin: '200px 0px 200px 0px',
+      }
+    );
+
+    if (heroRef.current) {
+      observer.observe(heroRef.current);
     }
 
     return () => {
       try {
-        window.removeEventListener('scroll', handleScroll);
+        if (heroRef.current) {
+          observer.unobserve(heroRef.current);
+        }
+        if (scrollListener) {
+          window.removeEventListener('scroll', scrollListener);
+        }
         if (rafId) {
           cancelAnimationFrame(rafId);
         }

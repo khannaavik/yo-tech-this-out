@@ -96,51 +96,89 @@ export function ChapterIntro({ title, subtitle, id }) {
     }
   }, []);
 
-  // Scroll-scrub for smooth section transitions
+  // Optimized scroll-scrub: Only active when section is visible
   useEffect(() => {
     if (!shouldUseScrub || typeof window === 'undefined') return;
 
     let rafId = null;
-    const handleScroll = () => {
-      if (rafId) return;
-      
-      rafId = requestAnimationFrame(() => {
-        if (!sectionRef.current) {
-          rafId = null;
-          return;
-        }
+    let isVisible = false;
+    let scrollListener = null;
 
-        try {
-          const rect = sectionRef.current.getBoundingClientRect();
-          const windowHeight = window.innerHeight || 0;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting;
           
-          // Calculate scroll progress as section enters viewport
-          // 0 = section below viewport, 1 = section centered, then decreases
-          const sectionCenter = rect.top + rect.height / 2;
-          const windowCenter = windowHeight / 2;
-          const distanceFromCenter = sectionCenter - windowCenter;
-          const maxDistance = windowHeight;
-          const progress = Math.max(0, Math.min(1, 1 - Math.abs(distanceFromCenter) / maxDistance));
-          
-          setScrollProgress(progress);
-        } catch (e) {
-          setScrollProgress(0);
-        }
-        
-        rafId = null;
-      });
-    };
+          if (!isVisible) {
+            setScrollProgress(0);
+            if (scrollListener) {
+              window.removeEventListener('scroll', scrollListener);
+              scrollListener = null;
+            }
+            if (rafId) {
+              cancelAnimationFrame(rafId);
+              rafId = null;
+            }
+          } else if (!scrollListener) {
+            scrollListener = () => {
+              if (rafId) return;
+              
+              rafId = requestAnimationFrame(() => {
+                if (!sectionRef.current || !isVisible) {
+                  rafId = null;
+                  return;
+                }
 
-    try {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      handleScroll();
-    } catch (e) {
-      console.warn('Could not set up chapter scroll scrub:', e);
+                try {
+                  const rect = sectionRef.current.getBoundingClientRect();
+                  const windowHeight = window.innerHeight || 0;
+                  
+                  if (rect.bottom < -200 || rect.top > windowHeight + 200) {
+                    rafId = null;
+                    return;
+                  }
+                  
+                  const sectionCenter = rect.top + rect.height / 2;
+                  const windowCenter = windowHeight / 2;
+                  const distanceFromCenter = sectionCenter - windowCenter;
+                  const maxDistance = windowHeight;
+                  const progress = Math.max(0, Math.min(1, 1 - Math.abs(distanceFromCenter) / maxDistance));
+                  
+                  setScrollProgress(progress);
+                } catch (e) {
+                  setScrollProgress(0);
+                }
+                
+                rafId = null;
+              });
+            };
+
+            try {
+              window.addEventListener('scroll', scrollListener, { passive: true });
+              scrollListener();
+            } catch (e) {
+              console.warn('Could not set up chapter scroll scrub:', e);
+            }
+          }
+        });
+      },
+      {
+        rootMargin: '200px 0px 200px 0px',
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
     }
 
     return () => {
       try {
-        window.removeEventListener('scroll', handleScroll);
+        if (sectionRef.current) {
+          observer.unobserve(sectionRef.current);
+        }
+        if (scrollListener) {
+          window.removeEventListener('scroll', scrollListener);
+        }
         if (rafId) {
           cancelAnimationFrame(rafId);
         }

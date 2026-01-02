@@ -47,7 +47,7 @@
   text-align: center;
 }
 
-/* Chapter Title - Enhanced typography */
+/* Chapter Title - Futuristic neon gradient */
 .chapter-intro__title {
   font-size: var(--font-size-5xl);
   font-weight: var(--font-weight-bold);
@@ -55,10 +55,13 @@
   color: var(--color-text-primary);
   letter-spacing: -0.04em;
   margin: 0 0 var(--spacing-xl) 0;
-  background: linear-gradient(135deg, var(--color-text-primary), var(--color-text-secondary));
+  background: linear-gradient(135deg, #00d4ff, #8b5cf6, #00d4ff);
+  background-size: 200% 200%;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+  animation: gradientShift 3s ease infinite;
+  filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.3));
 }
 
 @media (min-width: 768px) {
@@ -104,6 +107,16 @@
   transition: opacity 0.1s linear, transform 0.1s linear;
 }
 
+/* Gradient animation for chapter title */
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
 /* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   .chapter-intro {
@@ -119,6 +132,13 @@
   
   .chapter-intro[style*="transform"] {
     transition: none !important;
+  }
+  
+  .chapter-intro__title {
+    animation: none !important;
+    background: var(--color-text-primary) !important;
+    -webkit-text-fill-color: var(--color-text-primary) !important;
+    filter: none !important;
   }
 }
 

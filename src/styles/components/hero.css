@@ -23,7 +23,7 @@
   z-index: 1; /* Above cursor lighting */
 }
 
-/* Subtle animated gradient overlay for hero */
+/* Futuristic neon gradient overlay for hero */
 .hero::before {
   content: '';
   position: absolute;
@@ -31,10 +31,16 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(ellipse at center, rgba(0, 212, 255, 0.1), transparent 70%);
+  background: radial-gradient(
+    ellipse at center,
+    rgba(0, 212, 255, 0.15) 0%,
+    rgba(139, 92, 246, 0.1) 40%,
+    transparent 70%
+  );
   animation: heroGlow 8s ease-in-out infinite alternate;
   z-index: -1;
   pointer-events: none;
+  filter: blur(60px);
 }
 
 @keyframes heroGlow {
@@ -53,6 +59,11 @@
   .hero {
     background-position: 50% 50% !important;
     transition: none;
+  }
+  
+  .hero::before {
+    animation: none !important;
+    filter: none !important;
   }
   
   .hero__content {

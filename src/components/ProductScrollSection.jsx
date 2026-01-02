@@ -129,85 +129,125 @@ export function ProductScrollSection(props) {
     setIsModalOpen(false);
   }, []);
 
-  // Apple-level scroll-synced parallax with perspective and rotation
+  // Optimized scroll-scrub: Only active when section is visible (performance critical)
   useEffect(() => {
     if (!shouldUseParallax || typeof window === 'undefined') return;
 
     let rafId = null;
-    const handleScroll = () => {
-      if (rafId) return;
-      
-      rafId = requestAnimationFrame(() => {
-        if (!imageRef.current || !sectionRef.current) {
-          rafId = null;
-          return;
-        }
+    let isVisible = false;
+    let scrollListener = null;
 
-        try {
-          const rect = sectionRef.current.getBoundingClientRect();
-          const windowHeight = window.innerHeight || 0;
-          const windowCenter = windowHeight / 2;
-          const sectionCenter = rect.top + rect.height / 2;
-          const sectionTop = rect.top;
-          const sectionBottom = rect.bottom;
+    // Use IntersectionObserver to only enable scroll scrub when section is in viewport
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisible = entry.isIntersecting;
           
-          // Calculate scroll progress (0 to 1) as section moves through viewport
-          // Progress is 0 when section enters, 1 when centered, then decreases
-          const distanceFromCenter = sectionCenter - windowCenter;
-          const maxDistance = windowHeight + rect.height;
-          const progress = Math.max(0, Math.min(1, 1 - Math.abs(distanceFromCenter) / maxDistance));
-          
-          setScrollProgress(progress);
-          
-          // Apple-style scroll-scrub: Image scrubs with scroll
-          // Scale: Slightly larger when centered (1.0 to 1.05)
-          const scale = 1 + (progress * 0.05);
-          setImageScale(scale);
-          
-          // Vertical translate: Moves up as section enters, down as it exits
-          const translateY = distanceFromCenter * 0.2; // Gentle vertical movement
-          setImageTranslateY(translateY);
-          
-          // Parallax offset with perspective (subtle, Apple-like)
-          const parallaxAmount = distanceFromCenter * 0.15;
-          setParallaxOffset(parallaxAmount);
-          
-          // Subtle rotation based on scroll position (max 2 degrees)
-          const rotation = (distanceFromCenter / windowHeight) * 2;
-          setImageRotation(Math.max(-2, Math.min(2, rotation)));
-          
-          // Text scrubs at slower rate than image (depth effect)
-          // Text moves slower to create depth perception
-          const textTranslate = distanceFromCenter * 0.08; // Slower than image (0.2)
-          setTextTranslateY(textTranslate);
-          
-          // Glow intensity: Increases near section center, fades out afterward
-          // Peak intensity when section is centered in viewport
-          const glow = Math.sin(progress * Math.PI) * 0.6 + 0.4; // 0.4 to 1.0
-          setGlowIntensity(glow);
-        } catch (e) {
-          setParallaxOffset(0);
-          setImageRotation(0);
-          setImageScale(1);
-          setImageTranslateY(0);
-          setTextTranslateY(0);
-          setGlowIntensity(0.4);
-        }
-        
-        rafId = null;
-      });
-    };
+          if (!isVisible) {
+            // Disable animations when off-screen (performance optimization)
+            setParallaxOffset(0);
+            setImageRotation(0);
+            setImageScale(1);
+            setImageTranslateY(0);
+            setTextTranslateY(0);
+            setGlowIntensity(0.4);
+            setScrollProgress(0);
+            
+            // Remove scroll listener when off-screen
+            if (scrollListener) {
+              window.removeEventListener('scroll', scrollListener);
+              scrollListener = null;
+            }
+            if (rafId) {
+              cancelAnimationFrame(rafId);
+              rafId = null;
+            }
+          } else if (!scrollListener) {
+            // Add scroll listener when section becomes visible
+            scrollListener = () => {
+              if (rafId) return;
+              
+              rafId = requestAnimationFrame(() => {
+                if (!imageRef.current || !sectionRef.current || !isVisible) {
+                  rafId = null;
+                  return;
+                }
 
-    try {
-      window.addEventListener('scroll', handleScroll, { passive: true });
-      handleScroll();
-    } catch (e) {
-      console.warn('Could not set up parallax scroll:', e);
+                try {
+                  const rect = sectionRef.current.getBoundingClientRect();
+                  const windowHeight = window.innerHeight || 0;
+                  const windowCenter = windowHeight / 2;
+                  const sectionCenter = rect.top + rect.height / 2;
+                  
+                  // Only calculate if section is reasonably close to viewport (performance)
+                  if (rect.bottom < -200 || rect.top > windowHeight + 200) {
+                    rafId = null;
+                    return;
+                  }
+                  
+                  const distanceFromCenter = sectionCenter - windowCenter;
+                  const maxDistance = windowHeight + rect.height;
+                  const progress = Math.max(0, Math.min(1, 1 - Math.abs(distanceFromCenter) / maxDistance));
+                  
+                  setScrollProgress(progress);
+                  
+                  // Optimized scroll-scrub calculations
+                  const scale = 1 + (progress * 0.05);
+                  setImageScale(scale);
+                  
+                  const translateY = distanceFromCenter * 0.2;
+                  setImageTranslateY(translateY);
+                  
+                  const parallaxAmount = distanceFromCenter * 0.15;
+                  setParallaxOffset(parallaxAmount);
+                  
+                  const rotation = (distanceFromCenter / windowHeight) * 2;
+                  setImageRotation(Math.max(-2, Math.min(2, rotation)));
+                  
+                  const textTranslate = distanceFromCenter * 0.08;
+                  setTextTranslateY(textTranslate);
+                  
+                  const glow = Math.sin(progress * Math.PI) * 0.6 + 0.4;
+                  setGlowIntensity(glow);
+                } catch (e) {
+                  setParallaxOffset(0);
+                  setImageRotation(0);
+                  setImageScale(1);
+                  setImageTranslateY(0);
+                  setTextTranslateY(0);
+                  setGlowIntensity(0.4);
+                }
+                
+                rafId = null;
+              });
+            };
+
+            try {
+              window.addEventListener('scroll', scrollListener, { passive: true });
+              scrollListener(); // Initial calculation
+            } catch (e) {
+              console.warn('Could not set up parallax scroll:', e);
+            }
+          }
+        });
+      },
+      {
+        rootMargin: '200px 0px 200px 0px', // Start calculating 200px before entering viewport
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
     }
 
     return () => {
       try {
-        window.removeEventListener('scroll', handleScroll);
+        if (sectionRef.current) {
+          observer.unobserve(sectionRef.current);
+        }
+        if (scrollListener) {
+          window.removeEventListener('scroll', scrollListener);
+        }
         if (rafId) {
           cancelAnimationFrame(rafId);
         }

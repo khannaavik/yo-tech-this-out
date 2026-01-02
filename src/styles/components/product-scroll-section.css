@@ -14,6 +14,15 @@
   position: relative;
   isolation: isolate;
   z-index: 1; /* Above cursor lighting */
+  /* Futuristic glassy surface effect */
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.02) 0%,
+    rgba(139, 92, 246, 0.02) 50%,
+    transparent 100%
+  );
+  border-radius: 24px;
+  margin: var(--spacing-xl) 0;
 }
 
 @media (min-width: 768px) {
@@ -78,8 +87,8 @@
   width: 100%;
   padding-bottom: 75%; /* 4:3 aspect ratio - prevents layout shift */
   overflow: visible; /* Allow glow to show */
-  border-radius: var(--radius-lg);
-  background-color: var(--color-bg-secondary);
+  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.05), rgba(139, 92, 246, 0.05));
   transition: transform 0.1s linear,
               filter 0.1s linear;
   will-change: transform, filter;
@@ -87,8 +96,13 @@
   perspective: 1000px;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  /* Soft glow and depth - scroll-reactive via inline styles */
-  filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.3));
+  /* Futuristic neon glow - scroll-reactive via inline styles */
+  filter: drop-shadow(0 0 40px rgba(0, 212, 255, 0.3)) 
+          drop-shadow(0 20px 60px rgba(139, 92, 246, 0.2));
+  /* Glassy border */
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 }
 
 /* Scale-in animation on reveal */
@@ -239,6 +253,7 @@
     opacity: 1;
     transform: translate3d(0, 0, 0) scale(1);
     transition: none;
+    background: transparent !important;
   }
   
   .product-scroll-section--visible {
@@ -250,6 +265,8 @@
     transform: translate3d(0, 0, 0) scale(1) !important;
     transition: none !important;
     filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.3)) !important;
+    border: none !important;
+    backdrop-filter: none !important;
   }
   
   .product-scroll-section__content {
@@ -262,6 +279,14 @@
     animation: none;
     opacity: 0.6 !important;
     transform: scale(1) !important;
+  }
+  
+  .product-scroll-section__category::before {
+    animation: none !important;
+  }
+  
+  .product-scroll-section__button--primary::before {
+    animation: none !important;
   }
 }
 
@@ -285,23 +310,47 @@
   }
 }
 
-/* Category Tag - Enhanced with accent colors */
+/* Category Tag - Futuristic neon badge */
 .product-scroll-section__category {
   display: inline-block;
   font-size: var(--font-size-sm);
   font-weight: var(--font-weight-semibold);
-  color: var(--color-accent-electric-blue);
+  color: #00d4ff;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   padding: var(--spacing-sm) var(--spacing-lg);
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(139, 92, 246, 0.15));
-  border: 1px solid rgba(0, 212, 255, 0.3);
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(139, 92, 246, 0.2));
+  border: 1px solid rgba(0, 212, 255, 0.4);
   border-radius: var(--radius-full);
   align-self: center;
   transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.4),
+              0 0 60px rgba(139, 92, 246, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Animated gradient shimmer on category tag */
+.product-scroll-section__category::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: left 0.5s ease;
+}
+
+.product-scroll-section__category:hover::before {
+  left: 100%;
 }
 
 @media (min-width: 1024px) {
@@ -432,16 +481,19 @@
   }
 }
 
-/* Primary Button (Watch Demo) - Apple-level magnetic CTA */
+/* Primary Button (Watch Demo) - Futuristic neon CTA */
 .product-scroll-section__button--primary {
-  background: linear-gradient(135deg, var(--color-accent-electric-blue), var(--color-accent-violet));
+  background: linear-gradient(135deg, #00d4ff, #8b5cf6);
   color: #ffffff;
-  border: none;
+  border: 1px solid rgba(0, 212, 255, 0.5);
   position: relative;
   overflow: hidden;
-  box-shadow: 0 8px 32px rgba(0, 212, 255, 0.3),
-              0 0 0 1px rgba(255, 255, 255, 0.1) inset,
-              0 0 40px rgba(0, 212, 255, 0.2);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.5),
+              0 0 60px rgba(139, 92, 246, 0.3),
+              0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-weight: var(--font-weight-semibold);
 }
 
 .product-scroll-section__button--primary::before {
@@ -458,11 +510,12 @@
 /* Hover effects only for non-touch devices - Magnetic scale + glow */
 @media (hover: hover) and (pointer: fine) {
   .product-scroll-section__button--primary:hover {
-    background: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-electric-blue));
-    transform: translate3d(0, -4px, 0) scale(1.05);
-    box-shadow: 0 16px 48px rgba(0, 212, 255, 0.5),
-                0 0 0 1px rgba(255, 255, 255, 0.2) inset,
-                0 0 60px rgba(0, 212, 255, 0.4);
+    background: linear-gradient(135deg, #00f0ff, #00d4ff);
+    transform: translate3d(0, -2px, 0) scale(1.02);
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.7),
+                0 0 80px rgba(139, 92, 246, 0.5),
+                0 12px 40px rgba(0, 0, 0, 0.3);
+    border-color: rgba(0, 212, 255, 0.8);
   }
   
   .product-scroll-section__button--primary:hover::before {
