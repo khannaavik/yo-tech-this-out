@@ -35,19 +35,7 @@
 .navigation__brand {
   display: flex;
   align-items: center;
-}
-
-.navigation__brand-text {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-text-primary);
-  letter-spacing: -0.02em;
-}
-
-@media (min-width: 768px) {
-  .navigation__brand-text {
-    font-size: var(--font-size-2xl);
-  }
+  flex-shrink: 0;
 }
 
 /* Links (placeholder for future) */

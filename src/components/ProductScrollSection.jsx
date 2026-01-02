@@ -9,7 +9,8 @@ import '../styles/components/product-scroll-section.css';
  * @param {string} companyName - Name of the company
  * @param {string} categoryTag - Category tag/label
  * @param {string} shortDescription - 1-2 line product description
- * @param {string} productImage - URL to product image
+ * @param {string} productSlug - Product slug for image path (e.g., "galaxy-buds3-pro")
+ * @param {string} productImage - Fallback URL to product image (optional)
  * @param {string} youtubeUrl - YouTube video URL (for modal)
  * @param {string} websiteUrl - Product website URL
  * @param {boolean} reverseLayout - Reverse layout on large screens (image right, text left)
@@ -19,6 +20,7 @@ export function ProductScrollSection({
   companyName,
   categoryTag,
   shortDescription,
+  productSlug,
   productImage,
   youtubeUrl,
   websiteUrl,
@@ -172,16 +174,24 @@ export function ProductScrollSection({
           <div className="product-scroll-section__image-wrapper">
             <div
               ref={imageRef}
-              className="product-scroll-section__image-container"
+              className={`product-scroll-section__image-container ${isVisible ? 'product-scroll-section__image-container--visible' : ''}`}
               style={{ 
                 transform: shouldUseParallax ? `translate3d(0, ${parallaxOffset}px, 0)` : 'translate3d(0, 0, 0)',
               }}
             >
+              {/* Glow halo behind image */}
+              <div className="product-scroll-section__image-glow" aria-hidden="true"></div>
               <img
-                src={productImage}
-                alt={productName}
+                src={productImageSrc}
+                alt={imageAlt}
                 className="product-scroll-section__image"
                 loading="lazy"
+                onError={(e) => {
+                  // Fallback to provided productImage if local image fails
+                  if (productImage && e.target.src !== productImage) {
+                    e.target.src = productImage;
+                  }
+                }}
               />
             </div>
           </div>
@@ -216,11 +226,16 @@ export function ProductScrollSection({
             <div className="product-scroll-section__actions">
               {youtubeUrl && embedUrl && (
                 <button
-                  className="product-scroll-section__button product-scroll-section__button--primary"
+                  className="product-scroll-section__button product-scroll-section__button--primary product-scroll-section__button--watch-demo"
                   onClick={() => setIsModalOpen(true)}
                   aria-label={`Watch demo video for ${productName}`}
                 >
-                  Watch Demo
+                  <span className="product-scroll-section__play-icon" aria-hidden="true">
+                    <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M7 5L15 10L7 15V5Z" fill="currentColor"/>
+                    </svg>
+                  </span>
+                  <span className="product-scroll-section__button-text">Watch Demo</span>
                 </button>
               )}
               {websiteUrl && (

@@ -1,0 +1,62 @@
+/**
+ * Logo Styles
+ * Modern futuristic wordmark with entrance animation
+ */
+
+.logo {
+  display: flex;
+  align-items: center;
+  opacity: 0;
+  transform: translateX(-10px);
+  transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.logo--visible {
+  opacity: 1;
+  transform: translateX(0);
+  will-change: auto;
+}
+
+/* SVG Logo Image */
+.logo__image {
+  height: 32px;
+  width: auto;
+  display: block;
+  transition: opacity var(--transition-theme);
+}
+
+@media (min-width: 768px) {
+  .logo__image {
+    height: 36px;
+  }
+}
+
+/* Text Logo Fallback */
+.logo__text {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+  line-height: 1;
+  transition: color var(--transition-theme);
+  white-space: nowrap;
+}
+
+@media (min-width: 768px) {
+  .logo__text {
+    font-size: var(--font-size-2xl);
+    letter-spacing: -0.03em;
+  }
+}
+
+/* Ensure logo adapts to theme */
+[data-theme="light"] .logo__text {
+  color: var(--color-text-primary-light);
+}
+
+[data-theme="dark"] .logo__text {
+  color: var(--color-text-primary-dark);
+}
+

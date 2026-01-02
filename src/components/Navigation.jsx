@@ -1,10 +1,10 @@
 import { useTheme } from './ThemeProvider';
+import { Logo } from './Logo';
 import '../styles/components/navigation.css';
 
 /**
  * Navigation Component
- * Sticky top navigation bar with theme toggle
- * Placeholder for category jump links (to be added later)
+ * Sticky top navigation bar with logo and theme toggle
  */
 export function Navigation() {
   const { theme, toggleTheme, isDark } = useTheme();
@@ -12,9 +12,9 @@ export function Navigation() {
   return (
     <nav className="navigation" role="navigation" aria-label="Main navigation">
       <div className="navigation__container">
-        {/* Logo/Brand - placeholder for future */}
+        {/* Logo/Brand */}
         <div className="navigation__brand">
-          <span className="navigation__brand-text">YO!</span>
+          <Logo />
         </div>
 
         {/* Category Links - placeholder (to be added later) */}
