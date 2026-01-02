@@ -69,10 +69,11 @@
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* Line Heights */
-  --line-height-tight: 1.2;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.75;
+  /* Line Heights - Improved for readability */
+  --line-height-tight: 1.25;      /* Headings */
+  --line-height-normal: 1.6;      /* Body text - more breathing room */
+  --line-height-relaxed: 1.8;     /* Large text, descriptions */
+  --line-height-loose: 2;          /* Extra spacious */
 
   /* Spacing Scale */
   --spacing-xs: 0.25rem;   /* 4px */
@@ -91,10 +92,12 @@
   --transition-slow: 500ms cubic-bezier(0.16, 1, 0.3, 1);
   --transition-theme: 400ms cubic-bezier(0.16, 1, 0.3, 1); /* Smoother theme transitions */
 
-  /* Border Radius */
-  --radius-sm: 0.25rem;
-  --radius-md: 0.5rem;
-  --radius-lg: 1rem;
+  /* Border Radius - Soft, modern system */
+  --radius-sm: 0.375rem;    /* 6px - subtle rounding */
+  --radius-md: 0.75rem;     /* 12px - cards, buttons */
+  --radius-lg: 1.25rem;     /* 20px - images, large cards */
+  --radius-xl: 1.75rem;     /* 28px - hero images */
+  --radius-2xl: 2.25rem;    /* 36px - extra large elements */
   --radius-full: 9999px;
 
   /* Shadows */

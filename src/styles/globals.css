@@ -138,6 +138,15 @@ p {
   margin-bottom: var(--spacing-md);
   color: var(--color-text-primary);
   transition: color var(--transition-theme);
+  line-height: var(--line-height-normal); /* Better readability */
+}
+
+/* Mobile - Improved line-height for body text */
+@media (max-width: 479px) {
+  p {
+    line-height: var(--line-height-relaxed);
+    margin-bottom: var(--spacing-sm);
+  }
 }
 
 a {

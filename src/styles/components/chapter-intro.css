@@ -5,7 +5,7 @@
 
 .chapter-intro {
   width: 100%;
-  padding: var(--spacing-5xl) var(--spacing-md) var(--spacing-4xl);
+  padding: var(--spacing-4xl) var(--spacing-md) var(--spacing-3xl);
   opacity: 0;
   transform: translate3d(0, 30px, 0);
   transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
@@ -13,7 +13,7 @@
   will-change: opacity, transform;
   position: relative;
   text-align: center;
-  margin-bottom: var(--spacing-2xl);
+  margin-bottom: var(--spacing-xl);
   z-index: 1; /* Above cursor lighting */
 }
 
@@ -22,15 +22,35 @@
   transition: opacity 0.1s linear, transform 0.1s linear;
 }
 
-@media (min-width: 768px) {
+/* Small phones */
+@media (max-width: 479px) {
   .chapter-intro {
-    padding: var(--spacing-5xl) var(--spacing-xl) var(--spacing-4xl);
+    padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-2xl);
+    margin-bottom: var(--spacing-lg);
   }
 }
 
+/* Large phones */
+@media (min-width: 480px) and (max-width: 767px) {
+  .chapter-intro {
+    padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-2xl);
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+/* iPad */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .chapter-intro {
+    padding: var(--spacing-4xl) var(--spacing-xl) var(--spacing-3xl);
+    margin-bottom: var(--spacing-xl);
+  }
+}
+
+/* Desktop */
 @media (min-width: 1024px) {
   .chapter-intro {
     padding: var(--spacing-5xl) var(--spacing-xl) var(--spacing-4xl);
+    margin-bottom: var(--spacing-2xl);
   }
 }
 
@@ -47,14 +67,14 @@
   text-align: center;
 }
 
-/* Chapter Title - Futuristic neon gradient */
+/* Chapter Title - Futuristic neon gradient with responsive sizing */
 .chapter-intro__title {
-  font-size: var(--font-size-5xl);
+  font-size: var(--font-size-4xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   color: var(--color-text-primary);
   letter-spacing: -0.04em;
-  margin: 0 0 var(--spacing-xl) 0;
+  margin: 0 0 var(--spacing-lg) 0;
   background: linear-gradient(135deg, #00d4ff, #8b5cf6, #00d4ff);
   background-size: 200% 200%;
   -webkit-background-clip: text;
@@ -64,21 +84,47 @@
   filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.3));
 }
 
-@media (min-width: 768px) {
+/* Small phones */
+@media (max-width: 479px) {
+  .chapter-intro__title {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-md);
+    line-height: 1.2;
+  }
+}
+
+/* Large phones */
+@media (min-width: 480px) and (max-width: 767px) {
+  .chapter-intro__title {
+    font-size: var(--font-size-4xl);
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+/* iPad */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .chapter-intro__title {
+    font-size: var(--font-size-5xl);
+    margin-bottom: var(--spacing-xl);
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
   .chapter-intro__title {
     font-size: var(--font-size-6xl);
     margin-bottom: var(--spacing-2xl);
   }
 }
 
-@media (min-width: 1024px) {
+/* Large screens */
+@media (min-width: 1440px) {
   .chapter-intro__title {
     font-size: var(--font-size-7xl);
-    margin-bottom: var(--spacing-2xl);
   }
 }
 
-/* Chapter Subtitle */
+/* Chapter Subtitle - Better spacing and readability */
 .chapter-intro__subtitle {
   font-size: var(--font-size-lg);
   font-weight: var(--font-weight-normal);
@@ -90,15 +136,37 @@
   margin-right: auto;
 }
 
-@media (min-width: 768px) {
+/* Small phones */
+@media (max-width: 479px) {
   .chapter-intro__subtitle {
-    font-size: var(--font-size-xl);
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+    max-width: 100%;
+    padding: 0 var(--spacing-md);
   }
 }
 
+/* Large phones */
+@media (min-width: 480px) and (max-width: 767px) {
+  .chapter-intro__subtitle {
+    font-size: var(--font-size-lg);
+    max-width: 90%;
+  }
+}
+
+/* iPad */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .chapter-intro__subtitle {
+    font-size: var(--font-size-xl);
+    line-height: var(--line-height-relaxed);
+  }
+}
+
+/* Desktop */
 @media (min-width: 1024px) {
   .chapter-intro__subtitle {
     font-size: var(--font-size-2xl);
+    line-height: 1.6;
   }
 }
 
