@@ -1,0 +1,106 @@
+/**
+ * Navigation Styles
+ * Sticky navigation bar with theme toggle
+ */
+
+.navigation {
+  position: sticky;
+  top: 0;
+  z-index: var(--z-sticky);
+  background-color: var(--color-bg-primary);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--color-border);
+  transition: background-color var(--transition-theme), border-color var(--transition-theme);
+}
+
+.navigation__container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: var(--spacing-md) var(--spacing-md);
+  height: 60px;
+}
+
+@media (min-width: 768px) {
+  .navigation__container {
+    padding: var(--spacing-md) var(--spacing-xl);
+    height: 64px;
+  }
+}
+
+/* Brand */
+.navigation__brand {
+  display: flex;
+  align-items: center;
+}
+
+.navigation__brand-text {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .navigation__brand-text {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+/* Links (placeholder for future) */
+.navigation__links {
+  display: none; /* Will be enabled when category links are added */
+  align-items: center;
+  gap: var(--spacing-xl);
+}
+
+@media (min-width: 1024px) {
+  .navigation__links {
+    display: flex;
+  }
+}
+
+/* Theme Toggle */
+.navigation__theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px; /* Touch-friendly */
+  height: 44px;
+  border-radius: var(--radius-full);
+  background-color: var(--color-bg-secondary);
+  transition: background-color var(--transition-theme), 
+              transform 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+              color var(--transition-theme);
+  touch-action: manipulation;
+  transform: translate3d(0, 0, 0); /* GPU-friendly */
+  will-change: transform, background-color;
+}
+
+/* Hover effects only for non-touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .navigation__theme-toggle:hover {
+    background-color: var(--color-border);
+    transform: translate3d(0, 0, 0) scale(1.05);
+  }
+  
+  .navigation__theme-toggle:focus-visible {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+}
+
+.navigation__theme-toggle:active {
+  transform: translate3d(0, 0, 0) scale(0.9); /* Press feedback */
+  transition: transform 0.1s ease;
+}
+
+.navigation__theme-icon {
+  font-size: var(--font-size-xl);
+  line-height: 1;
+  user-select: none;
+}
+

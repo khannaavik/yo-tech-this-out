@@ -1,0 +1,224 @@
+/**
+ * Hero Section Styles
+ * Fullscreen hero with animated scroll indicator
+ */
+
+.hero {
+  position: relative;
+  width: 100%;
+  min-height: 100vh;
+  min-height: 100dvh; /* Dynamic viewport height for mobile */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg-primary);
+  padding: var(--spacing-4xl) var(--spacing-md) var(--spacing-3xl);
+  overflow: hidden;
+}
+
+.hero__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: var(--spacing-4xl);
+  padding-top: 60px; /* Account for sticky nav */
+}
+
+@media (min-width: 768px) {
+  .hero__container {
+    padding-top: 64px;
+    gap: var(--spacing-5xl);
+  }
+}
+
+/* Hero Content */
+.hero__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xl);
+  animation: fadeInUp 0.8s ease-out;
+}
+
+@media (min-width: 768px) {
+  .hero__content {
+    gap: var(--spacing-2xl);
+  }
+}
+
+/* Title */
+.hero__title {
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  letter-spacing: -0.03em;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .hero__title {
+    font-size: var(--font-size-7xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero__title {
+    font-size: var(--font-size-8xl);
+  }
+}
+
+/* Subtitle */
+.hero__subtitle {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin: 0;
+  max-width: 600px;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 768px) {
+  .hero__subtitle {
+    font-size: var(--font-size-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .hero__subtitle {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+/* Scroll Indicator */
+.hero__scroll-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  animation: fadeIn 1s ease-out 0.5s both;
+  position: absolute;
+  bottom: var(--spacing-3xl);
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 768px) {
+  .hero__scroll-indicator {
+    bottom: var(--spacing-4xl);
+  }
+}
+
+/* Scroll Mouse */
+.hero__scroll-mouse {
+  width: 24px;
+  height: 40px;
+  border: 2px solid var(--color-text-secondary);
+  border-radius: var(--radius-full);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  padding-top: 8px;
+}
+
+@media (min-width: 768px) {
+  .hero__scroll-mouse {
+    width: 28px;
+    height: 48px;
+  }
+}
+
+/* Scroll Wheel */
+.hero__scroll-wheel {
+  width: 4px;
+  height: 8px;
+  background-color: var(--color-text-secondary);
+  border-radius: var(--radius-full);
+  animation: scrollWheel 2s ease-in-out infinite;
+}
+
+@media (min-width: 768px) {
+  .hero__scroll-wheel {
+    width: 5px;
+    height: 10px;
+  }
+}
+
+/* Scroll Text */
+.hero__scroll-text {
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  animation: scrollText 2s ease-in-out infinite;
+}
+
+/* Animations */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scrollWheel {
+  0% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 0.5;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (min-width: 768px) {
+  @keyframes scrollWheel {
+    0% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    50% {
+      opacity: 0.5;
+      transform: translateY(16px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+}
+
+@keyframes scrollText {
+  0%, 100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
