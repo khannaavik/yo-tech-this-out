@@ -31,6 +31,9 @@ export function ProductScrollSection(props) {
   const [parallaxOffset, setParallaxOffset] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [imageRotation, setImageRotation] = useState(0);
+  const [imageScale, setImageScale] = useState(1);
+  const [imageTranslateY, setImageTranslateY] = useState(0);
+  const [textTranslateY, setTextTranslateY] = useState(0);
   const [glowIntensity, setGlowIntensity] = useState(0);
   const [shouldUseParallax, setShouldUseParallax] = useState(true);
   const sectionRef = useRef(null);
@@ -145,28 +148,49 @@ export function ProductScrollSection(props) {
           const windowHeight = window.innerHeight || 0;
           const windowCenter = windowHeight / 2;
           const sectionCenter = rect.top + rect.height / 2;
+          const sectionTop = rect.top;
+          const sectionBottom = rect.bottom;
           
           // Calculate scroll progress (0 to 1) as section moves through viewport
+          // Progress is 0 when section enters, 1 when centered, then decreases
           const distanceFromCenter = sectionCenter - windowCenter;
           const maxDistance = windowHeight + rect.height;
           const progress = Math.max(0, Math.min(1, 1 - Math.abs(distanceFromCenter) / maxDistance));
           
           setScrollProgress(progress);
           
+          // Apple-style scroll-scrub: Image scrubs with scroll
+          // Scale: Slightly larger when centered (1.0 to 1.05)
+          const scale = 1 + (progress * 0.05);
+          setImageScale(scale);
+          
+          // Vertical translate: Moves up as section enters, down as it exits
+          const translateY = distanceFromCenter * 0.2; // Gentle vertical movement
+          setImageTranslateY(translateY);
+          
           // Parallax offset with perspective (subtle, Apple-like)
-          const parallaxAmount = distanceFromCenter * 0.15; // Gentle parallax
+          const parallaxAmount = distanceFromCenter * 0.15;
           setParallaxOffset(parallaxAmount);
           
           // Subtle rotation based on scroll position (max 2 degrees)
           const rotation = (distanceFromCenter / windowHeight) * 2;
           setImageRotation(Math.max(-2, Math.min(2, rotation)));
           
-          // Glow intensity peaks when image is centered
+          // Text scrubs at slower rate than image (depth effect)
+          // Text moves slower to create depth perception
+          const textTranslate = distanceFromCenter * 0.08; // Slower than image (0.2)
+          setTextTranslateY(textTranslate);
+          
+          // Glow intensity: Increases near section center, fades out afterward
+          // Peak intensity when section is centered in viewport
           const glow = Math.sin(progress * Math.PI) * 0.6 + 0.4; // 0.4 to 1.0
           setGlowIntensity(glow);
         } catch (e) {
           setParallaxOffset(0);
           setImageRotation(0);
+          setImageScale(1);
+          setImageTranslateY(0);
+          setTextTranslateY(0);
           setGlowIntensity(0.4);
         }
         
@@ -271,8 +295,8 @@ export function ProductScrollSection(props) {
               className={`product-scroll-section__image-container ${isVisible ? 'product-scroll-section__image-container--visible' : ''}`}
               style={{ 
                 transform: shouldUseParallax 
-                  ? `translate3d(0, ${parallaxOffset}px, 0) rotateY(${imageRotation}deg) perspective(1000px)`
-                  : 'translate3d(0, 0, 0)',
+                  ? `translate3d(0, ${parallaxOffset + imageTranslateY}px, 0) rotateY(${imageRotation}deg) scale(${imageScale}) perspective(1000px)`
+                  : 'translate3d(0, 0, 0) scale(1)',
                 filter: shouldUseParallax 
                   ? `drop-shadow(0 ${20 + glowIntensity * 40}px ${60 + glowIntensity * 40}px rgba(0, 212, 255, ${0.2 + glowIntensity * 0.3}))`
                   : 'drop-shadow(0 20px 60px rgba(0, 0, 0, 0.3))',
@@ -325,15 +349,18 @@ export function ProductScrollSection(props) {
             </div>
           </div>
 
-          {/* Content Container */}
+          {/* Content Container - Text scrubs at slower rate for depth effect */}
           <div 
             ref={contentRef}
             className="product-scroll-section__content"
             style={{
-              opacity: isVisible ? scrollProgress : 0,
-              transform: isVisible 
+              opacity: isVisible ? Math.max(0.3, scrollProgress) : 0,
+              transform: shouldUseParallax && isVisible
+                ? `translate3d(0, ${textTranslateY}px, 0) scale(${0.95 + scrollProgress * 0.05})`
+                : isVisible
                 ? `translateY(${(1 - scrollProgress) * 30}px) scale(${0.95 + scrollProgress * 0.05})`
                 : 'translateY(30px) scale(0.95)',
+              willChange: shouldUseParallax ? 'transform, opacity' : 'auto',
             }}
           >
             {/* Category Tag */}

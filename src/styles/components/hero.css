@@ -12,9 +12,14 @@
   align-items: center;
   justify-content: center;
   background-color: var(--color-bg-primary);
+  background-image: var(--bg-gradient);
+  background-size: 200% 200%;
+  background-position: 50% 50%;
   padding: var(--spacing-4xl) var(--spacing-md) var(--spacing-3xl);
   overflow: hidden;
   isolation: isolate;
+  transition: background-position 0.1s linear;
+  will-change: background-position;
 }
 
 /* Subtle animated gradient overlay for hero */
@@ -42,6 +47,24 @@
   }
 }
 
+/* Respect reduced motion for hero */
+@media (prefers-reduced-motion: reduce) {
+  .hero {
+    background-position: 50% 50% !important;
+    transition: none;
+  }
+  
+  .hero__content {
+    transform: none !important;
+    opacity: 1 !important;
+    transition: none;
+  }
+  
+  .hero__scroll-indicator {
+    opacity: 1 !important;
+  }
+}
+
 .hero__container {
   display: flex;
   flex-direction: column;
@@ -62,13 +85,15 @@
   }
 }
 
-/* Hero Content */
+/* Hero Content - Scroll-scrub enabled */
 .hero__content {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: var(--spacing-xl);
   animation: fadeInUp 0.8s ease-out;
+  transition: transform 0.1s linear, opacity 0.1s linear;
+  will-change: transform, opacity;
 }
 
 @media (min-width: 768px) {

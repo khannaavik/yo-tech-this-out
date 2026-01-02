@@ -16,6 +16,11 @@
   margin-bottom: var(--spacing-2xl);
 }
 
+/* Scroll-scrub override when scrub is active */
+.chapter-intro[style*="transform"] {
+  transition: opacity 0.1s linear, transform 0.1s linear;
+}
+
 @media (min-width: 768px) {
   .chapter-intro {
     padding: var(--spacing-5xl) var(--spacing-xl) var(--spacing-4xl);
@@ -93,17 +98,26 @@
   }
 }
 
+/* Scroll-scrub override when scrub is active */
+.chapter-intro[style*="transform"] {
+  transition: opacity 0.1s linear, transform 0.1s linear;
+}
+
 /* Respect reduced motion preference */
 @media (prefers-reduced-motion: reduce) {
   .chapter-intro {
-    opacity: 1;
-    transform: translate3d(0, 0, 0);
-    transition: none;
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) !important;
+    transition: none !important;
   }
   
   .chapter-intro--visible {
     opacity: 1;
     transform: translate3d(0, 0, 0);
+  }
+  
+  .chapter-intro[style*="transform"] {
+    transition: none !important;
   }
 }
 
