@@ -6,11 +6,13 @@
 .logo {
   display: flex;
   align-items: center;
-  opacity: 0;
-  transform: translateX(-10px);
+  /* TEMPORARY: Force visible for debugging */
+  opacity: 1 !important;
+  transform: translateX(0) !important;
   transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
+  visibility: visible !important;
 }
 
 .logo--visible {

@@ -6,13 +6,16 @@
 .chapter-intro {
   width: 100%;
   padding: var(--spacing-5xl) var(--spacing-md) var(--spacing-4xl);
-  opacity: 0;
-  transform: translate3d(0, 30px, 0); /* GPU-friendly */
+  /* TEMPORARY: Force visible for debugging - will re-enable animation after fix */
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important;
   transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
               transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* Refined easing */
   will-change: opacity, transform;
   position: relative;
   text-align: center;
+  /* Ensure content is always visible */
+  visibility: visible !important;
 }
 
 @media (min-width: 768px) {
@@ -29,9 +32,10 @@
 
 /* Visible state - scroll reveal animation */
 .chapter-intro--visible {
-  opacity: 1;
-  transform: translate3d(0, 0, 0); /* GPU-friendly */
+  opacity: 1 !important;
+  transform: translate3d(0, 0, 0) !important; /* GPU-friendly */
   will-change: auto; /* Remove will-change after animation */
+  visibility: visible !important;
 }
 
 .chapter-intro__container {
