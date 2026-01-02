@@ -326,6 +326,9 @@ export function ProductScrollSection(props) {
         ref={sectionRef}
         className={`product-scroll-section ${isVisible ? 'product-scroll-section--visible' : ''} ${reverseLayout ? 'product-scroll-section--reverse' : ''}`}
         aria-label={`${productName} product section`}
+        data-product-section
+        data-product-name={productName}
+        data-youtube-url={youtubeUrl || ''}
       >
         <div className="product-scroll-section__container">
           {/* Image Container */}

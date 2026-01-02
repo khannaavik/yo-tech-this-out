@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import { useTheme } from './ThemeProvider';
 import { Logo } from './Logo';
 import '../styles/components/navigation.css';
@@ -14,12 +15,15 @@ export function Navigation() {
       <div className="navigation__container">
         {/* Logo/Brand */}
         <div className="navigation__brand">
-          <Logo />
+          <Link to="/" style={{ textDecoration: 'none' }}>
+            <Logo />
+          </Link>
         </div>
 
-        {/* Category Links - placeholder (to be added later) */}
+        {/* Navigation Links */}
         <div className="navigation__links">
-          {/* Future: Category jump links will be added here */}
+          <Link to="/" className="navigation__link">Home</Link>
+          <Link to="/why" className="navigation__link">Why</Link>
         </div>
 
         {/* Theme Toggle Button */}
