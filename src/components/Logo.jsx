@@ -8,7 +8,16 @@ import '../styles/components/logo.css';
  * Dynamically switches based on theme
  */
 export function Logo() {
-  const { theme, isDark } = useTheme();
+  // Safe theme access with fallback
+  let isDark = true;
+  try {
+    const theme = useTheme();
+    isDark = theme?.isDark ?? true;
+  } catch (e) {
+    // If theme context is not available, default to dark
+    // This is safe and won't crash the app
+  }
+
   const [isVisible, setIsVisible] = useState(false);
   const [svgError, setSvgError] = useState(false);
 
@@ -33,6 +42,9 @@ export function Logo() {
           className="logo__image"
           onError={() => setSvgError(true)}
           loading="eager"
+          onLoad={() => {
+            // Image loaded successfully
+          }}
         />
       ) : (
         <span className="logo__text">YO! TECH THIS OUT</span>

@@ -14,7 +14,7 @@ import './styles/globals.css';
 function App() {
   return (
     <ThemeProvider>
-      <div className="app">
+      <div className="app" style={{ minHeight: '100vh', position: 'relative' }}>
         {/* Sticky Navigation */}
         <Navigation />
 

@@ -20,50 +20,70 @@ export function CategoryJumpNav() {
 
   // Smooth scroll to chapter
   const scrollToChapter = (chapterId) => {
-    const element = document.getElementById(chapterId);
-    if (element) {
-      const navHeight = navRef.current?.offsetHeight || 0;
-      const elementPosition = element.getBoundingClientRect().top + window.pageYOffset;
-      const offsetPosition = elementPosition - navHeight - 20;
+    if (typeof document === 'undefined' || typeof window === 'undefined') return;
+    
+    try {
+      const element = document.getElementById(chapterId);
+      if (element) {
+        const navHeight = navRef.current?.offsetHeight || 0;
+        const elementPosition = element.getBoundingClientRect().top + (window.pageYOffset || window.scrollY || 0);
+        const offsetPosition = elementPosition - navHeight - 20;
 
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: 'smooth',
-      });
+        window.scrollTo({
+          top: offsetPosition,
+          behavior: 'smooth',
+        });
+      }
+    } catch (e) {
+      console.warn('Could not scroll to chapter:', e);
     }
   };
 
   // Detect active section on scroll
   useEffect(() => {
+    if (typeof window === 'undefined' || typeof document === 'undefined') return;
+
     const handleScroll = () => {
-      const scrollPosition = window.scrollY + 150; // Offset for sticky nav
+      try {
+        const scrollPosition = (window.scrollY || window.pageYOffset || 0) + 150; // Offset for sticky nav
 
-      // Check each chapter section
-      for (let i = chapters.length - 1; i >= 0; i--) {
-        const element = document.getElementById(chapters[i].id);
-        if (element) {
-          const elementTop = element.offsetTop;
-          const elementBottom = elementTop + element.offsetHeight;
+        // Check each chapter section
+        for (let i = chapters.length - 1; i >= 0; i--) {
+          const element = document.getElementById(chapters[i].id);
+          if (element) {
+            const elementTop = element.offsetTop;
+            const elementBottom = elementTop + element.offsetHeight;
 
-          if (scrollPosition >= elementTop && scrollPosition < elementBottom) {
-            setActiveSection(chapters[i].id);
-            return;
+            if (scrollPosition >= elementTop && scrollPosition < elementBottom) {
+              setActiveSection(chapters[i].id);
+              return;
+            }
           }
         }
-      }
 
-      // If scrolled past all sections, set last one as active
-      const lastElement = document.getElementById(chapters[chapters.length - 1].id);
-      if (lastElement && scrollPosition >= lastElement.offsetTop) {
-        setActiveSection(chapters[chapters.length - 1].id);
+        // If scrolled past all sections, set last one as active
+        const lastElement = document.getElementById(chapters[chapters.length - 1].id);
+        if (lastElement && scrollPosition >= lastElement.offsetTop) {
+          setActiveSection(chapters[chapters.length - 1].id);
+        }
+      } catch (e) {
+        console.warn('Error detecting active section:', e);
       }
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial check
+    try {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll(); // Initial check
+    } catch (e) {
+      console.warn('Could not set up scroll listener:', e);
+    }
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
+      try {
+        window.removeEventListener('scroll', handleScroll);
+      } catch (e) {
+        // Ignore cleanup errors
+      }
     };
   }, []);
 

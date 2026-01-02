@@ -11,18 +11,38 @@ const ThemeContext = createContext();
  * Manages theme state and applies theme to document
  */
 export function ThemeProvider({ children }) {
-  // Default theme is dark
+  // Default theme is dark - safe for SSR
   const [theme, setTheme] = useState(() => {
-    // Check localStorage for saved theme preference
-    const savedTheme = localStorage.getItem('theme');
-    return savedTheme || 'dark';
+    // Only access localStorage if window is available (client-side)
+    if (typeof window !== 'undefined' && window.localStorage) {
+      try {
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme === 'dark' || savedTheme === 'light') {
+          return savedTheme;
+        }
+      } catch (e) {
+        // localStorage might be disabled or unavailable
+        console.warn('localStorage not available:', e);
+      }
+    }
+    return 'dark';
   });
 
   useEffect(() => {
-    // Apply theme to document root
-    document.documentElement.setAttribute('data-theme', theme);
-    // Save theme preference to localStorage
-    localStorage.setItem('theme', theme);
+    // Only run on client-side
+    if (typeof document !== 'undefined') {
+      // Apply theme to document root
+      document.documentElement.setAttribute('data-theme', theme);
+      // Save theme preference to localStorage
+      if (typeof window !== 'undefined' && window.localStorage) {
+        try {
+          localStorage.setItem('theme', theme);
+        } catch (e) {
+          // localStorage might be disabled
+          console.warn('Could not save theme to localStorage:', e);
+        }
+      }
+    }
   }, [theme]);
 
   const toggleTheme = () => {

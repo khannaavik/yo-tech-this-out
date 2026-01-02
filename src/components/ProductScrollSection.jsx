@@ -36,44 +36,87 @@ export function ProductScrollSection({
 
   // Detect low-performance devices and disable parallax
   useEffect(() => {
-    // Check for reduced motion preference
-    const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    
-    // Check for low-end device indicators
-    const isLowPerformance = 
-      navigator.hardwareConcurrency <= 2 || // Low CPU cores
-      navigator.deviceMemory <= 2 || // Low RAM (if available)
-      prefersReducedMotion;
+    // Only run on client-side
+    if (typeof window === 'undefined') {
+      setShouldUseParallax(false);
+      return;
+    }
 
-    setShouldUseParallax(!isLowPerformance);
+    try {
+      // Check for reduced motion preference
+      const prefersReducedMotion = window.matchMedia 
+        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches 
+        : false;
+      
+      // Check for low-end device indicators (safe access with fallbacks)
+      const hardwareConcurrency = navigator.hardwareConcurrency || 4; // Default to 4 if unavailable
+      const deviceMemory = navigator.deviceMemory || 4; // Default to 4 if unavailable
+      
+      const isLowPerformance = 
+        hardwareConcurrency <= 2 || // Low CPU cores
+        deviceMemory <= 2 || // Low RAM (if available)
+        prefersReducedMotion;
+
+      setShouldUseParallax(!isLowPerformance);
+    } catch (e) {
+      // If any check fails, disable parallax for safety
+      console.warn('Could not detect device capabilities:', e);
+      setShouldUseParallax(false);
+    }
   }, []);
 
   // IntersectionObserver for scroll reveal animation (one-time trigger with subtle easing)
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated.current) {
-            setIsVisible(true);
-            hasAnimated.current = true;
-          }
-        });
-      },
-      {
-        threshold: 0.1,
-        rootMargin: '0px 0px -100px 0px',
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    // Fallback: if IntersectionObserver is not available, show content immediately
+    if (typeof window === 'undefined' || !window.IntersectionObserver) {
+      setIsVisible(true);
+      return;
     }
 
-    return () => {
+    let observer;
+    try {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !hasAnimated.current) {
+              setIsVisible(true);
+              hasAnimated.current = true;
+            }
+          });
+        },
+        {
+          threshold: 0.1,
+          rootMargin: '0px 0px -100px 0px',
+        }
+      );
+
       if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+        observer.observe(sectionRef.current);
       }
-    };
+
+      // Fallback timeout: show content after 1 second if observer doesn't trigger
+      const fallbackTimeout = setTimeout(() => {
+        if (!hasAnimated.current && sectionRef.current) {
+          setIsVisible(true);
+          hasAnimated.current = true;
+        }
+      }, 1000);
+
+      return () => {
+        clearTimeout(fallbackTimeout);
+        if (observer && sectionRef.current) {
+          try {
+            observer.unobserve(sectionRef.current);
+          } catch (e) {
+            // Ignore cleanup errors
+          }
+        }
+      };
+    } catch (e) {
+      // If IntersectionObserver fails, show content immediately
+      console.warn('IntersectionObserver not available, showing content:', e);
+      setIsVisible(true);
+    }
   }, []);
 
   // Handle modal close
@@ -83,7 +126,7 @@ export function ProductScrollSection({
 
   // Subtle parallax effect on scroll (disabled on low-performance devices)
   useEffect(() => {
-    if (!shouldUseParallax) return;
+    if (!shouldUseParallax || typeof window === 'undefined') return;
 
     let rafId = null;
     const handleScroll = () => {
@@ -95,15 +138,20 @@ export function ProductScrollSection({
           return;
         }
 
-        const rect = sectionRef.current.getBoundingClientRect();
-        const windowHeight = window.innerHeight;
-        
-        // Calculate subtle parallax offset when section is in viewport
-        if (rect.top < windowHeight && rect.bottom > 0) {
-          const scrollProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
-          const offset = scrollProgress * 15; // Reduced to 15px for subtlety
-          setParallaxOffset(offset);
-        } else {
+        try {
+          const rect = sectionRef.current.getBoundingClientRect();
+          const windowHeight = window.innerHeight || 0;
+          
+          // Calculate subtle parallax offset when section is in viewport
+          if (rect.top < windowHeight && rect.bottom > 0) {
+            const scrollProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
+            const offset = scrollProgress * 15; // Reduced to 15px for subtlety
+            setParallaxOffset(offset);
+          } else {
+            setParallaxOffset(0);
+          }
+        } catch (e) {
+          // If calculation fails, reset offset
           setParallaxOffset(0);
         }
         
@@ -111,37 +159,59 @@ export function ProductScrollSection({
       });
     };
 
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Initial calculation
+    try {
+      window.addEventListener('scroll', handleScroll, { passive: true });
+      handleScroll(); // Initial calculation
+    } catch (e) {
+      console.warn('Could not set up parallax scroll:', e);
+    }
 
     return () => {
-      window.removeEventListener('scroll', handleScroll);
-      if (rafId) {
-        cancelAnimationFrame(rafId);
+      try {
+        window.removeEventListener('scroll', handleScroll);
+        if (rafId) {
+          cancelAnimationFrame(rafId);
+        }
+      } catch (e) {
+        // Ignore cleanup errors
       }
     };
   }, [shouldUseParallax]);
 
   // Lock body scroll when modal is open and handle Escape key
   useEffect(() => {
+    if (typeof document === 'undefined') return;
+
     if (isModalOpen) {
-      document.body.style.overflow = 'hidden';
-      
-      // Handle Escape key to close modal
-      const handleEscape = (e) => {
-        if (e.key === 'Escape') {
-          handleCloseModal();
-        }
-      };
-      
-      document.addEventListener('keydown', handleEscape);
-      
-      return () => {
-        document.body.style.overflow = '';
-        document.removeEventListener('keydown', handleEscape);
-      };
+      try {
+        document.body.style.overflow = 'hidden';
+        
+        // Handle Escape key to close modal
+        const handleEscape = (e) => {
+          if (e.key === 'Escape') {
+            handleCloseModal();
+          }
+        };
+        
+        document.addEventListener('keydown', handleEscape);
+        
+        return () => {
+          try {
+            document.body.style.overflow = '';
+            document.removeEventListener('keydown', handleEscape);
+          } catch (e) {
+            // Ignore cleanup errors
+          }
+        };
+      } catch (e) {
+        console.warn('Could not lock body scroll:', e);
+      }
     } else {
-      document.body.style.overflow = '';
+      try {
+        document.body.style.overflow = '';
+      } catch (e) {
+        // Ignore errors
+      }
     }
   }, [isModalOpen, handleCloseModal]);
 
@@ -181,18 +251,23 @@ export function ProductScrollSection({
             >
               {/* Glow halo behind image */}
               <div className="product-scroll-section__image-glow" aria-hidden="true"></div>
-              <img
-                src={productImageSrc}
-                alt={imageAlt}
-                className="product-scroll-section__image"
-                loading="lazy"
-                onError={(e) => {
-                  // Fallback to provided productImage if local image fails
-                  if (productImage && e.target.src !== productImage) {
-                    e.target.src = productImage;
-                  }
-                }}
-              />
+              {productImageSrc && (
+                <img
+                  src={productImageSrc}
+                  alt={imageAlt}
+                  className="product-scroll-section__image"
+                  loading="lazy"
+                  onError={(e) => {
+                    // Fallback to provided productImage if local image fails
+                    if (productImage && e.target.src !== productImage) {
+                      e.target.src = productImage;
+                    } else {
+                      // If no fallback, hide broken image gracefully
+                      e.target.style.display = 'none';
+                    }
+                  }}
+                />
+              )}
             </div>
           </div>
 

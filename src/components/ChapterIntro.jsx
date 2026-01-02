@@ -16,30 +16,56 @@ export function ChapterIntro({ title, subtitle, id }) {
 
   // IntersectionObserver for scroll reveal animation (one-time trigger)
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting && !hasAnimated.current) {
-            setIsVisible(true);
-            hasAnimated.current = true;
-          }
-        });
-      },
-      {
-        threshold: 0.2,
-        rootMargin: '0px 0px -50px 0px',
-      }
-    );
-
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    // Fallback: if IntersectionObserver is not available, show content immediately
+    if (typeof window === 'undefined' || !window.IntersectionObserver) {
+      setIsVisible(true);
+      return;
     }
 
-    return () => {
+    let observer;
+    try {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting && !hasAnimated.current) {
+              setIsVisible(true);
+              hasAnimated.current = true;
+            }
+          });
+        },
+        {
+          threshold: 0.2,
+          rootMargin: '0px 0px -50px 0px',
+        }
+      );
+
       if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+        observer.observe(sectionRef.current);
       }
-    };
+
+      // Fallback timeout: show content after 1 second if observer doesn't trigger
+      const fallbackTimeout = setTimeout(() => {
+        if (!hasAnimated.current && sectionRef.current) {
+          setIsVisible(true);
+          hasAnimated.current = true;
+        }
+      }, 1000);
+
+      return () => {
+        clearTimeout(fallbackTimeout);
+        if (observer && sectionRef.current) {
+          try {
+            observer.unobserve(sectionRef.current);
+          } catch (e) {
+            // Ignore cleanup errors
+          }
+        }
+      };
+    } catch (e) {
+      // If IntersectionObserver fails, show content immediately
+      console.warn('IntersectionObserver not available, showing content:', e);
+      setIsVisible(true);
+    }
   }, []);
 
   return (
