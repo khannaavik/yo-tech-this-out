@@ -80,7 +80,7 @@ function App() {
           companyName="Samsung"
           categoryTag="Audio / AI Earbuds"
           shortDescription="Next-generation wireless earbuds with AI-powered sound enhancement and adaptive noise cancellation for immersive audio experiences."
-          productImage="/products/galaxy-buds3-pro/hero.png"
+          productImage="/products/galaxy-buds/hero.png"
           youtubeUrl="https://www.youtube.com/@Samsung"
                 websiteUrl="https://www.samsung.com/global/galaxy/galaxy-buds3-pro/"
                 reverseLayout={false}
@@ -102,26 +102,14 @@ function App() {
 
             <ErrorBoundary>
               <ProductScrollSection
-          productName="AI Voice Changer Gaming Microphone"
+          productName="Maono AI Gaming Microphone"
           companyName="Maono"
           categoryTag="Gaming Audio / Creator Gear"
           shortDescription="Advanced AI-powered microphone with real-time voice modulation for content creators and gamers seeking professional-quality audio."
-          productImage="/products/maono-ai-voice-changer/hero.png"
+          productImage="/products/maono-ai-mic/hero.png"
           youtubeUrl="https://www.youtube.com/@MAONOGlobal"
                 websiteUrl="https://www.maono.com/"
                 reverseLayout={false}
-              />
-            </ErrorBoundary>
-
-            <ErrorBoundary>
-              <ProductScrollSection
-          productName="Acoustic Eye"
-          companyName="LINSOL"
-          categoryTag="Audio Visualizer / Art"
-          shortDescription="Innovative audio visualization device that transforms sound into stunning visual art, creating a unique sensory experience."
-          productImage="/products/linsol-acoustic-eye/hero.png"
-                youtubeUrl="https://www.youtube.com/results?search_query=LINSOL+Acoustic+Eye"
-                reverseLayout={true}
               />
             </ErrorBoundary>
 
@@ -162,89 +150,16 @@ function App() {
 
             <ErrorBoundary>
               <ProductScrollSection
-                productName="WHSP Ring"
-          companyName="Vtouch"
-          categoryTag="AI Wearable / Voice Input"
-          shortDescription="AI-powered smart ring that enables natural voice interaction and gesture control, redefining how we communicate with technology."
-          productImage="/products/whsp-ring/hero.png"
-          youtubeUrl="https://www.youtube.com/results?search_query=WHSP+Ring+Vtouch"
-                websiteUrl="https://www.vtouchinc.com/"
+                productName="H-Flex Wearable Robot"
+          companyName="H-Flex"
+          categoryTag="Wearable Robotics / Rehabilitation"
+          shortDescription="Advanced wearable robotic system designed for rehabilitation and mobility assistance, combining cutting-edge robotics with human-centered design."
+          productImage="/products/h-flex/hero.png"
+          youtubeUrl="https://www.youtube.com/results?search_query=H-Flex+Wearable+Robot"
                 reverseLayout={false}
               />
             </ErrorBoundary>
 
-            <ErrorBoundary>
-              <ProductScrollSection
-                productName="Osmotex Active Membrane Jacket"
-          companyName="Myant"
-          categoryTag="Fashion Tech / Smart Apparel"
-          shortDescription="Intelligent textile jacket with active membrane technology that adapts to environmental conditions and monitors biometric data seamlessly."
-          productImage="/products/osmotex-jacket/hero.png"
-          youtubeUrl="https://www.youtube.com/results?search_query=Myant+Osmotex+jacket"
-                websiteUrl="https://www.myant.ca/"
-                reverseLayout={true}
-              />
-            </ErrorBoundary>
-
-            {/* HEALTH, ACCESSIBILITY & SAFETY Chapter */}
-            <ErrorBoundary>
-              <ChapterIntro
-          id="health"
-          title="HEALTH, ACCESSIBILITY & SAFETY"
-                subtitle="Technology improving lives and protecting communities"
-              />
-            </ErrorBoundary>
-
-            <ErrorBoundary>
-              <ProductScrollSection
-                productName="TD Square"
-          companyName="Hanyang University Playlab"
-          categoryTag="Tinnitus Digital Treatment Device"
-          shortDescription="Innovative digital therapy device that provides personalized treatment for tinnitus using advanced audio therapy and neuroplasticity techniques."
-          productImage="/products/td-square/hero.png"
-                youtubeUrl="https://www.youtube.com/results?search_query=TD+Square+tinnitus+device"
-                reverseLayout={false}
-              />
-            </ErrorBoundary>
-
-            <ErrorBoundary>
-              <ProductScrollSection
-                productName="buddy-in"
-          companyName="Neudive"
-          categoryTag="Mental Health / Youth"
-          shortDescription="Supportive mental health platform designed for youth, providing accessible tools and resources for emotional well-being and resilience."
-          productImage="/products/buddy-in/hero.png"
-          youtubeUrl="https://www.youtube.com/results?search_query=Neudive+buddy-in"
-                websiteUrl="https://neudive.com/"
-                reverseLayout={true}
-              />
-            </ErrorBoundary>
-
-            <ErrorBoundary>
-              <ProductScrollSection
-                productName="Bio Leg"
-          companyName="BionicM"
-          categoryTag="Accessibility / Robotics"
-          shortDescription="Advanced bionic prosthetic leg that uses AI and robotics to provide natural movement and enhanced mobility for amputees."
-          productImage="/products/bio-leg/hero.png"
-          youtubeUrl="https://www.youtube.com/results?search_query=BionicM+Bio+Leg"
-                websiteUrl="https://bionicm.com/"
-                reverseLayout={false}
-              />
-            </ErrorBoundary>
-
-            <ErrorBoundary>
-              <ProductScrollSection
-                productName="Q-Vision Pro"
-          companyName="Suprema AI"
-          categoryTag="Embedded AI / Safety"
-          shortDescription="Intelligent vision system with embedded AI for advanced security, surveillance, and safety applications in smart environments."
-          productImage="/products/q-vision-pro/hero.png"
-          youtubeUrl="https://www.youtube.com/results?search_query=Suprema+Q-Vision+Pro"
-                websiteUrl="https://suprema-ai.com/"
-                reverseLayout={true}
-              />
-            </ErrorBoundary>
 
             {/* XR, GAMING & FUTURE INTERACTION Chapter */}
             <ErrorBoundary>
@@ -257,11 +172,11 @@ function App() {
 
             <ErrorBoundary>
               <ProductScrollSection
-                productName="XR Head-Mounted Display SRH-S1"
+                productName="Sony XR Head-Mounted Display"
                 companyName="Sony"
                 categoryTag="XR / Creator Gear"
                 shortDescription="Professional-grade XR headset designed for creators, delivering stunning visual fidelity and seamless mixed reality experiences."
-                productImage="/products/xr-head-mounted-display-srh-s1/hero.png"
+                productImage="/products/sony-xr-display/hero.png"
                 youtubeUrl="https://www.youtube.com/@SonyGroupOfficial"
                 reverseLayout={false}
               />
@@ -269,26 +184,14 @@ function App() {
 
             <ErrorBoundary>
               <ProductScrollSection
-                productName="SPORTRACK XR Board Game"
-                companyName="Newjak"
-                categoryTag="XR Gaming / Exergame"
-                shortDescription="Revolutionary board game that combines physical movement with extended reality, creating an active gaming experience for all ages."
-                productImage="/products/sportrack-xr-board-game/hero.png"
-                youtubeUrl="https://www.youtube.com/results?search_query=SPORTRACK+XR+Board+Game"
-                reverseLayout={true}
-              />
-            </ErrorBoundary>
-
-            <ErrorBoundary>
-              <ProductScrollSection
-                productName="GoKart Pro2"
+                productName="Segway GoKart Pro2"
                 companyName="Segway"
                 categoryTag="Gaming / Mobility"
                 shortDescription="High-performance electric go-kart that blends gaming culture with real-world mobility, delivering thrilling racing experiences."
-                productImage="/products/gokart-pro2/hero.png"
+                productImage="/products/segway-gokart/hero.png"
                 youtubeUrl="https://www.youtube.com/@Segway"
                 websiteUrl="https://www.segway.com/"
-                reverseLayout={false}
+                reverseLayout={true}
               />
             </ErrorBoundary>
 
@@ -303,11 +206,11 @@ function App() {
 
             <ErrorBoundary>
               <ProductScrollSection
-                productName="AI Transformer Home Trailer"
+                productName="AC Future AI Transformer Home"
           companyName="AC Future"
           categoryTag="Smart Home / Mobility"
           shortDescription="Intelligent modular living space that transforms between home and vehicle, featuring AI-powered automation and sustainable design."
-          productImage="/products/ai-transformer-home-trailer/hero.png"
+          productImage="/products/ac-future-home/hero.png"
           youtubeUrl="https://www.youtube.com/@ACFutureOfficial"
                 websiteUrl="https://www.acfuture.com/"
                 reverseLayout={false}
@@ -316,11 +219,11 @@ function App() {
 
             <ErrorBoundary>
               <ProductScrollSection
-                productName="Drone First Responder Station"
+                productName="Nearthlab Drone First Responder Station"
           companyName="Nearthlab"
           categoryTag="Drones / Public Safety"
           shortDescription="Autonomous drone deployment system for emergency response, providing rapid aerial support for public safety and rescue operations."
-          productImage="/products/drone-first-responder-station/hero.png"
+          productImage="/products/nearthlab-dfr/hero.png"
           youtubeUrl="https://www.youtube.com/results?search_query=Nearthlab+Drone+Station"
                 websiteUrl="https://nearthlab.com/"
                 reverseLayout={true}
