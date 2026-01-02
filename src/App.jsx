@@ -1,6 +1,7 @@
 import { ThemeProvider } from './components/ThemeProvider';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { LoadingIntro } from './components/LoadingIntro';
+import { CursorLighting } from './components/CursorLighting';
 import { Navigation } from './components/Navigation';
 import { CategoryJumpNav } from './components/CategoryJumpNav';
 import { Hero } from './components/Hero';
@@ -10,39 +11,10 @@ import { ClosingSection } from './components/ClosingSection';
 import './styles/globals.css';
 
 /**
- * Debug Banner Component
- * Always visible banner to verify rendering
- */
-function DebugBanner() {
-  return (
-    <div style={{
-      position: 'fixed',
-      top: 0,
-      left: 0,
-      right: 0,
-      zIndex: 99999,
-      backgroundColor: '#00ff00',
-      color: '#000000',
-      padding: '8px',
-      textAlign: 'center',
-      fontSize: '14px',
-      fontWeight: 'bold',
-      fontFamily: 'monospace',
-      borderBottom: '2px solid #000',
-    }}>
-      🟢 APP RENDERING - If you see this, React is working
-    </div>
-  );
-}
-
-/**
  * App Component
  * Main application shell with theme provider and layout structure
  */
 function App() {
-  // Force render check
-  console.log('App component rendering...');
-  
   return (
     <ErrorBoundary>
       <ThemeProvider>
@@ -50,8 +22,8 @@ function App() {
         <LoadingIntro />
         
         <div className="app" style={{ minHeight: '100vh', position: 'relative' }}>
-          {/* Debug Banner - Always visible */}
-          <DebugBanner />
+          {/* Cursor-reactive lighting (desktop only) */}
+          <CursorLighting />
           
           {/* Sticky Navigation */}
           <ErrorBoundary>

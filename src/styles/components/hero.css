@@ -20,6 +20,7 @@
   isolation: isolate;
   transition: background-position 0.1s linear;
   will-change: background-position;
+  z-index: 1; /* Above cursor lighting */
 }
 
 /* Subtle animated gradient overlay for hero */
