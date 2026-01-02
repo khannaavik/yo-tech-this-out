@@ -42,37 +42,36 @@ function App() {
   // Force render check
   console.log('App component rendering...');
   
-  try {
-    return (
-      <ErrorBoundary>
-        <ThemeProvider>
-          <div className="app" style={{ minHeight: '100vh', position: 'relative' }}>
-            {/* Debug Banner - Always visible */}
-            <DebugBanner />
-            
-            {/* Sticky Navigation */}
-            <ErrorBoundary>
-              <Navigation />
-            </ErrorBoundary>
+  return (
+    <ErrorBoundary>
+      <ThemeProvider>
+        <div className="app" style={{ minHeight: '100vh', position: 'relative' }}>
+          {/* Debug Banner - Always visible */}
+          <DebugBanner />
+          
+          {/* Sticky Navigation */}
+          <ErrorBoundary>
+            <Navigation />
+          </ErrorBoundary>
 
-            {/* Category Jump Navigation */}
-            <ErrorBoundary>
-              <CategoryJumpNav />
-            </ErrorBoundary>
+          {/* Category Jump Navigation */}
+          <ErrorBoundary>
+            <CategoryJumpNav />
+          </ErrorBoundary>
 
-            {/* Hero Section */}
-            <ErrorBoundary>
-              <Hero />
-            </ErrorBoundary>
+          {/* Hero Section */}
+          <ErrorBoundary>
+            <Hero />
+          </ErrorBoundary>
 
-            {/* AI & AUDIO Chapter */}
-            <ErrorBoundary>
-              <ChapterIntro
-                id="ai-audio"
-                title="AI & AUDIO"
-                subtitle="Intelligent sound systems and audio innovation"
-              />
-            </ErrorBoundary>
+          {/* AI & AUDIO Chapter */}
+          <ErrorBoundary>
+            <ChapterIntro
+              id="ai-audio"
+              title="AI & AUDIO"
+              subtitle="Intelligent sound systems and audio innovation"
+            />
+          </ErrorBoundary>
 
             <ErrorBoundary>
               <ProductScrollSection
@@ -230,12 +229,13 @@ function App() {
               />
             </ErrorBoundary>
 
-            {/* Closing Section */}
-            <ErrorBoundary>
-              <ClosingSection />
-            </ErrorBoundary>
-      </div>
-    </ThemeProvider>
+          {/* Closing Section */}
+          <ErrorBoundary>
+            <ClosingSection />
+          </ErrorBoundary>
+        </div>
+      </ThemeProvider>
+    </ErrorBoundary>
   );
 }
 
