@@ -9,29 +9,30 @@ import '../styles/components/product-scroll-section.css';
  * @param {string} companyName - Name of the company
  * @param {string} categoryTag - Category tag/label
  * @param {string} shortDescription - 1-2 line product description
- * @param {string} productSlug - Product slug for image path (e.g., "galaxy-buds3-pro")
- * @param {string} productImage - Fallback URL to product image (optional)
+ * @param {string} productImage - Product image URL (e.g., "/products/galaxy-buds3-pro/hero.png")
  * @param {string} youtubeUrl - YouTube video URL (for modal)
  * @param {string} websiteUrl - Product website URL
  * @param {boolean} reverseLayout - Reverse layout on large screens (image right, text left)
  */
-export function ProductScrollSection({
-  productName,
-  companyName,
-  categoryTag,
-  shortDescription,
-  productSlug,
-  productImage,
-  youtubeUrl,
-  websiteUrl,
-  reverseLayout = false,
-}) {
+export function ProductScrollSection(props) {
+  // Safe destructuring with defaults
+  const {
+    productName,
+    companyName,
+    categoryTag,
+    shortDescription,
+    productImage,
+    youtubeUrl,
+    websiteUrl,
+    reverseLayout = false,
+  } = props || {};
   const [isVisible, setIsVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [parallaxOffset, setParallaxOffset] = useState(0);
   const [shouldUseParallax, setShouldUseParallax] = useState(true);
   const sectionRef = useRef(null);
   const imageRef = useRef(null);
+  const placeholderRef = useRef(null);
   const hasAnimated = useRef(false);
 
   // Detect low-performance devices and disable parallax
@@ -232,6 +233,15 @@ export function ProductScrollSection({
   const videoId = getYouTubeVideoId(youtubeUrl);
   const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}` : null;
 
+  // Safe resolved image source - always has a value, never undefined
+  // If productImage is provided → use it, otherwise fallback to placeholder
+  const resolvedImageSrc = productImage || '/products/placeholder.png';
+
+  // Safe alt text generation with fallbacks
+  const imageAlt = productName 
+    ? `${productName}${companyName ? ` by ${companyName}` : ''}`
+    : 'Product image';
+
   return (
     <>
       <section
@@ -251,23 +261,41 @@ export function ProductScrollSection({
             >
               {/* Glow halo behind image */}
               <div className="product-scroll-section__image-glow" aria-hidden="true"></div>
-              {productImageSrc && (
-                <img
-                  src={productImageSrc}
-                  alt={imageAlt}
-                  className="product-scroll-section__image"
-                  loading="lazy"
-                  onError={(e) => {
-                    // Fallback to provided productImage if local image fails
-                    if (productImage && e.target.src !== productImage) {
-                      e.target.src = productImage;
-                    } else {
-                      // If no fallback, hide broken image gracefully
-                      e.target.style.display = 'none';
-                    }
-                  }}
-                />
-              )}
+              
+              {/* Always render placeholder as fallback (hidden when image loads successfully) */}
+              <div 
+                ref={placeholderRef}
+                className="product-scroll-section__image-placeholder" 
+                aria-label={imageAlt}
+                style={{ display: 'none' }}
+              >
+                <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="100" height="100" fill="var(--color-bg-secondary)" opacity="0.5"/>
+                  <path d="M30 40L50 25L70 40V70H30V40Z" stroke="var(--color-text-secondary)" strokeWidth="2" fill="none"/>
+                  <circle cx="50" cy="50" r="8" fill="var(--color-text-secondary)" opacity="0.3"/>
+                </svg>
+              </div>
+
+              {/* Always render image block unconditionally using resolved image source */}
+              <img
+                src={resolvedImageSrc}
+                alt={imageAlt}
+                className="product-scroll-section__image"
+                loading="lazy"
+                onError={(e) => {
+                  // Hide broken image and show placeholder
+                  e.target.style.display = 'none';
+                  if (placeholderRef.current) {
+                    placeholderRef.current.style.display = 'flex';
+                  }
+                }}
+                onLoad={() => {
+                  // Ensure placeholder is hidden when image loads successfully
+                  if (placeholderRef.current) {
+                    placeholderRef.current.style.display = 'none';
+                  }
+                }}
+              />
             </div>
           </div>
 
