@@ -1,18 +1,120 @@
+import { useState, useEffect, useRef } from 'react';
 import '../styles/components/closing-section.css';
 
 /**
  * ClosingSection Component
- * Final section at the bottom of the page with closing message
+ * Apple-style footer with brand statement, minimal navigation, and signature
  */
 export function ClosingSection() {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef(null);
+
+  // Scroll reveal animation
+  useEffect(() => {
+    if (typeof window === 'undefined' || !window.IntersectionObserver) {
+      setIsVisible(true);
+      return;
+    }
+
+    let observer;
+    try {
+      observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              setIsVisible(true);
+            }
+          });
+        },
+        {
+          threshold: 0.2,
+          rootMargin: '0px 0px -50px 0px',
+        }
+      );
+
+      if (sectionRef.current) {
+        observer.observe(sectionRef.current);
+      }
+
+      return () => {
+        if (observer && sectionRef.current) {
+          try {
+            observer.unobserve(sectionRef.current);
+          } catch (e) {
+            // Ignore cleanup errors
+          }
+        }
+      };
+    } catch (e) {
+      setIsVisible(true);
+    }
+  }, []);
+
+  const currentYear = new Date().getFullYear();
+
   return (
-    <section className="closing-section" aria-label="Closing section">
+    <footer 
+      className={`closing-section ${isVisible ? 'closing-section--visible' : ''}`}
+      ref={sectionRef}
+      aria-label="Footer"
+    >
+      {/* Closing transition gradient */}
+      <div className="closing-section__transition" aria-hidden="true"></div>
+      
       <div className="closing-section__container">
-        <p className="closing-section__text">
-          YO! TECH THIS OUT — A visual curation of technologies shaping the future.
+        {/* Brand Statement */}
+        <p className="closing-section__brand-statement">
+          A curated look at technologies shaping how humans live, move, and think.
         </p>
+
+        {/* Minimal Navigation */}
+        <nav className="closing-section__nav" aria-label="Footer navigation">
+          <a 
+            href="#ai-audio" 
+            className="closing-section__nav-link"
+            onClick={(e) => {
+              e.preventDefault();
+              const element = document.getElementById('ai-audio');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }}
+          >
+            Explore
+          </a>
+          <a 
+            href="#top" 
+            className="closing-section__nav-link"
+            onClick={(e) => {
+              e.preventDefault();
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+          >
+            Watch Demos
+          </a>
+          <a 
+            href="#xr" 
+            className="closing-section__nav-link"
+            onClick={(e) => {
+              e.preventDefault();
+              const element = document.getElementById('xr');
+              if (element) {
+                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              }
+            }}
+          >
+            About
+          </a>
+        </nav>
+
+        {/* Brand Signature */}
+        <div className="closing-section__signature">
+          <p className="closing-section__brand-name">YO! TECH THIS OUT</p>
+          <p className="closing-section__year">© {currentYear}</p>
+          <p className="closing-section__tagline">Built as an experimental tech showcase</p>
+        </div>
       </div>
-    </section>
+    </footer>
   );
 }
 
