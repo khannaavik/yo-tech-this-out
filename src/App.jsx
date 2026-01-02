@@ -1,5 +1,6 @@
 import { ThemeProvider } from './components/ThemeProvider';
 import { ErrorBoundary } from './components/ErrorBoundary';
+import { LoadingIntro } from './components/LoadingIntro';
 import { Navigation } from './components/Navigation';
 import { CategoryJumpNav } from './components/CategoryJumpNav';
 import { Hero } from './components/Hero';
@@ -45,6 +46,9 @@ function App() {
   return (
     <ErrorBoundary>
       <ThemeProvider>
+        {/* Apple-style loading intro - shown once per session */}
+        <LoadingIntro />
+        
         <div className="app" style={{ minHeight: '100vh', position: 'relative' }}>
           {/* Debug Banner - Always visible */}
           <DebugBanner />
