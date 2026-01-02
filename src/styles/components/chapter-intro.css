@@ -6,16 +6,14 @@
 .chapter-intro {
   width: 100%;
   padding: var(--spacing-5xl) var(--spacing-md) var(--spacing-4xl);
-  /* TEMPORARY: Force visible for debugging - will re-enable animation after fix */
-  opacity: 1 !important;
-  transform: translate3d(0, 0, 0) !important;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* Refined easing */
+  opacity: 0;
+  transform: translate3d(0, 30px, 0);
+  transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 1s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
   position: relative;
   text-align: center;
-  /* Ensure content is always visible */
-  visibility: visible !important;
+  margin-bottom: var(--spacing-2xl);
 }
 
 @media (min-width: 768px) {
@@ -30,12 +28,11 @@
   }
 }
 
-/* Visible state - scroll reveal animation */
+/* Visible state - Apple-level scroll reveal animation */
 .chapter-intro--visible {
-  opacity: 1 !important;
-  transform: translate3d(0, 0, 0) !important; /* GPU-friendly */
-  will-change: auto; /* Remove will-change after animation */
-  visibility: visible !important;
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
 }
 
 .chapter-intro__container {
@@ -93,6 +90,20 @@
 @media (min-width: 1024px) {
   .chapter-intro__subtitle {
     font-size: var(--font-size-2xl);
+  }
+}
+
+/* Respect reduced motion preference */
+@media (prefers-reduced-motion: reduce) {
+  .chapter-intro {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+    transition: none;
+  }
+  
+  .chapter-intro--visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
   }
 }
 

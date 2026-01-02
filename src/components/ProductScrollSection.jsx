@@ -29,10 +29,14 @@ export function ProductScrollSection(props) {
   const [isVisible, setIsVisible] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [parallaxOffset, setParallaxOffset] = useState(0);
+  const [scrollProgress, setScrollProgress] = useState(0);
+  const [imageRotation, setImageRotation] = useState(0);
+  const [glowIntensity, setGlowIntensity] = useState(0);
   const [shouldUseParallax, setShouldUseParallax] = useState(true);
   const sectionRef = useRef(null);
   const imageRef = useRef(null);
   const placeholderRef = useRef(null);
+  const contentRef = useRef(null);
   const hasAnimated = useRef(false);
 
   // Detect low-performance devices and disable parallax
@@ -66,9 +70,8 @@ export function ProductScrollSection(props) {
     }
   }, []);
 
-  // IntersectionObserver for scroll reveal animation (one-time trigger with subtle easing)
+  // Apple-level scroll-synced reveal animation
   useEffect(() => {
-    // Fallback: if IntersectionObserver is not available, show content immediately
     if (typeof window === 'undefined' || !window.IntersectionObserver) {
       setIsVisible(true);
       return;
@@ -86,8 +89,8 @@ export function ProductScrollSection(props) {
           });
         },
         {
-          threshold: 0.1,
-          rootMargin: '0px 0px -100px 0px',
+          threshold: 0.15,
+          rootMargin: '0px 0px -50px 0px',
         }
       );
 
@@ -95,7 +98,6 @@ export function ProductScrollSection(props) {
         observer.observe(sectionRef.current);
       }
 
-      // Fallback timeout: show content after 1 second if observer doesn't trigger
       const fallbackTimeout = setTimeout(() => {
         if (!hasAnimated.current && sectionRef.current) {
           setIsVisible(true);
@@ -114,7 +116,6 @@ export function ProductScrollSection(props) {
         }
       };
     } catch (e) {
-      // If IntersectionObserver fails, show content immediately
       console.warn('IntersectionObserver not available, showing content:', e);
       setIsVisible(true);
     }
@@ -125,13 +126,13 @@ export function ProductScrollSection(props) {
     setIsModalOpen(false);
   }, []);
 
-  // Subtle parallax effect on scroll (disabled on low-performance devices)
+  // Apple-level scroll-synced parallax with perspective and rotation
   useEffect(() => {
     if (!shouldUseParallax || typeof window === 'undefined') return;
 
     let rafId = null;
     const handleScroll = () => {
-      if (rafId) return; // Throttle with RAF
+      if (rafId) return;
       
       rafId = requestAnimationFrame(() => {
         if (!imageRef.current || !sectionRef.current) {
@@ -142,18 +143,31 @@ export function ProductScrollSection(props) {
         try {
           const rect = sectionRef.current.getBoundingClientRect();
           const windowHeight = window.innerHeight || 0;
+          const windowCenter = windowHeight / 2;
+          const sectionCenter = rect.top + rect.height / 2;
           
-          // Calculate subtle parallax offset when section is in viewport
-          if (rect.top < windowHeight && rect.bottom > 0) {
-            const scrollProgress = (windowHeight - rect.top) / (windowHeight + rect.height);
-            const offset = scrollProgress * 15; // Reduced to 15px for subtlety
-            setParallaxOffset(offset);
-          } else {
-            setParallaxOffset(0);
-          }
+          // Calculate scroll progress (0 to 1) as section moves through viewport
+          const distanceFromCenter = sectionCenter - windowCenter;
+          const maxDistance = windowHeight + rect.height;
+          const progress = Math.max(0, Math.min(1, 1 - Math.abs(distanceFromCenter) / maxDistance));
+          
+          setScrollProgress(progress);
+          
+          // Parallax offset with perspective (subtle, Apple-like)
+          const parallaxAmount = distanceFromCenter * 0.15; // Gentle parallax
+          setParallaxOffset(parallaxAmount);
+          
+          // Subtle rotation based on scroll position (max 2 degrees)
+          const rotation = (distanceFromCenter / windowHeight) * 2;
+          setImageRotation(Math.max(-2, Math.min(2, rotation)));
+          
+          // Glow intensity peaks when image is centered
+          const glow = Math.sin(progress * Math.PI) * 0.6 + 0.4; // 0.4 to 1.0
+          setGlowIntensity(glow);
         } catch (e) {
-          // If calculation fails, reset offset
           setParallaxOffset(0);
+          setImageRotation(0);
+          setGlowIntensity(0.4);
         }
         
         rafId = null;
@@ -162,7 +176,7 @@ export function ProductScrollSection(props) {
 
     try {
       window.addEventListener('scroll', handleScroll, { passive: true });
-      handleScroll(); // Initial calculation
+      handleScroll();
     } catch (e) {
       console.warn('Could not set up parallax scroll:', e);
     }
@@ -256,11 +270,23 @@ export function ProductScrollSection(props) {
               ref={imageRef}
               className={`product-scroll-section__image-container ${isVisible ? 'product-scroll-section__image-container--visible' : ''}`}
               style={{ 
-                transform: shouldUseParallax ? `translate3d(0, ${parallaxOffset}px, 0)` : 'translate3d(0, 0, 0)',
+                transform: shouldUseParallax 
+                  ? `translate3d(0, ${parallaxOffset}px, 0) rotateY(${imageRotation}deg) perspective(1000px)`
+                  : 'translate3d(0, 0, 0)',
+                filter: shouldUseParallax 
+                  ? `drop-shadow(0 ${20 + glowIntensity * 40}px ${60 + glowIntensity * 40}px rgba(0, 212, 255, ${0.2 + glowIntensity * 0.3}))`
+                  : 'drop-shadow(0 20px 60px rgba(0, 0, 0, 0.3))',
               }}
             >
-              {/* Glow halo behind image */}
-              <div className="product-scroll-section__image-glow" aria-hidden="true"></div>
+              {/* Scroll-reactive glow halo behind image */}
+              <div 
+                className="product-scroll-section__image-glow" 
+                aria-hidden="true"
+                style={{
+                  opacity: shouldUseParallax ? glowIntensity : 0.6,
+                  transform: `scale(${1 + glowIntensity * 0.1})`,
+                }}
+              ></div>
               
               {/* Always render placeholder as fallback (hidden when image loads successfully) */}
               <div 
@@ -300,7 +326,16 @@ export function ProductScrollSection(props) {
           </div>
 
           {/* Content Container */}
-          <div className="product-scroll-section__content">
+          <div 
+            ref={contentRef}
+            className="product-scroll-section__content"
+            style={{
+              opacity: isVisible ? scrollProgress : 0,
+              transform: isVisible 
+                ? `translateY(${(1 - scrollProgress) * 30}px) scale(${0.95 + scrollProgress * 0.05})`
+                : 'translateY(30px) scale(0.95)',
+            }}
+          >
             {/* Category Tag */}
             {categoryTag && (
               <span className="product-scroll-section__category">

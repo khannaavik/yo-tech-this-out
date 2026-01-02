@@ -6,16 +6,13 @@
 .product-scroll-section {
   width: 100%;
   padding: var(--spacing-4xl) var(--spacing-md);
-  /* TEMPORARY: Force visible for debugging - will re-enable animation after fix */
-  opacity: 1 !important;
-  transform: translate3d(0, 0, 0) !important;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1); /* Refined easing */
+  opacity: 0;
+  transform: translate3d(0, 40px, 0) scale(0.96);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
+              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
   position: relative;
   isolation: isolate;
-  /* Ensure content is always visible */
-  visibility: visible !important;
 }
 
 @media (min-width: 768px) {
@@ -33,12 +30,11 @@
   }
 }
 
-/* Visible state - scroll reveal animation */
+/* Visible state - Apple-level scroll reveal animation */
 .product-scroll-section--visible {
-  opacity: 1 !important;
-  transform: translate3d(0, 0, 0) !important; /* GPU-friendly */
-  will-change: auto; /* Remove will-change after animation */
-  visibility: visible !important;
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  will-change: auto;
 }
 
 .product-scroll-section__container {
@@ -83,26 +79,24 @@
   overflow: visible; /* Allow glow to show */
   border-radius: var(--radius-lg);
   background-color: var(--color-bg-secondary);
-  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
-  /* GPU-friendly transform */
-  /* TEMPORARY: Force visible for debugging */
-  transform: translate3d(0, 0, 0) scale(1) !important;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, filter;
+  transform-style: preserve-3d;
+  perspective: 1000px;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  opacity: 1 !important;
-  /* Soft glow and depth */
+  /* Soft glow and depth - scroll-reactive via inline styles */
   filter: drop-shadow(0 20px 60px rgba(0, 0, 0, 0.3));
-  visibility: visible !important;
 }
 
 /* Scale-in animation on reveal */
 .product-scroll-section__image-container--visible {
-  opacity: 1 !important;
-  transform: translate3d(0, 0, 0) scale(1) !important;
-  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  visibility: visible !important;
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
+              filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @media (min-width: 1024px) {
@@ -227,25 +221,56 @@
   }
 }
 
-/* Reduced motion on mobile */
+/* Reduced motion on mobile and for accessibility */
 @media (max-width: 768px) {
   .product-scroll-section__image-container {
-    transform: translate3d(0, 0, 0) !important; /* Disable parallax on mobile */
+    transform: translate3d(0, 0, 0);
     filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
   }
   
   .product-scroll-section__image-container--visible {
-    transform: translate3d(0, 0, 0) scale(1) !important;
+    transform: translate3d(0, 0, 0) scale(1);
   }
 }
 
-/* Content Container */
+@media (prefers-reduced-motion: reduce) {
+  .product-scroll-section {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    transition: none;
+  }
+  
+  .product-scroll-section--visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  
+  .product-scroll-section__image-container {
+    transform: translate3d(0, 0, 0) !important;
+    transition: none;
+  }
+  
+  .product-scroll-section__content {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) scale(1) !important;
+    transition: none;
+  }
+  
+  .product-scroll-section__image-glow {
+    animation: none;
+  }
+}
+
+/* Content Container - Scroll-synced reveal */
 .product-scroll-section__content {
   width: 100%;
   display: flex;
   flex-direction: column;
   gap: var(--spacing-lg);
   text-align: center;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
 }
 
 @media (min-width: 1024px) {
@@ -401,7 +426,7 @@
   }
 }
 
-/* Primary Button (Watch Demo) - Redesigned as premium CTA */
+/* Primary Button (Watch Demo) - Apple-level magnetic CTA */
 .product-scroll-section__button--primary {
   background: linear-gradient(135deg, var(--color-accent-electric-blue), var(--color-accent-violet));
   color: #ffffff;
@@ -409,7 +434,8 @@
   position: relative;
   overflow: hidden;
   box-shadow: 0 8px 32px rgba(0, 212, 255, 0.3),
-              0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+              0 0 0 1px rgba(255, 255, 255, 0.1) inset,
+              0 0 40px rgba(0, 212, 255, 0.2);
 }
 
 .product-scroll-section__button--primary::before {
@@ -423,14 +449,14 @@
   transition: left 0.5s ease;
 }
 
-/* Hover effects only for non-touch devices */
+/* Hover effects only for non-touch devices - Magnetic scale + glow */
 @media (hover: hover) and (pointer: fine) {
   .product-scroll-section__button--primary:hover {
     background: linear-gradient(135deg, var(--color-accent-cyan), var(--color-accent-electric-blue));
-    transform: translate3d(0, -3px, 0);
-    box-shadow: 0 12px 40px rgba(0, 212, 255, 0.4),
+    transform: translate3d(0, -4px, 0) scale(1.05);
+    box-shadow: 0 16px 48px rgba(0, 212, 255, 0.5),
                 0 0 0 1px rgba(255, 255, 255, 0.2) inset,
-                var(--glow-blue);
+                0 0 60px rgba(0, 212, 255, 0.4);
   }
   
   .product-scroll-section__button--primary:hover::before {
@@ -444,8 +470,10 @@
 }
 
 .product-scroll-section__button--primary:active {
-  transform: translate3d(0, 0, 0) scale(0.96); /* Press feedback */
+  transform: translate3d(0, -1px, 0) scale(0.98); /* Refined press feedback */
   transition: transform 0.1s ease;
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3),
+              0 0 0 1px rgba(255, 255, 255, 0.1) inset;
 }
 
 /* Watch Demo Button - Animated play icon */
