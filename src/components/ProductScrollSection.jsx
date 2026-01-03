@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef, useCallback } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import '../styles/components/product-scroll-section.css';
 
 /**
@@ -9,7 +9,7 @@ import '../styles/components/product-scroll-section.css';
  * @param {string} companyName - Name of the company
  * @param {string} categoryTag - Category tag/label
  * @param {string} shortDescription - 1-2 line product description
- * @param {string} productImage - Product image URL (e.g., "/products/galaxy-buds3-pro/hero.png")
+ * @param {string} productImage - Product image URL (e.g., "/products/galaxy-buds/product.png")
  * @param {string} youtubeUrl - YouTube video URL (for modal)
  * @param {string} websiteUrl - Product website URL
  * @param {boolean} reverseLayout - Reverse layout on large screens (image right, text left)
@@ -27,14 +27,13 @@ export function ProductScrollSection(props) {
     reverseLayout = false,
   } = props || {};
   const [isVisible, setIsVisible] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [parallaxOffset, setParallaxOffset] = useState(0);
   const [scrollProgress, setScrollProgress] = useState(0);
   const [imageRotation, setImageRotation] = useState(0);
   const [imageScale, setImageScale] = useState(1);
   const [imageTranslateY, setImageTranslateY] = useState(0);
   const [textTranslateY, setTextTranslateY] = useState(0);
-  const [glowIntensity, setGlowIntensity] = useState(0);
+  const [glowIntensity, setGlowIntensity] = useState(0.8); // Start with subtle glow
   const [shouldUseParallax, setShouldUseParallax] = useState(true);
   const sectionRef = useRef(null);
   const imageRef = useRef(null);
@@ -124,10 +123,6 @@ export function ProductScrollSection(props) {
     }
   }, []);
 
-  // Handle modal close
-  const handleCloseModal = useCallback(() => {
-    setIsModalOpen(false);
-  }, []);
 
   // Optimized scroll-scrub: Only active when section is visible (performance critical)
   useEffect(() => {
@@ -150,7 +145,7 @@ export function ProductScrollSection(props) {
             setImageScale(1);
             setImageTranslateY(0);
             setTextTranslateY(0);
-            setGlowIntensity(0.4);
+            setGlowIntensity(0.8); // Default to subtle glow
             setScrollProgress(0);
             
             // Remove scroll listener when off-screen
@@ -191,23 +186,24 @@ export function ProductScrollSection(props) {
                   
                   setScrollProgress(progress);
                   
-                  // Optimized scroll-scrub calculations
-                  const scale = 1 + (progress * 0.05);
+                  // Gentle scroll-based micro-motion - calm and minimal
+                  const scale = 1 + (progress * 0.02); // Very subtle scale (2% max)
                   setImageScale(scale);
                   
-                  const translateY = distanceFromCenter * 0.2;
+                  const translateY = distanceFromCenter * 0.1; // Reduced from 0.2 - gentler motion
                   setImageTranslateY(translateY);
                   
-                  const parallaxAmount = distanceFromCenter * 0.15;
+                  const parallaxAmount = distanceFromCenter * 0.08; // Reduced from 0.15 - subtle parallax
                   setParallaxOffset(parallaxAmount);
                   
-                  const rotation = (distanceFromCenter / windowHeight) * 2;
-                  setImageRotation(Math.max(-2, Math.min(2, rotation)));
+                  // No rotation - clean, floating presentation
+                  setImageRotation(0);
                   
-                  const textTranslate = distanceFromCenter * 0.08;
+                  const textTranslate = distanceFromCenter * 0.05; // Reduced from 0.08 - gentler text motion
                   setTextTranslateY(textTranslate);
                   
-                  const glow = Math.sin(progress * Math.PI) * 0.6 + 0.4;
+                  // Subtle glow variation - calm and minimal
+                  const glow = Math.sin(progress * Math.PI) * 0.2 + 0.8; // Reduced variation (0.8-1.0)
                   setGlowIntensity(glow);
                 } catch (e) {
                   setParallaxOffset(0);
@@ -215,7 +211,7 @@ export function ProductScrollSection(props) {
                   setImageScale(1);
                   setImageTranslateY(0);
                   setTextTranslateY(0);
-                  setGlowIntensity(0.4);
+                  setGlowIntensity(0.8); // Default to subtle glow
                 }
                 
                 rafId = null;
@@ -257,59 +253,18 @@ export function ProductScrollSection(props) {
     };
   }, [shouldUseParallax]);
 
-  // Lock body scroll when modal is open and handle Escape key
-  useEffect(() => {
-    if (typeof document === 'undefined') return;
 
-    if (isModalOpen) {
-      try {
-        document.body.style.overflow = 'hidden';
-        
-        // Handle Escape key to close modal
-        const handleEscape = (e) => {
-          if (e.key === 'Escape') {
-            handleCloseModal();
-          }
-        };
-        
-        document.addEventListener('keydown', handleEscape);
-        
-        return () => {
-          try {
-            document.body.style.overflow = '';
-            document.removeEventListener('keydown', handleEscape);
-          } catch (e) {
-            // Ignore cleanup errors
-          }
-        };
-      } catch (e) {
-        console.warn('Could not lock body scroll:', e);
-      }
-    } else {
-      try {
-        document.body.style.overflow = '';
-      } catch (e) {
-        // Ignore errors
-      }
-    }
-  }, [isModalOpen, handleCloseModal]);
-
-  // Handle backdrop click
-  const handleBackdropClick = (e) => {
-    if (e.target === e.currentTarget) {
-      handleCloseModal();
-    }
-  };
-
-  // Extract YouTube video ID from URL
-  const getYouTubeVideoId = (url) => {
+  // Normalize YouTube URL - if it's a channel or search URL, keep as is; if it's a video URL, use it directly
+  const getYouTubeUrl = (url) => {
     if (!url) return null;
-    const match = url.match(/(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/);
-    return match ? match[1] : null;
+    // If it's already a full YouTube URL, use it
+    if (url.includes('youtube.com') || url.includes('youtu.be')) {
+      return url;
+    }
+    return null;
   };
 
-  const videoId = getYouTubeVideoId(youtubeUrl);
-  const embedUrl = videoId ? `https://www.youtube.com/embed/${videoId}` : null;
+  const normalizedYoutubeUrl = getYouTubeUrl(youtubeUrl);
 
   // Safe resolved image source - always has a value, never undefined
   // If productImage is provided → use it, otherwise fallback to placeholder
@@ -338,20 +293,19 @@ export function ProductScrollSection(props) {
               className={`product-scroll-section__image-container ${isVisible ? 'product-scroll-section__image-container--visible' : ''}`}
               style={{ 
                 transform: shouldUseParallax 
-                  ? `translate3d(0, ${parallaxOffset + imageTranslateY}px, 0) rotateY(${imageRotation}deg) scale(${imageScale}) perspective(1000px)`
+                  ? `translate3d(0, ${parallaxOffset + imageTranslateY}px, 0) scale(${imageScale})`
                   : 'translate3d(0, 0, 0) scale(1)',
-                filter: shouldUseParallax 
-                  ? `drop-shadow(0 ${20 + glowIntensity * 40}px ${60 + glowIntensity * 40}px rgba(0, 212, 255, ${0.2 + glowIntensity * 0.3}))`
-                  : 'drop-shadow(0 20px 60px rgba(0, 0, 0, 0.3))',
+                opacity: isVisible ? 1 : 0,
+                willChange: shouldUseParallax ? 'transform, opacity' : 'opacity',
               }}
             >
-              {/* Scroll-reactive glow halo behind image */}
+              {/* Scroll-reactive glow halo behind image - premium ambient lighting */}
               <div 
                 className="product-scroll-section__image-glow" 
                 aria-hidden="true"
                 style={{
-                  opacity: shouldUseParallax ? glowIntensity : 0.6,
-                  transform: `scale(${1 + glowIntensity * 0.1})`,
+                  opacity: shouldUseParallax ? glowIntensity : 1,
+                  transform: `scale(${1 + (glowIntensity - 0.8) * 0.05})`, // Very subtle scale variation
                 }}
               ></div>
               
@@ -432,10 +386,12 @@ export function ProductScrollSection(props) {
 
             {/* Action Buttons */}
             <div className="product-scroll-section__actions">
-              {youtubeUrl && embedUrl && (
-                <button
+              {normalizedYoutubeUrl && (
+                <a
+                  href={normalizedYoutubeUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="product-scroll-section__button product-scroll-section__button--primary product-scroll-section__button--watch-demo"
-                  onClick={() => setIsModalOpen(true)}
                   aria-label={`Watch demo video for ${productName}`}
                 >
                   <span className="product-scroll-section__play-icon" aria-hidden="true">
@@ -444,7 +400,7 @@ export function ProductScrollSection(props) {
                     </svg>
                   </span>
                   <span className="product-scroll-section__button-text">Watch Demo</span>
-                </button>
+                </a>
               )}
               {websiteUrl && (
                 <a
@@ -461,42 +417,6 @@ export function ProductScrollSection(props) {
           </div>
         </div>
       </section>
-
-      {/* Video Modal */}
-      {isModalOpen && embedUrl && (
-        <div
-          className="product-scroll-section__modal-backdrop"
-          onClick={handleBackdropClick}
-          aria-label="Close video modal"
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === 'Escape') {
-              handleCloseModal();
-            }
-          }}
-        >
-          <div className="product-scroll-section__modal">
-            <button
-              className="product-scroll-section__modal-close"
-              onClick={handleCloseModal}
-              aria-label="Close video modal"
-            >
-              <span aria-hidden="true">×</span>
-            </button>
-            <div className="product-scroll-section__modal-content">
-              <iframe
-                src={embedUrl}
-                title={`${productName} demo video`}
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-                className="product-scroll-section__modal-video"
-              />
-            </div>
-          </div>
-        </div>
-      )}
     </>
   );
 }

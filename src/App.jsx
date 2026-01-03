@@ -3,7 +3,6 @@ import { ThemeProvider } from './components/ThemeProvider';
 import { ErrorBoundary } from './components/ErrorBoundary';
 import { LoadingIntro } from './components/LoadingIntro';
 import { CursorLighting } from './components/CursorLighting';
-import { FixedWatchDemoButton } from './components/FixedWatchDemoButton';
 import { GoToTopButton } from './components/GoToTopButton';
 import { Navigation } from './components/Navigation';
 import { Home } from './pages/Home';
@@ -14,6 +13,7 @@ import { Techfluencers } from './pages/Techfluencers';
 import { Press } from './pages/Press';
 import { Contact } from './pages/Contact';
 import { Live } from './pages/Live';
+import { ClosingSection } from './components/ClosingSection';
 import './styles/globals.css';
 
 /**
@@ -37,15 +37,10 @@ function App() {
               <Navigation />
             </ErrorBoundary>
 
-                    {/* Fixed Watch Demo Button (desktop only) */}
-                    <ErrorBoundary>
-                      <FixedWatchDemoButton />
-                    </ErrorBoundary>
-
-                    {/* Go to Top Button */}
-                    <ErrorBoundary>
-                      <GoToTopButton />
-                    </ErrorBoundary>
+            {/* Go to Top Button */}
+            <ErrorBoundary>
+              <GoToTopButton />
+            </ErrorBoundary>
 
             {/* Routes */}
             <Routes>
@@ -90,6 +85,11 @@ function App() {
                 </ErrorBoundary>
               } />
             </Routes>
+
+            {/* Footer - Appears on all pages */}
+            <ErrorBoundary>
+              <ClosingSection />
+            </ErrorBoundary>
           </div>
         </Router>
       </ThemeProvider>

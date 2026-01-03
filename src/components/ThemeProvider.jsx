@@ -11,7 +11,7 @@ const ThemeContext = createContext();
  * Manages theme state and applies theme to document
  */
 export function ThemeProvider({ children }) {
-  // Default theme is dark - safe for SSR
+  // Default theme is light - safe for SSR
   const [theme, setTheme] = useState(() => {
     // Only access localStorage if window is available (client-side)
     if (typeof window !== 'undefined' && window.localStorage) {
@@ -25,7 +25,7 @@ export function ThemeProvider({ children }) {
         console.warn('localStorage not available:', e);
       }
     }
-    return 'dark';
+    return 'light';
   });
 
   useEffect(() => {

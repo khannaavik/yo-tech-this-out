@@ -114,32 +114,62 @@
   position: relative;
   width: 100%;
   padding-bottom: 75%; /* 4:3 aspect ratio - prevents layout shift */
-  overflow: visible; /* Allow glow to show */
+  overflow: visible; /* Allow glow and shadow to show */
   border-radius: var(--radius-xl); /* Soft, modern rounding */
-  background: linear-gradient(135deg, rgba(0, 212, 255, 0.04), rgba(139, 92, 246, 0.04));
-  transition: transform 0.1s linear,
-              filter 0.1s linear;
-  will-change: transform, filter;
+  /* No solid background - transparent images render cleanly */
+  background: transparent;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
   transform-style: preserve-3d;
   perspective: 1000px;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  /* Soft neon glow with light bleed - scroll-reactive via inline styles */
-  filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.25)) 
-          drop-shadow(0 15px 50px rgba(139, 92, 246, 0.15))
-          drop-shadow(0 0 80px rgba(0, 212, 255, 0.1));
-  /* Subtle glassy border - softer */
-  border: 1px solid rgba(0, 212, 255, 0.12);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
+  /* No borders or frames - clean, floating presentation */
+  border: none;
+  /* Soft shadow beneath for depth - scroll-reactive via inline styles */
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.12))
+          drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
+}
+
+/* Light Mode - Elegant, Editorial, Airy */
+[data-theme="light"] .product-scroll-section__image-container {
+  /* Soft, airy gradient behind product - very subtle */
+  background: radial-gradient(ellipse at center,
+    rgba(0, 212, 255, 0.03) 0%,
+    rgba(139, 92, 246, 0.02) 40%,
+    transparent 70%);
+  /* Soft shadow for depth - elegant and refined */
+  filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.08))
+          drop-shadow(0 4px 12px rgba(0, 0, 0, 0.04));
+}
+
+/* Dark Mode - Cinematic, Powerful, Immersive */
+[data-theme="dark"] .product-scroll-section__image-container {
+  /* Deeper ambient glow - cinematic feel */
+  background: radial-gradient(ellipse at center,
+    rgba(0, 212, 255, 0.06) 0%,
+    rgba(139, 92, 246, 0.04) 40%,
+    transparent 70%);
+  /* Deeper shadow for cinematic depth */
+  filter: drop-shadow(0 16px 48px rgba(0, 0, 0, 0.3))
+          drop-shadow(0 6px 16px rgba(0, 0, 0, 0.2));
 }
 
 /* Mobile - Smaller border radius */
 @media (max-width: 479px) {
   .product-scroll-section__image-container {
     border-radius: var(--radius-lg);
-    filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.2)) 
-            drop-shadow(0 10px 30px rgba(139, 92, 246, 0.12));
+  }
+  
+  [data-theme="light"] .product-scroll-section__image-container {
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.06))
+            drop-shadow(0 2px 8px rgba(0, 0, 0, 0.03));
+  }
+  
+  [data-theme="dark"] .product-scroll-section__image-container {
+    filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.25))
+            drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
   }
 }
 
@@ -152,51 +182,93 @@
               filter 0.6s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
+/* Desktop - Enhanced depth */
 @media (min-width: 1024px) {
-  .product-scroll-section__image-container {
-    filter: drop-shadow(0 30px 80px rgba(0, 0, 0, 0.4)) 
-            drop-shadow(0 0 40px rgba(0, 212, 255, 0.1));
+  [data-theme="light"] .product-scroll-section__image-container {
+    filter: drop-shadow(0 16px 48px rgba(0, 0, 0, 0.1))
+            drop-shadow(0 6px 20px rgba(0, 0, 0, 0.06));
+  }
+  
+  [data-theme="dark"] .product-scroll-section__image-container {
+    filter: drop-shadow(0 24px 64px rgba(0, 0, 0, 0.4))
+            drop-shadow(0 8px 24px rgba(0, 0, 0, 0.25));
   }
 }
 
-/* Gradient halo/glow behind image */
+/* Gradient halo/glow behind image - Premium ambient lighting */
 .product-scroll-section__image-glow {
   position: absolute;
-  top: -20%;
-  left: -20%;
-  width: 140%;
-  height: 140%;
-  background: radial-gradient(ellipse at center, 
-    rgba(0, 212, 255, 0.15) 0%,
-    rgba(139, 92, 246, 0.1) 30%,
-    transparent 70%);
+  top: -25%;
+  left: -25%;
+  width: 150%;
+  height: 150%;
   border-radius: 50%;
   z-index: -1;
   pointer-events: none;
   opacity: 0;
-  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  animation: glowPulse 4s ease-in-out infinite;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+/* Light Mode - Subtle radial glow (very low opacity) */
+[data-theme="light"] .product-scroll-section__image-glow {
+  background: radial-gradient(ellipse at center,
+    rgba(0, 212, 255, 0.04) 0%,
+    rgba(139, 92, 246, 0.03) 25%,
+    rgba(6, 182, 212, 0.02) 50%,
+    transparent 75%);
+}
+
+/* Dark Mode - Deeper ambient glow (cinematic) */
+[data-theme="dark"] .product-scroll-section__image-glow {
+  background: radial-gradient(ellipse at center,
+    rgba(0, 212, 255, 0.08) 0%,
+    rgba(139, 92, 246, 0.06) 25%,
+    rgba(6, 182, 212, 0.04) 50%,
+    transparent 75%);
 }
 
 .product-scroll-section__image-container--visible .product-scroll-section__image-glow {
   opacity: 1;
 }
 
+/* Gentle pulse animation - calm and minimal */
 @keyframes glowPulse {
   0%, 100% {
-    opacity: 0.6;
+    opacity: 1;
     transform: scale(1);
   }
   50% {
-    opacity: 0.8;
-    transform: scale(1.05);
+    opacity: 1.1;
+    transform: scale(1.02);
   }
 }
 
-@media (max-width: 768px) {
+@media (min-width: 768px) {
   .product-scroll-section__image-glow {
-    opacity: 0.3; /* Reduced glow on mobile for performance */
+    animation: glowPulse 6s ease-in-out infinite;
+  }
+}
+
+@media (max-width: 767px) {
+  .product-scroll-section__image-glow {
+    /* Reduced glow on mobile for performance */
     animation: none;
+  }
+  
+  [data-theme="light"] .product-scroll-section__image-glow {
+    background: radial-gradient(ellipse at center,
+      rgba(0, 212, 255, 0.03) 0%,
+      rgba(139, 92, 246, 0.02) 30%,
+      transparent 70%);
+  }
+  
+  [data-theme="dark"] .product-scroll-section__image-glow {
+    background: radial-gradient(ellipse at center,
+      rgba(0, 212, 255, 0.06) 0%,
+      rgba(139, 92, 246, 0.04) 30%,
+      transparent 70%);
   }
 }
 
@@ -218,10 +290,10 @@
   left: 0;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain; /* Changed from cover to contain - no cropping, preserves aspect ratio */
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-              filter 0.5s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
+              opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
   transform: translate3d(0, 0, 0) scale(1);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
@@ -229,11 +301,22 @@
   /* Retina-friendly image rendering */
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
-  /* Prevent layout shift */
-  background-color: var(--color-bg-secondary);
-  /* Soft light bleed effect - subtle inner glow */
-  box-shadow: inset 0 0 60px rgba(0, 212, 255, 0.08),
-              inset 0 0 100px rgba(139, 92, 246, 0.05);
+  /* No background color - allows transparent PNGs to render cleanly */
+  background-color: transparent;
+  /* No inner shadows - clean, floating presentation */
+  box-shadow: none;
+}
+
+/* Light Mode - Clean, floating, premium feel */
+[data-theme="light"] .product-scroll-section__image {
+  /* Subtle contrast enhancement for light mode */
+  filter: brightness(1.02) contrast(1.05);
+}
+
+/* Dark Mode - Cinematic contrast */
+[data-theme="dark"] .product-scroll-section__image {
+  /* Subtle contrast increase for cinematic feel */
+  filter: brightness(1.05) contrast(1.08);
 }
 
 /* Mobile - Smaller border radius */
@@ -265,30 +348,48 @@
   max-height: 120px;
 }
 
-/* Soft hover glow on images (desktop only) */
+/* Premium hover effects (desktop only) - subtle and elegant */
 @media (hover: hover) and (pointer: fine) {
-  .product-scroll-section__image-wrapper:hover .product-scroll-section__image-container {
-    transform: translate3d(0, -5px, 0) scale(1.02);
-    filter: drop-shadow(0 40px 100px rgba(0, 0, 0, 0.5)) 
-            drop-shadow(0 0 60px rgba(0, 212, 255, 0.2));
+  [data-theme="light"] .product-scroll-section__image-wrapper:hover .product-scroll-section__image-container {
+    transform: translate3d(0, -3px, 0) scale(1.01);
+    filter: drop-shadow(0 16px 48px rgba(0, 0, 0, 0.12))
+            drop-shadow(0 6px 20px rgba(0, 0, 0, 0.08));
+  }
+  
+  [data-theme="dark"] .product-scroll-section__image-wrapper:hover .product-scroll-section__image-container {
+    transform: translate3d(0, -4px, 0) scale(1.01);
+    filter: drop-shadow(0 24px 64px rgba(0, 0, 0, 0.45))
+            drop-shadow(0 8px 24px rgba(0, 0, 0, 0.3));
   }
   
   .product-scroll-section__image-wrapper:hover .product-scroll-section__image-glow {
-    opacity: 1;
-    transform: scale(1.1);
+    opacity: 1.1;
+    transform: scale(1.03);
   }
   
-  .product-scroll-section__image-wrapper:hover .product-scroll-section__image {
-    transform: translate3d(0, 0, 0) scale(1.02);
-    filter: brightness(1.08);
+  [data-theme="light"] .product-scroll-section__image-wrapper:hover .product-scroll-section__image {
+    filter: brightness(1.03) contrast(1.06);
+  }
+  
+  [data-theme="dark"] .product-scroll-section__image-wrapper:hover .product-scroll-section__image {
+    filter: brightness(1.06) contrast(1.1);
   }
 }
 
-/* Reduced motion on mobile and for accessibility */
+/* Mobile - Optimized for performance and clarity */
 @media (max-width: 768px) {
   .product-scroll-section__image-container {
     transform: translate3d(0, 0, 0);
-    filter: drop-shadow(0 10px 30px rgba(0, 0, 0, 0.2));
+  }
+  
+  [data-theme="light"] .product-scroll-section__image-container {
+    filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.06))
+            drop-shadow(0 2px 8px rgba(0, 0, 0, 0.03));
+  }
+  
+  [data-theme="dark"] .product-scroll-section__image-container {
+    filter: drop-shadow(0 12px 32px rgba(0, 0, 0, 0.25))
+            drop-shadow(0 4px 12px rgba(0, 0, 0, 0.15));
   }
   
   .product-scroll-section__image-container--visible {

@@ -2,7 +2,6 @@ import { CategoryJumpNav } from '../components/CategoryJumpNav';
 import { Hero } from '../components/Hero';
 import { ChapterIntro } from '../components/ChapterIntro';
 import { ProductScrollSection } from '../components/ProductScrollSection';
-import { ClosingSection } from '../components/ClosingSection';
 
 /**
  * Home Page Component
@@ -29,7 +28,7 @@ export function Home() {
         companyName="Samsung"
         categoryTag="Audio / AI Earbuds"
         shortDescription="Next-generation wireless earbuds with AI-powered sound enhancement and adaptive noise cancellation for immersive audio experiences."
-        productImage="/products/galaxy-buds/hero.png"
+        productImage="/products/galaxy-buds/product.png"
         youtubeUrl="https://www.youtube.com/@Samsung"
         websiteUrl="https://www.samsung.com/global/galaxy/galaxy-buds3-pro/"
         reverseLayout={false}
@@ -40,7 +39,7 @@ export function Home() {
         companyName="Sony"
         categoryTag="Home Audio / TV"
         shortDescription="Revolutionary home theater system delivering immersive quad-channel audio that transforms your living space into a cinematic experience."
-        productImage="/products/bravia-theater-quad/hero.png"
+        productImage="/products/bravia-theater-quad/product.png"
         youtubeUrl="https://www.youtube.com/@SonyElectronics"
         websiteUrl="https://electronics.sony.com/"
         reverseLayout={true}
@@ -51,7 +50,7 @@ export function Home() {
         companyName="Maono"
         categoryTag="Gaming Audio / Creator Gear"
         shortDescription="Advanced AI-powered microphone with real-time voice modulation for content creators and gamers seeking professional-quality audio."
-        productImage="/products/maono-ai-mic/hero.png"
+        productImage="/products/maono-ai-mic/product.png"
         youtubeUrl="https://www.youtube.com/@MAONOGlobal"
         websiteUrl="https://www.maono.com/"
         reverseLayout={false}
@@ -69,7 +68,7 @@ export function Home() {
         companyName="VIV Health"
         categoryTag="Health Wearable / Smart Ring"
         shortDescription="Comprehensive health monitoring smart ring that tracks vital signs, sleep patterns, and activity metrics in an elegant, unobtrusive design."
-        productImage="/products/viv-ring/hero.png"
+        productImage="/products/viv-ring/product.png"
         youtubeUrl="https://www.youtube.com/results?search_query=VIV+Ring+CES+2025"
         websiteUrl="https://www.vivring.ai"
         reverseLayout={false}
@@ -80,7 +79,7 @@ export function Home() {
         companyName="Earable"
         categoryTag="Sleep / Focus Wearable"
         shortDescription="Wearable headband that uses advanced neurotechnology to enhance sleep quality and improve focus through personalized brain stimulation."
-        productImage="/products/frenz-brainband/hero.png"
+        productImage="/products/frenz-brainband/product.png"
         youtubeUrl="https://www.youtube.com/@Earable"
         websiteUrl="https://www.frenzband.com/"
         reverseLayout={true}
@@ -91,7 +90,7 @@ export function Home() {
         companyName="H-Flex"
         categoryTag="Wearable Robotics / Rehabilitation"
         shortDescription="Advanced wearable robotic system designed for rehabilitation and mobility assistance, combining cutting-edge robotics with human-centered design."
-        productImage="/products/h-flex/hero.png"
+        productImage="/products/h-flex/product.png"
         youtubeUrl="https://www.youtube.com/results?search_query=H-Flex+Wearable+Robot"
         reverseLayout={false}
       />
@@ -108,7 +107,7 @@ export function Home() {
         companyName="Sony"
         categoryTag="XR / Creator Gear"
         shortDescription="Professional-grade XR headset designed for creators, delivering stunning visual fidelity and seamless mixed reality experiences."
-        productImage="/products/sony-xr-display/hero.png"
+        productImage="/products/sony-xr-display/product.png"
         youtubeUrl="https://www.youtube.com/@SonyGroupOfficial"
         reverseLayout={false}
       />
@@ -118,7 +117,7 @@ export function Home() {
         companyName="Segway"
         categoryTag="Gaming / Mobility"
         shortDescription="High-performance electric go-kart that blends gaming culture with real-world mobility, delivering thrilling racing experiences."
-        productImage="/products/segway-gokart/hero.png"
+        productImage="/products/segway-gokart/product.png"
         youtubeUrl="https://www.youtube.com/@Segway"
         websiteUrl="https://www.segway.com/"
         reverseLayout={true}
@@ -136,7 +135,7 @@ export function Home() {
         companyName="AC Future"
         categoryTag="Smart Home / Mobility"
         shortDescription="Intelligent modular living space that transforms between home and vehicle, featuring AI-powered automation and sustainable design."
-        productImage="/products/ac-future-home/hero.png"
+        productImage="/products/ac-future-home/product.png"
         youtubeUrl="https://www.youtube.com/@ACFutureOfficial"
         websiteUrl="https://www.acfuture.com/"
         reverseLayout={false}
@@ -147,14 +146,11 @@ export function Home() {
         companyName="Nearthlab"
         categoryTag="Drones / Public Safety"
         shortDescription="Autonomous drone deployment system for emergency response, providing rapid aerial support for public safety and rescue operations."
-        productImage="/products/nearthlab-dfr/hero.png"
+        productImage="/products/nearthlab-dfr/product.png"
         youtubeUrl="https://www.youtube.com/results?search_query=Nearthlab+Drone+Station"
         websiteUrl="https://nearthlab.com/"
         reverseLayout={true}
       />
-
-      {/* Closing Section */}
-      <ClosingSection />
     </>
   );
 }
