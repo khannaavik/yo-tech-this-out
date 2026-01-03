@@ -1,0 +1,140 @@
+/**
+ * Go To Top Button Styles
+ * Futuristic floating button matching site aesthetic
+ */
+
+.go-to-top-button {
+  position: fixed;
+  bottom: var(--spacing-xl);
+  right: var(--spacing-xl);
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-full);
+  /* Futuristic gradient matching site */
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.15), rgba(139, 92, 246, 0.15));
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  color: #ffffff;
+  cursor: pointer;
+  z-index: 1000; /* Above content, below modals */
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  touch-action: manipulation;
+  transform: translate3d(0, 0, 0); /* GPU-friendly */
+  will-change: transform, box-shadow, background;
+  /* Premium glow effect */
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.3),
+              0 0 40px rgba(139, 92, 246, 0.2),
+              0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  opacity: 0;
+  transform: translate3d(0, 20px, 0) scale(0.9);
+  pointer-events: none;
+}
+
+.go-to-top-button--visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  pointer-events: auto;
+}
+
+.go-to-top-button svg {
+  width: 24px;
+  height: 24px;
+  stroke-width: 2.5;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Hover effects - Premium glow intensification */
+@media (hover: hover) and (pointer: fine) {
+  .go-to-top-button:hover {
+    transform: translate3d(0, -4px, 0) scale(1.05);
+    background: linear-gradient(135deg, rgba(0, 212, 255, 0.25), rgba(139, 92, 246, 0.25));
+    border-color: rgba(0, 212, 255, 0.5);
+    box-shadow: 0 0 30px rgba(0, 212, 255, 0.5),
+                0 0 60px rgba(139, 92, 246, 0.4),
+                0 12px 48px rgba(0, 0, 0, 0.4);
+  }
+  
+  .go-to-top-button:hover svg {
+    transform: translateY(-2px);
+  }
+}
+
+.go-to-top-button:active {
+  transform: translate3d(0, 0, 0) scale(0.95);
+  transition: transform 0.1s ease;
+}
+
+.go-to-top-button:focus-visible {
+  outline: 2px solid var(--color-accent-electric-blue);
+  outline-offset: 4px;
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.6),
+              0 0 60px rgba(139, 92, 246, 0.4),
+              0 0 0 4px rgba(0, 212, 255, 0.3);
+}
+
+/* Light mode adjustments */
+[data-theme="light"] .go-to-top-button {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(139, 92, 246, 0.2));
+  border-color: rgba(0, 212, 255, 0.4);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.25),
+              0 0 40px rgba(139, 92, 246, 0.15),
+              0 8px 32px rgba(0, 0, 0, 0.2);
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .go-to-top-button:hover {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(139, 92, 246, 0.3));
+  border-color: rgba(0, 212, 255, 0.6);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.4),
+              0 0 60px rgba(139, 92, 246, 0.3),
+              0 12px 48px rgba(0, 0, 0, 0.25);
+}
+
+/* Responsive adjustments */
+@media (max-width: 767px) {
+  .go-to-top-button {
+    width: 52px;
+    height: 52px;
+    bottom: var(--spacing-lg);
+    right: var(--spacing-lg);
+  }
+  
+  .go-to-top-button svg {
+    width: 22px;
+    height: 22px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1023px) {
+  .go-to-top-button {
+    bottom: var(--spacing-xl);
+    right: var(--spacing-xl);
+  }
+}
+
+@media (min-width: 1440px) {
+  .go-to-top-button {
+    bottom: var(--spacing-2xl);
+    right: var(--spacing-2xl);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .go-to-top-button {
+    transition: opacity 0.2s ease, transform 0.2s ease;
+  }
+  
+  .go-to-top-button:hover {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  
+  .go-to-top-button svg {
+    transition: none;
+  }
+}
+

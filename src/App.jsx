@@ -4,6 +4,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { LoadingIntro } from './components/LoadingIntro';
 import { CursorLighting } from './components/CursorLighting';
 import { FixedWatchDemoButton } from './components/FixedWatchDemoButton';
+import { GoToTopButton } from './components/GoToTopButton';
 import { Navigation } from './components/Navigation';
 import { Home } from './pages/Home';
 import { Why } from './pages/Why';
@@ -36,10 +37,15 @@ function App() {
               <Navigation />
             </ErrorBoundary>
 
-            {/* Fixed Watch Demo Button (desktop only) */}
-            <ErrorBoundary>
-              <FixedWatchDemoButton />
-            </ErrorBoundary>
+                    {/* Fixed Watch Demo Button (desktop only) */}
+                    <ErrorBoundary>
+                      <FixedWatchDemoButton />
+                    </ErrorBoundary>
+
+                    {/* Go to Top Button */}
+                    <ErrorBoundary>
+                      <GoToTopButton />
+                    </ErrorBoundary>
 
             {/* Routes */}
             <Routes>
