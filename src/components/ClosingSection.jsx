@@ -1,9 +1,11 @@
 import { useState, useEffect, useRef } from 'react';
+import { Logo } from './Logo';
 import '../styles/components/closing-section.css';
 
 /**
  * ClosingSection Component
  * Apple-style footer with brand statement, minimal navigation, and signature
+ * Features full logo with tagline
  */
 export function ClosingSection() {
   const [isVisible, setIsVisible] = useState(false);
@@ -107,11 +109,13 @@ export function ClosingSection() {
           </a>
         </nav>
 
-        {/* Brand Signature */}
+        {/* Brand Signature with Logo */}
         <div className="closing-section__signature">
-          <p className="closing-section__brand-name">YO! TECH THIS OUT</p>
-          <p className="closing-section__year">© {currentYear}</p>
+          <div className="closing-section__logo-wrapper">
+            <Logo variant="full" className="closing-section__logo" />
+          </div>
           <p className="closing-section__tagline">Built as an experimental tech showcase</p>
+          <p className="closing-section__year">© {currentYear}</p>
         </div>
       </div>
     </footer>

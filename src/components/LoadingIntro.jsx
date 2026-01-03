@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { useTheme } from './ThemeProvider';
+import { Logo } from './Logo';
 import '../styles/components/loading-intro.css';
 
 /**
  * LoadingIntro Component
  * Apple-style fullscreen loading intro shown once per session
+ * Features logo with fade + scale + glow animation
  */
 export function LoadingIntro() {
   const [isVisible, setIsVisible] = useState(false);
@@ -83,7 +85,9 @@ export function LoadingIntro() {
       aria-hidden="true"
     >
       <div className="loading-intro__content">
-        <h1 className="loading-intro__brand">YO! TECH THIS OUT</h1>
+        <div className="loading-intro__logo-wrapper">
+          <Logo variant="full" className="loading-intro__logo" />
+        </div>
         <p className="loading-intro__subtext">Exploring the future.</p>
       </div>
     </div>

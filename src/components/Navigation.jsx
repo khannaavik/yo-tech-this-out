@@ -15,8 +15,10 @@ export function Navigation() {
       <div className="navigation__container">
         {/* Logo/Brand */}
         <div className="navigation__brand">
-          <Link to="/" style={{ textDecoration: 'none' }}>
-            <Logo />
+          <Link to="/" style={{ textDecoration: 'none' }} aria-label="Home">
+            {/* Use compact mark on small screens, full logo on larger screens */}
+            <Logo variant="mark" className="navigation__logo--mobile" />
+            <Logo variant="full" className="navigation__logo--desktop" />
           </Link>
         </div>
 

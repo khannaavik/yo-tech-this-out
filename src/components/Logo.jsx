@@ -4,11 +4,11 @@ import '../styles/components/logo.css';
 
 /**
  * Logo Component
- * Text-based wordmark with SVG fallback support
- * Dynamically switches based on theme
- * NEVER crashes if SVG is missing - always falls back to text
+ * Theme-aware logo with PNG images from /public/branding/
+ * Supports full logo and compact mark variants
+ * NEVER crashes if images are missing - always falls back to text
  */
-export function Logo() {
+export function Logo({ variant = 'full', className = '' }) {
   // Safe theme access with fallback
   let isDark = true;
   try {
@@ -20,44 +20,49 @@ export function Logo() {
   }
 
   const [isVisible, setIsVisible] = useState(false);
-  const [svgError, setSvgError] = useState(false);
-  const [svgLoaded, setSvgLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const [imageLoaded, setImageLoaded] = useState(false);
 
   // Entrance animation on load
   useEffect(() => {
     setIsVisible(true);
   }, []);
 
-  // Determine logo path based on theme - with safe fallback
-  // If path construction fails, default to dark
-  let logoSvgPath = '/logo/logo-dark.svg';
+  // Determine logo path based on theme and variant - with safe fallback
+  let logoPath = '/branding/logo-dark.png';
   try {
-    logoSvgPath = isDark ? '/logo/logo-dark.svg' : '/logo/logo-light.svg';
+    if (variant === 'mark') {
+      // Compact mark (same for both themes, or use theme-specific if available)
+      logoPath = '/branding/logo-mark.png';
+    } else {
+      // Full logo - theme-aware
+      logoPath = isDark ? '/branding/logo-dark.png' : '/branding/logo-light.png';
+    }
   } catch (e) {
     // If path construction fails, use default
-    logoSvgPath = '/logo/logo-dark.svg';
+    logoPath = '/branding/logo-dark.png';
   }
 
-  // Handle SVG load error - always fallback to text
+  // Handle image load error - always fallback to text
   // NEVER throw an error
-  const handleSvgError = () => {
+  const handleImageError = () => {
     try {
-      setSvgError(true);
-      setSvgLoaded(false);
+      setImageError(true);
+      setImageLoaded(false);
     } catch (e) {
       // If state update fails, component will still render text fallback
-      console.warn('Logo SVG error handler failed:', e);
+      console.warn('Logo image error handler failed:', e);
     }
   };
 
-  // Handle SVG load success
-  const handleSvgLoad = () => {
+  // Handle image load success
+  const handleImageLoad = () => {
     try {
-      setSvgLoaded(true);
-      setSvgError(false);
+      setImageLoaded(true);
+      setImageError(false);
     } catch (e) {
       // If state update fails, continue with text fallback
-      console.warn('Logo SVG load handler failed:', e);
+      console.warn('Logo image load handler failed:', e);
     }
   };
 
@@ -65,30 +70,27 @@ export function Logo() {
   try {
     return (
       <div 
-        className={`logo ${isVisible ? 'logo--visible' : ''}`}
+        className={`logo ${isVisible ? 'logo--visible' : ''} ${variant === 'mark' ? 'logo--mark' : ''} ${className}`}
         aria-label="YO! TECH THIS OUT"
-        style={{ opacity: 1, visibility: 'visible' }}
       >
-        {/* Try SVG logo first, always fallback to text if it fails or doesn't exist */}
-        {!svgError ? (
+        {/* Try PNG logo first, always fallback to text if it fails or doesn't exist */}
+        {!imageError ? (
           <img
-            src={logoSvgPath}
+            src={logoPath}
             alt="YO! TECH THIS OUT"
             className="logo__image"
-            onError={handleSvgError}
-            onLoad={handleSvgLoad}
+            onError={handleImageError}
+            onLoad={handleImageLoad}
             loading="eager"
-            style={{ display: svgLoaded ? 'block' : 'none' }}
+            style={{ display: imageLoaded ? 'block' : 'none' }}
           />
         ) : null}
         
-        {/* Always render text fallback (visible if SVG fails or hasn't loaded) */}
+        {/* Always render text fallback (visible if image fails or hasn't loaded) */}
         <span 
           className="logo__text" 
           style={{ 
-            opacity: 1, 
-            visibility: 'visible',
-            display: svgError || !svgLoaded ? 'inline' : 'none'
+            display: imageError || !imageLoaded ? 'inline' : 'none'
           }}
         >
           YO! TECH THIS OUT
@@ -99,7 +101,7 @@ export function Logo() {
     // Ultimate fallback - if component render fails, return minimal text
     console.error('Logo component render error:', e);
     return (
-      <div aria-label="YO! TECH THIS OUT" style={{ opacity: 1, visibility: 'visible' }}>
+      <div aria-label="YO! TECH THIS OUT">
         <span className="logo__text">YO! TECH THIS OUT</span>
       </div>
     );

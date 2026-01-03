@@ -36,6 +36,26 @@
   display: flex;
   align-items: center;
   flex-shrink: 0;
+  position: relative;
+}
+
+/* Responsive logo switching */
+.navigation__logo--mobile {
+  display: block;
+}
+
+.navigation__logo--desktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .navigation__logo--mobile {
+    display: none;
+  }
+  
+  .navigation__logo--desktop {
+    display: block;
+  }
 }
 
 /* Navigation Links */

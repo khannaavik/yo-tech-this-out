@@ -1,6 +1,7 @@
 /**
  * Logo Styles
- * Modern futuristic wordmark with entrance animation
+ * Theme-aware logo with PNG images from /public/branding/
+ * Supports full logo and compact mark variants
  */
 
 .logo {
@@ -11,6 +12,8 @@
   transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
+  /* Prevent layout shift */
+  min-height: 32px;
 }
 
 .logo--visible {
@@ -19,17 +22,33 @@
   will-change: auto;
 }
 
-/* SVG Logo Image */
+/* PNG Logo Image */
 .logo__image {
   height: 32px;
   width: auto;
   display: block;
+  object-fit: contain;
   transition: opacity var(--transition-theme);
+  /* Prevent layout shift */
+  max-width: 200px;
 }
 
 @media (min-width: 768px) {
   .logo__image {
     height: 36px;
+  }
+}
+
+/* Compact mark variant */
+.logo--mark .logo__image {
+  height: 28px;
+  max-width: 40px;
+}
+
+@media (min-width: 768px) {
+  .logo--mark .logo__image {
+    height: 32px;
+    max-width: 48px;
   }
 }
 
@@ -48,6 +67,17 @@
   .logo__text {
     font-size: var(--font-size-2xl);
     letter-spacing: -0.03em;
+  }
+}
+
+/* Compact mark text fallback */
+.logo--mark .logo__text {
+  font-size: var(--font-size-lg);
+}
+
+@media (min-width: 768px) {
+  .logo--mark .logo__text {
+    font-size: var(--font-size-xl);
   }
 }
 
