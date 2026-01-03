@@ -12,8 +12,20 @@
   transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
               transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
-  /* Prevent layout shift */
-  min-height: 32px;
+  /* Prevent layout shift - increased for larger logo */
+  min-height: 48px; /* Bigger on mobile */
+}
+
+@media (min-width: 768px) {
+  .logo {
+    min-height: 50px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .logo {
+    min-height: 48px;
+  }
 }
 
 .logo--visible {
@@ -22,9 +34,9 @@
   will-change: auto;
 }
 
-/* PNG Logo Image */
+/* PNG Logo Image - Visually anchors header on mobile, larger on desktop */
 .logo__image {
-  height: 32px;
+  height: 44px; /* Increased to visually anchor header */
   width: auto;
   display: block;
   object-fit: contain;
@@ -35,20 +47,33 @@
 
 @media (min-width: 768px) {
   .logo__image {
-    height: 36px;
+    height: 46px; /* Slightly larger */
   }
 }
 
-/* Compact mark variant */
+@media (min-width: 1024px) {
+  .logo__image {
+    height: 48px; /* Larger on desktop */
+  }
+}
+
+/* Compact mark variant - Larger on mobile to anchor header */
 .logo--mark .logo__image {
-  height: 28px;
-  max-width: 40px;
+  height: 48px; /* Bigger on mobile */
+  max-width: 65px; /* Increased */
 }
 
 @media (min-width: 768px) {
   .logo--mark .logo__image {
-    height: 32px;
-    max-width: 48px;
+    height: 50px; /* Slightly larger */
+    max-width: 70px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .logo--mark .logo__image {
+    height: 44px; /* Larger on desktop */
+    max-width: 65px;
   }
 }
 

@@ -1,0 +1,90 @@
+/**
+ * Page Section Styles
+ * Reusable content sections with scroll reveal animations
+ */
+
+.page-section {
+  width: 100%;
+  padding: var(--spacing-2xl) var(--spacing-md) var(--spacing-xl);
+  opacity: 0;
+  transform: translate3d(0, 40px, 0);
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.page-section--visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+  will-change: auto;
+}
+
+@media (min-width: 768px) {
+  .page-section {
+    padding: var(--spacing-3xl) var(--spacing-xl) var(--spacing-2xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-section {
+    padding: var(--spacing-4xl) var(--spacing-xl) var(--spacing-3xl);
+  }
+}
+
+/* No padding variant */
+.page-section--no-padding {
+  padding: 0;
+}
+
+/* Section Container */
+.page-section__container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-section--centered .page-section__container {
+  max-width: 900px;
+}
+
+.page-section--wide .page-section__container {
+  max-width: 1400px;
+}
+
+/* Section Title */
+.page-section__title {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  letter-spacing: -0.03em; /* Tighter for Space Grotesk */
+  margin: 0 0 var(--spacing-lg) 0;
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .page-section__title {
+    font-size: var(--font-size-5xl);
+    margin-bottom: var(--spacing-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-section__title {
+    font-size: var(--font-size-6xl);
+  }
+}
+
+/* Section Content */
+.page-section__content {
+  width: 100%;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .page-section {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) !important;
+    transition: none !important;
+  }
+}
+

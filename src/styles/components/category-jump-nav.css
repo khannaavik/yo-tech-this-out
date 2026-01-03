@@ -30,6 +30,9 @@
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none; /* Firefox */
   -ms-overflow-style: none; /* IE and Edge */
+  /* Remove any left-side offset */
+  padding-left: var(--spacing-md);
+  padding-right: var(--spacing-md);
 }
 
 .category-jump-nav__container::-webkit-scrollbar {
@@ -38,17 +41,20 @@
 
 .category-jump-nav__links {
   display: flex;
-  gap: var(--spacing-sm);
   align-items: center;
   padding: var(--spacing-sm) 0;
   min-width: max-content;
+  /* Equal spacing - distribute evenly */
+  justify-content: space-evenly;
+  width: 100%;
+  gap: 0; /* Remove gap, use space-evenly instead */
 }
 
 @media (min-width: 768px) {
   .category-jump-nav__links {
-    gap: var(--spacing-md);
-    justify-content: center;
+    justify-content: space-evenly;
     padding: var(--spacing-md) 0;
+    gap: 0; /* Remove gap, use space-evenly instead */
   }
 }
 

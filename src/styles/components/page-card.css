@@ -1,0 +1,148 @@
+/**
+ * Page Card Styles
+ * Glass-style content cards with soft gradients and glow accents
+ */
+
+.page-card {
+  padding: var(--spacing-xl);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.03),
+    rgba(139, 92, 246, 0.03)
+  );
+  border-radius: var(--radius-xl);
+  border: 1px solid rgba(0, 212, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              border-color 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  /* Soft glow effect */
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.05),
+              0 0 40px rgba(139, 92, 246, 0.03);
+  /* Ensure cards work well in grids */
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+@media (min-width: 768px) {
+  .page-card {
+    padding: var(--spacing-2xl);
+  }
+}
+
+/* Highlight variant - more prominent */
+.page-card--highlight {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.08),
+    rgba(139, 92, 246, 0.08)
+  );
+  border-color: rgba(0, 212, 255, 0.2);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.1),
+              0 0 60px rgba(139, 92, 246, 0.05);
+}
+
+/* Subtle variant - minimal styling */
+.page-card--subtle {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.015),
+    rgba(139, 92, 246, 0.015)
+  );
+  border-color: rgba(0, 212, 255, 0.05);
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.02);
+}
+
+/* Hover effects for interactive cards */
+@media (hover: hover) and (pointer: fine) {
+  .page-card:hover {
+    transform: translate3d(0, -4px, 0);
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.15),
+                0 0 80px rgba(139, 92, 246, 0.08);
+    border-color: rgba(0, 212, 255, 0.25);
+  }
+
+  .page-card--highlight:hover {
+    box-shadow: 0 0 50px rgba(0, 212, 255, 0.2),
+                0 0 100px rgba(139, 92, 246, 0.1);
+  }
+
+  .page-card[role="button"]:hover {
+    cursor: pointer;
+  }
+}
+
+/* Focus states for interactive cards */
+.page-card[role="button"]:focus-visible {
+  outline: 2px solid var(--color-accent-electric-blue);
+  outline-offset: 4px;
+  border-radius: var(--radius-xl);
+}
+
+/* Active state */
+.page-card[role="button"]:active {
+  transform: translate3d(0, -2px, 0);
+  transition: transform 0.1s ease;
+}
+
+/* Inner content spacing */
+.page-card > *:first-child {
+  margin-top: 0;
+}
+
+.page-card > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Card title styling */
+.page-card h3 {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-md) 0;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 768px) {
+  .page-card h3 {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+/* Card text styling */
+.page-card p {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-md) 0;
+}
+
+@media (min-width: 768px) {
+  .page-card p {
+    font-size: var(--font-size-lg);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+.page-card p:last-child {
+  margin-bottom: 0;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .page-card {
+    transition: none !important;
+  }
+
+  .page-card:hover {
+    transform: none !important;
+  }
+}
+

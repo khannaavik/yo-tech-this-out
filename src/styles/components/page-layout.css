@@ -1,0 +1,28 @@
+/**
+ * Page Layout Styles
+ * Global wrapper for secondary pages with consistent structure
+ */
+
+.page-layout {
+  width: 100%;
+  min-height: 100vh;
+  position: relative;
+  background-color: var(--color-bg-primary);
+  padding-top: 60px; /* Account for sticky nav */
+}
+
+@media (min-width: 768px) {
+  .page-layout {
+    padding-top: 64px;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .page-layout .page-section {
+    opacity: 1 !important;
+    transform: translate3d(0, 0, 0) !important;
+    transition: none !important;
+  }
+}
+

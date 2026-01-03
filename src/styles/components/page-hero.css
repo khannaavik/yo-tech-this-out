@@ -1,0 +1,128 @@
+/**
+ * Page Hero Styles
+ * Consistent hero section with title, subtitle, and description
+ */
+
+.page-hero {
+  width: 100%;
+  padding: var(--spacing-3xl) var(--spacing-md) var(--spacing-2xl);
+  text-align: center;
+  position: relative;
+}
+
+@media (min-width: 768px) {
+  .page-hero {
+    padding: var(--spacing-4xl) var(--spacing-xl) var(--spacing-3xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-hero {
+    padding: var(--spacing-5xl) var(--spacing-xl) var(--spacing-4xl);
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+}
+
+.page-hero__container {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+/* Hero Title - Futuristic gradient */
+.page-hero__title {
+  font-size: var(--font-size-5xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  letter-spacing: -0.035em; /* Tighter for Space Grotesk */
+  margin: 0 0 var(--spacing-md) 0;
+  background: linear-gradient(135deg, #00d4ff, #8b5cf6);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: gradientShift 3s ease infinite;
+  filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.2));
+}
+
+@media (min-width: 768px) {
+  .page-hero__title {
+    font-size: var(--font-size-6xl);
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-hero__title {
+    font-size: var(--font-size-7xl);
+  }
+}
+
+/* Hero Subtitle */
+.page-hero__subtitle {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-md) 0;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .page-hero__subtitle {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-hero__subtitle {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+/* Hero Description */
+.page-hero__description {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin: 0;
+  max-width: 700px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .page-hero__description {
+    font-size: var(--font-size-xl);
+    line-height: 1.7;
+  }
+}
+
+@media (min-width: 1024px) {
+  .page-hero__description {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+/* Gradient Animation */
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .page-hero__title {
+    animation: none !important;
+    filter: none !important;
+  }
+}
+

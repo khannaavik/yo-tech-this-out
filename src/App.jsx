@@ -7,6 +7,12 @@ import { FixedWatchDemoButton } from './components/FixedWatchDemoButton';
 import { Navigation } from './components/Navigation';
 import { Home } from './pages/Home';
 import { Why } from './pages/Why';
+import { About } from './pages/About';
+import { Advertise } from './pages/Advertise';
+import { Techfluencers } from './pages/Techfluencers';
+import { Press } from './pages/Press';
+import { Contact } from './pages/Contact';
+import { Live } from './pages/Live';
 import './styles/globals.css';
 
 /**
@@ -45,6 +51,36 @@ function App() {
               <Route path="/why" element={
                 <ErrorBoundary>
                   <Why />
+                </ErrorBoundary>
+              } />
+              <Route path="/about" element={
+                <ErrorBoundary>
+                  <About />
+                </ErrorBoundary>
+              } />
+              <Route path="/advertise" element={
+                <ErrorBoundary>
+                  <Advertise />
+                </ErrorBoundary>
+              } />
+              <Route path="/techfluencers" element={
+                <ErrorBoundary>
+                  <Techfluencers />
+                </ErrorBoundary>
+              } />
+              <Route path="/press" element={
+                <ErrorBoundary>
+                  <Press />
+                </ErrorBoundary>
+              } />
+              <Route path="/contact" element={
+                <ErrorBoundary>
+                  <Contact />
+                </ErrorBoundary>
+              } />
+              <Route path="/live" element={
+                <ErrorBoundary>
+                  <Live />
                 </ErrorBoundary>
               } />
             </Routes>
