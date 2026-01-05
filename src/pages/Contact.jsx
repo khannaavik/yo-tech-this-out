@@ -143,6 +143,16 @@ export function Contact() {
               <div className="contact-social-icon">📷</div>
               <span>Instagram</span>
             </a>
+            <a
+              href="https://www.instagram.com/yotechthisout"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="contact-social-link"
+              aria-label="@yotechthisout"
+            >
+              <div className="contact-social-icon">@</div>
+              <span>@yotechthisout</span>
+            </a>
           </div>
         </div>
       </PageSection>

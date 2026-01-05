@@ -115,7 +115,7 @@
   width: 100%;
   padding-bottom: 75%; /* 4:3 aspect ratio - prevents layout shift */
   overflow: visible; /* Allow glow and shadow to show */
-  border-radius: var(--radius-xl); /* Soft, modern rounding */
+  border-radius: 18px; /* Premium rounded corners (16-20px range) */
   /* No solid background - transparent images render cleanly */
   background: transparent;
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
@@ -292,37 +292,45 @@
   height: 100%;
   object-fit: contain; /* Changed from cover to contain - no cropping, preserves aspect ratio */
   transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1),
-              opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+              opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1),
+              box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
   transform: translate3d(0, 0, 0) scale(1);
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
-  border-radius: var(--radius-xl); /* Match container - soft rounding */
+  border-radius: 18px; /* Premium rounded corners (16-20px range) */
   /* Retina-friendly image rendering */
   image-rendering: -webkit-optimize-contrast;
   image-rendering: crisp-edges;
   /* No background color - allows transparent PNGs to render cleanly */
   background-color: transparent;
-  /* No inner shadows - clean, floating presentation */
-  box-shadow: none;
+  /* Soft ambient glow for floating effect */
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.15),
+              0 0 80px rgba(139, 92, 246, 0.1);
 }
 
-/* Light Mode - Clean, floating, premium feel */
+/* Light Mode - Clean, floating, premium feel - images pop more */
 [data-theme="light"] .product-scroll-section__image {
-  /* Subtle contrast enhancement for light mode */
-  filter: brightness(1.02) contrast(1.05);
+  /* Enhanced contrast for light mode - products stand out more */
+  filter: brightness(1.05) contrast(1.12);
+  box-shadow: 0 0 50px rgba(0, 212, 255, 0.2),
+              0 0 100px rgba(139, 92, 246, 0.15),
+              0 8px 32px rgba(0, 0, 0, 0.1),
+              0 0 0 1px rgba(0, 212, 255, 0.05);
 }
 
-/* Dark Mode - Cinematic contrast */
+/* Dark Mode - Cinematic contrast, not neon */
 [data-theme="dark"] .product-scroll-section__image {
-  /* Subtle contrast increase for cinematic feel */
+  /* Subtle contrast for cinematic feel */
   filter: brightness(1.05) contrast(1.08);
+  box-shadow: 0 0 40px rgba(0, 212, 255, 0.12),
+              0 0 80px rgba(139, 92, 246, 0.08);
 }
 
 /* Mobile - Smaller border radius */
 @media (max-width: 479px) {
   .product-scroll-section__image {
-    border-radius: var(--radius-lg);
+    border-radius: 16px;
   }
 }
 
@@ -367,12 +375,20 @@
     transform: scale(1.03);
   }
   
+  /* Image hover - scale up to 1.04 with enhanced glow */
   [data-theme="light"] .product-scroll-section__image-wrapper:hover .product-scroll-section__image {
-    filter: brightness(1.03) contrast(1.06);
+    transform: scale(1.04);
+    filter: brightness(1.06) contrast(1.1);
+    box-shadow: 0 0 60px rgba(0, 212, 255, 0.25),
+                0 0 120px rgba(139, 92, 246, 0.2),
+                0 12px 40px rgba(0, 0, 0, 0.12);
   }
   
   [data-theme="dark"] .product-scroll-section__image-wrapper:hover .product-scroll-section__image {
+    transform: scale(1.04);
     filter: brightness(1.06) contrast(1.1);
+    box-shadow: 0 0 50px rgba(0, 212, 255, 0.2),
+                0 0 100px rgba(139, 92, 246, 0.15);
   }
 }
 
@@ -746,6 +762,7 @@
   .product-scroll-section__button--primary:hover {
     background: linear-gradient(135deg, #00f0ff, #00d4ff);
     transform: translate3d(0, -2px, 0) scale(1.02);
+    opacity: 0.95;
     box-shadow: 0 0 40px rgba(0, 212, 255, 0.7),
                 0 0 80px rgba(139, 92, 246, 0.5),
                 0 12px 40px rgba(0, 0, 0, 0.3);
@@ -824,6 +841,7 @@
     background-color: var(--color-bg-secondary);
     border-color: var(--color-text-secondary);
     transform: translate3d(0, -2px, 0);
+    opacity: 0.9;
   }
   
   .product-scroll-section__button--secondary:focus-visible {

@@ -132,16 +132,13 @@ export function Hero() {
   const titleTranslateY = scrollProgress * -60; // Subtle upward translation
   const titleOpacity = Math.max(0, 1 - scrollProgress * 1.2); // Gentle fade, never fully disappears abruptly
   const subtitleOpacity = Math.max(0, 1 - scrollProgress * 1.5);
-  const backgroundPosition = scrollProgress * 20; // Gradient shift
 
   return (
     <section 
       className="hero" 
       ref={heroRef}
       aria-label="Hero section"
-      style={{
-        backgroundPosition: shouldUseScrub ? `${50 + backgroundPosition}% ${50 + backgroundPosition * 0.5}%` : undefined,
-      }}
+      style={{}}
     >
       <div className="hero__container">
         <div 
@@ -153,20 +150,7 @@ export function Hero() {
             willChange: shouldUseScrub ? 'transform, opacity' : 'auto',
           }}
         >
-          {/* Main Title */}
-          <h1 className="hero__title">
-            YO! TECH THIS OUT
-          </h1>
-
-          {/* Subtitle */}
-          <p 
-            className="hero__subtitle"
-            style={{
-              opacity: shouldUseScrub ? subtitleOpacity : 1,
-            }}
-          >
-            A curated scroll through the future of technology.
-          </p>
+          {/* Content removed per requirements */}
         </div>
 
         {/* Scroll Indicator */}

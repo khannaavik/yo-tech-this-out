@@ -28,10 +28,17 @@ export function ThemeProvider({ children }) {
     return 'light';
   });
 
+  // Set initial theme immediately on mount to prevent flash
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      document.documentElement.setAttribute('data-theme', theme);
+    }
+  }, []);
+
   useEffect(() => {
     // Only run on client-side
     if (typeof document !== 'undefined') {
-      // Apply theme to document root
+      // Apply theme to document root immediately to prevent flash
       document.documentElement.setAttribute('data-theme', theme);
       // Save theme preference to localStorage
       if (typeof window !== 'undefined' && window.localStorage) {

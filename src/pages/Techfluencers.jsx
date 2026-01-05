@@ -140,8 +140,8 @@ export function Techfluencers() {
               your brand and campaign objectives.
             </p>
             <a 
-              href="/techfluencers/roster.pdf" 
-              download
+              href="/assets/techfluencers/Techfluencer-DMS-Talent-Roster-21.pdf" 
+              download="Techfluencer-DMS-Talent-Roster-21.pdf"
               className="techfluencers-pdf-button"
             >
               Download Techfluencer™ Roster (PDF)

@@ -86,14 +86,15 @@ export function Navigation() {
 
         {/* Desktop: Center - Navigation Links */}
         <div className="navigation__links navigation__links--desktop">
-          <Link to="/" className="navigation__link">Home</Link>
-          <Link to="/about" className="navigation__link">About</Link>
-          <Link to="/why" className="navigation__link">Why</Link>
-          <Link to="/advertise" className="navigation__link">Advertise</Link>
-          <Link to="/techfluencers" className="navigation__link">Techfluencers</Link>
-          <Link to="/press" className="navigation__link">Press</Link>
-          <Link to="/live" className="navigation__link">Live</Link>
-          <Link to="/contact" className="navigation__link">Contact</Link>
+          <Link to="/" className={`navigation__link ${location.pathname === '/' ? 'navigation__link--active' : ''}`}>Home</Link>
+          <Link to="/explore" className={`navigation__link ${location.pathname === '/explore' ? 'navigation__link--active' : ''}`}>Explore</Link>
+          <Link to="/about" className={`navigation__link ${location.pathname === '/about' ? 'navigation__link--active' : ''}`}>About</Link>
+          <Link to="/why" className={`navigation__link ${location.pathname === '/why' ? 'navigation__link--active' : ''}`}>Why</Link>
+          <Link to="/advertise" className={`navigation__link ${location.pathname === '/advertise' ? 'navigation__link--active' : ''}`}>Advertise</Link>
+          <Link to="/techfluencers" className={`navigation__link ${location.pathname === '/techfluencers' ? 'navigation__link--active' : ''}`}>Techfluencers</Link>
+          <Link to="/press" className={`navigation__link ${location.pathname === '/press' ? 'navigation__link--active' : ''}`}>Press</Link>
+          <Link to="/live" className={`navigation__link ${location.pathname === '/live' ? 'navigation__link--active' : ''}`}>Live</Link>
+          <Link to="/contact" className={`navigation__link ${location.pathname === '/contact' ? 'navigation__link--active' : ''}`}>Contact</Link>
         </div>
 
         {/* Mobile: Extreme Right / Desktop: Right - Theme Toggle Button */}
@@ -138,14 +139,15 @@ export function Navigation() {
             
             {/* Navigation Links */}
             <div className="navigation__links-content">
-              <Link to="/" className="navigation__link" onClick={handleNavLinkClick}>Home</Link>
-              <Link to="/about" className="navigation__link" onClick={handleNavLinkClick}>About</Link>
-              <Link to="/why" className="navigation__link" onClick={handleNavLinkClick}>Why</Link>
-              <Link to="/advertise" className="navigation__link" onClick={handleNavLinkClick}>Advertise</Link>
-              <Link to="/techfluencers" className="navigation__link" onClick={handleNavLinkClick}>Techfluencers</Link>
-              <Link to="/press" className="navigation__link" onClick={handleNavLinkClick}>Press</Link>
-              <Link to="/live" className="navigation__link" onClick={handleNavLinkClick}>Live</Link>
-              <Link to="/contact" className="navigation__link" onClick={handleNavLinkClick}>Contact</Link>
+              <Link to="/" className={`navigation__link ${location.pathname === '/' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Home</Link>
+              <Link to="/explore" className={`navigation__link ${location.pathname === '/explore' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Explore</Link>
+              <Link to="/about" className={`navigation__link ${location.pathname === '/about' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>About</Link>
+              <Link to="/why" className={`navigation__link ${location.pathname === '/why' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Why</Link>
+              <Link to="/advertise" className={`navigation__link ${location.pathname === '/advertise' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Advertise</Link>
+              <Link to="/techfluencers" className={`navigation__link ${location.pathname === '/techfluencers' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Techfluencers</Link>
+              <Link to="/press" className={`navigation__link ${location.pathname === '/press' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Press</Link>
+              <Link to="/live" className={`navigation__link ${location.pathname === '/live' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Live</Link>
+              <Link to="/contact" className={`navigation__link ${location.pathname === '/contact' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Contact</Link>
             </div>
           </div>
         </>

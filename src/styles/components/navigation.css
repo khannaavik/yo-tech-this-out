@@ -397,6 +397,23 @@
   outline-offset: 2px;
 }
 
+.navigation__link--active {
+  color: var(--color-accent-electric-blue);
+  font-weight: 600;
+  position: relative;
+}
+
+.navigation__link--active::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--color-accent-electric-blue);
+  border-radius: var(--radius-full);
+}
+
 /* Mobile Menu Overlay - Backdrop - Covers ENTIRE viewport */
 .navigation__overlay {
   position: fixed;

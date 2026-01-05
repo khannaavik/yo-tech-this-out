@@ -4,6 +4,7 @@ import { ErrorBoundary } from './components/ErrorBoundary';
 import { LoadingIntro } from './components/LoadingIntro';
 import { CursorLighting } from './components/CursorLighting';
 import { GoToTopButton } from './components/GoToTopButton';
+import { CESBadge } from './components/CESBadge';
 import { Navigation } from './components/Navigation';
 import { Home } from './pages/Home';
 import { Why } from './pages/Why';
@@ -13,6 +14,7 @@ import { Techfluencers } from './pages/Techfluencers';
 import { Press } from './pages/Press';
 import { Contact } from './pages/Contact';
 import { Live } from './pages/Live';
+import { Explore } from './pages/Explore';
 import { ClosingSection } from './components/ClosingSection';
 import './styles/globals.css';
 
@@ -35,6 +37,11 @@ function App() {
             {/* Sticky Navigation */}
             <ErrorBoundary>
               <Navigation />
+            </ErrorBoundary>
+
+            {/* CES Badge - Only shows on Home page */}
+            <ErrorBoundary>
+              <CESBadge />
             </ErrorBoundary>
 
             {/* Go to Top Button */}
@@ -82,6 +89,11 @@ function App() {
               <Route path="/live" element={
                 <ErrorBoundary>
                   <Live />
+                </ErrorBoundary>
+              } />
+              <Route path="/explore" element={
+                <ErrorBoundary>
+                  <Explore />
                 </ErrorBoundary>
               } />
             </Routes>

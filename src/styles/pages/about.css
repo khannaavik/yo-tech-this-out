@@ -284,24 +284,29 @@
   padding: var(--spacing-xl) 0;
 }
 
+/* Timeline line - starts at first item dot, ends at last item dot */
 .about-timeline::before {
   content: '';
   position: absolute;
   left: 50%;
-  top: 0;
-  bottom: 0;
+  top: calc(var(--spacing-xl) + 28px); /* Container padding + first item dot center (20px + 8px) */
+  bottom: auto;
   width: 2px;
+  height: calc(100% - var(--spacing-xl) - var(--spacing-xl) - 56px); /* Total height minus top/bottom padding and dot positions */
   background: linear-gradient(
     to bottom,
     rgba(0, 212, 255, 0.3),
     rgba(139, 92, 246, 0.3)
   );
   transform: translateX(-50%);
+  z-index: 0; /* Behind timeline items */
 }
 
 @media (max-width: 767px) {
   .about-timeline::before {
     left: 20px;
+    top: calc(var(--spacing-xl) + 28px);
+    height: calc(100% - var(--spacing-xl) - var(--spacing-xl) - 56px);
   }
 }
 
@@ -311,6 +316,7 @@
   display: flex;
   align-items: flex-start;
   gap: var(--spacing-xl);
+  z-index: 1; /* Above timeline line */
 }
 
 .about-timeline-item:last-child {
@@ -322,6 +328,12 @@
     flex-direction: column;
     gap: var(--spacing-md);
     padding-left: var(--spacing-3xl);
+  }
+  
+  /* On mobile, ensure content doesn't overlap with left-aligned line */
+  .about-timeline-content {
+    margin-left: 0;
+    width: 100%;
   }
 }
 
@@ -348,7 +360,7 @@
   border: 3px solid var(--color-bg-primary);
   transform: translateX(-50%);
   box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-  z-index: 1;
+  z-index: 2; /* Above timeline line */
 }
 
 @media (max-width: 767px) {
@@ -393,6 +405,8 @@
   );
   border-radius: var(--radius-lg);
   border: 1px solid rgba(0, 212, 255, 0.1);
+  position: relative;
+  z-index: 1; /* Above timeline line, below dot */
 }
 
 @media (min-width: 768px) {

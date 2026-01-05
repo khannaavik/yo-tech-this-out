@@ -115,6 +115,21 @@ export function ClosingSection() {
             <Logo variant="full" className="closing-section__logo" />
           </div>
           <p className="closing-section__tagline">Built as an experimental tech showcase</p>
+          
+          {/* Social Handle */}
+          <div className="closing-section__social">
+            <a
+              href="https://www.instagram.com/yotechthisout"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="closing-section__social-link"
+              aria-label="Follow @yotechthisout on Instagram"
+            >
+              <span className="closing-section__social-icon">📷</span>
+              <span className="closing-section__social-handle">@yotechthisout</span>
+            </a>
+          </div>
+          
           <p className="closing-section__year">© {currentYear}</p>
         </div>
       </div>
