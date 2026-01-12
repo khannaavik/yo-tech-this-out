@@ -15,6 +15,7 @@ import { Press } from './pages/Press';
 import { Contact } from './pages/Contact';
 import { Live } from './pages/Live';
 import { Explore } from './pages/Explore';
+import { PodcastSection } from './components/PodcastSection';
 import { ClosingSection } from './components/ClosingSection';
 import './styles/globals.css';
 
@@ -97,6 +98,11 @@ function App() {
                 </ErrorBoundary>
               } />
             </Routes>
+
+            {/* Podcast Section - Appears on all pages above footer */}
+            <ErrorBoundary>
+              <PodcastSection />
+            </ErrorBoundary>
 
             {/* Footer - Appears on all pages */}
             <ErrorBoundary>

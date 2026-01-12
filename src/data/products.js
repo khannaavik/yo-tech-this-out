@@ -1,7 +1,7 @@
 /**
  * Products Data
  * Single source of truth for all product information
- * Total: 24 products
+ * Total: 25 products
  */
 
 export const products = [
@@ -126,6 +126,19 @@ export const products = [
     image: '/products/whsp-ring/product.png',
     website: null,
     youtube: null,
+    showOnHome: false,
+  },
+  {
+    id: 'looki-l1',
+    name: 'Looki L1',
+    company: 'Looki',
+    category: 'wearables',
+    categoryTag: 'AI Wearable / Lifelogging',
+    description:
+      'Looki L1 is a lightweight multimodal AI wearable that captures your day through sight, sound, and context — transforming raw moments into polished stories. Designed for creators, futurists, and podcasters, it auto-edits clips with AI styling, transcription, and private on-device storage.',
+    image: '/products/looki-l1/product.png',
+    website: 'https://www.looki.ai/looki-l1',
+    youtube: 'https://www.youtube.com/watch?v=3SSk7DXy9eI',
     showOnHome: false,
   },
 

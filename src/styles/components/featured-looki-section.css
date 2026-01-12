@@ -1,0 +1,538 @@
+/**
+ * Featured Looki Section Styles
+ * Flagship featured product section with transparent PNG image
+ * NO background colors - image floats with glow/shadow only
+ */
+
+.featured-looki-section {
+  width: 100%;
+  padding: var(--spacing-4xl) var(--spacing-md);
+  opacity: 0;
+  transform: translate3d(0, 40px, 0) scale(0.96);
+  transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+  position: relative;
+  isolation: isolate;
+  z-index: 1;
+  /* NO background - transparent section */
+  background: transparent;
+}
+
+/* Mobile - Smaller padding */
+@media (max-width: 479px) {
+  .featured-looki-section {
+    padding: var(--spacing-3xl) var(--spacing-md);
+  }
+}
+
+/* Tablet */
+@media (min-width: 480px) and (max-width: 767px) {
+  .featured-looki-section {
+    padding: var(--spacing-4xl) var(--spacing-lg);
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .featured-looki-section {
+    padding: var(--spacing-5xl) var(--spacing-xl);
+    min-height: 80vh;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* Visible state */
+.featured-looki-section--visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  will-change: auto;
+}
+
+.featured-looki-section__container {
+  max-width: 1280px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xl);
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .featured-looki-section__container {
+    flex-direction: row;
+    gap: var(--spacing-5xl);
+    align-items: center;
+  }
+}
+
+/* Image Wrapper - NO background */
+.featured-looki-section__image-wrapper {
+  width: 100%;
+  flex-shrink: 0;
+  overflow: visible; /* Allow glow to show */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .featured-looki-section__image-wrapper {
+    width: 50%;
+  }
+}
+
+/* Image Container - NO background, transparent */
+.featured-looki-section__image-container {
+  position: relative;
+  width: 100%;
+  max-width: 520px; /* Desktop max-width */
+  /* NO background color */
+  background: transparent;
+  /* NO border */
+  border: none;
+  /* NO padding that would create background */
+  padding: 0;
+  overflow: visible; /* Allow glow and shadow to show */
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, opacity;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Mobile - 80% width, centered */
+@media (max-width: 767px) {
+  .featured-looki-section__image-container {
+    max-width: 80%;
+  }
+}
+
+/* Scale-in animation on reveal */
+.featured-looki-section__image-container--visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0) scale(1);
+  transition: transform 1s cubic-bezier(0.16, 1, 0.3, 1),
+              opacity 1s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Radial Glow - Behind image, NO background on container */
+.featured-looki-section__image-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 120%;
+  height: 120%;
+  border-radius: 50%;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity;
+}
+
+/* Light Mode - Soft cyan/blue glow */
+[data-theme="light"] .featured-looki-section__image-glow {
+  background: radial-gradient(ellipse at center,
+    rgba(0, 212, 255, 0.15) 0%,
+    rgba(0, 180, 255, 0.1) 30%,
+    rgba(6, 182, 212, 0.05) 60%,
+    transparent 80%);
+}
+
+/* Dark Mode - Neon cyan glow */
+[data-theme="dark"] .featured-looki-section__image-glow {
+  background: radial-gradient(ellipse at center,
+    rgba(0, 212, 255, 0.25) 0%,
+    rgba(0, 180, 255, 0.18) 30%,
+    rgba(6, 182, 212, 0.12) 60%,
+    transparent 80%);
+}
+
+.featured-looki-section__image-container--visible .featured-looki-section__image-glow {
+  opacity: 1;
+}
+
+/* Product Image - Transparent PNG */
+.featured-looki-section__image {
+  position: relative;
+  width: 100%;
+  height: auto;
+  object-fit: contain; /* Preserve aspect ratio, no cropping */
+  /* NO background color */
+  background-color: transparent;
+  /* Border radius: subtle (12-16px) */
+  border-radius: 14px;
+  /* Drop shadow for floating effect */
+  filter: drop-shadow(0 12px 40px rgba(0, 0, 0, 0.15))
+          drop-shadow(0 4px 16px rgba(0, 0, 0, 0.1));
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  /* Retina-friendly rendering */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+}
+
+/* Light Mode - Enhanced glow on image */
+[data-theme="light"] .featured-looki-section__image {
+  filter: drop-shadow(0 16px 48px rgba(0, 212, 255, 0.2))
+          drop-shadow(0 6px 20px rgba(0, 180, 255, 0.15))
+          drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+}
+
+/* Dark Mode - Neon cyan glow */
+[data-theme="dark"] .featured-looki-section__image {
+  filter: drop-shadow(0 20px 60px rgba(0, 212, 255, 0.3))
+          drop-shadow(0 8px 24px rgba(0, 180, 255, 0.25))
+          drop-shadow(0 4px 12px rgba(6, 182, 212, 0.2));
+}
+
+/* Mobile - Smaller border radius and reduced glow */
+@media (max-width: 479px) {
+  .featured-looki-section__image {
+    border-radius: 12px;
+  }
+  
+  [data-theme="light"] .featured-looki-section__image {
+    filter: drop-shadow(0 12px 32px rgba(0, 212, 255, 0.15))
+            drop-shadow(0 4px 12px rgba(0, 180, 255, 0.1))
+            drop-shadow(0 2px 6px rgba(0, 0, 0, 0.08));
+  }
+  
+  [data-theme="dark"] .featured-looki-section__image {
+    filter: drop-shadow(0 16px 40px rgba(0, 212, 255, 0.25))
+            drop-shadow(0 6px 16px rgba(0, 180, 255, 0.2))
+            drop-shadow(0 3px 8px rgba(6, 182, 212, 0.15));
+  }
+}
+
+/* Content Container */
+.featured-looki-section__content {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-lg);
+  text-align: center;
+}
+
+/* Mobile - Tighter spacing */
+@media (max-width: 479px) {
+  .featured-looki-section__content {
+    gap: var(--spacing-md);
+  }
+}
+
+@media (min-width: 1024px) {
+  .featured-looki-section__content {
+    width: 50%;
+    text-align: left;
+    justify-content: center;
+    gap: var(--spacing-xl);
+  }
+}
+
+/* Eyebrow - Featured AI Wearable */
+.featured-looki-section__eyebrow {
+  display: inline-block;
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: #00d4ff;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.2), rgba(139, 92, 246, 0.2));
+  border: 1px solid rgba(0, 212, 255, 0.4);
+  border-radius: var(--radius-full);
+  align-self: center;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.4),
+              0 0 60px rgba(139, 92, 246, 0.2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+@media (min-width: 1024px) {
+  .featured-looki-section__eyebrow {
+    align-self: flex-start;
+  }
+}
+
+/* Headline - Looki L1 */
+.featured-looki-section__headline {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+@media (max-width: 479px) {
+  .featured-looki-section__headline {
+    font-size: var(--font-size-3xl);
+    line-height: 1.3;
+  }
+}
+
+@media (min-width: 768px) {
+  .featured-looki-section__headline {
+    font-size: var(--font-size-5xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .featured-looki-section__headline {
+    font-size: var(--font-size-6xl);
+    font-weight: var(--font-weight-medium);
+    letter-spacing: -0.015em;
+    line-height: 1.2;
+  }
+}
+
+/* Subline - Capture life. Automatically. */
+.featured-looki-section__subline {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  margin: 0;
+  letter-spacing: 0.01em;
+}
+
+@media (min-width: 768px) {
+  .featured-looki-section__subline {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .featured-looki-section__subline {
+    font-size: var(--font-size-3xl);
+  }
+}
+
+/* Description */
+.featured-looki-section__description {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-normal);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-primary);
+  margin: 0;
+  max-width: 600px;
+  opacity: 0.9;
+  align-self: center;
+}
+
+@media (max-width: 479px) {
+  .featured-looki-section__description {
+    font-size: var(--font-size-base);
+    line-height: var(--line-height-normal);
+    max-width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .featured-looki-section__description {
+    font-size: var(--font-size-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .featured-looki-section__description {
+    font-size: var(--font-size-2xl);
+    line-height: 1.7;
+    max-width: none;
+    align-self: flex-start;
+  }
+}
+
+/* Action Buttons */
+.featured-looki-section__actions {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  align-items: center;
+  width: 100%;
+}
+
+@media (max-width: 479px) {
+  .featured-looki-section__actions {
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+  }
+}
+
+@media (min-width: 768px) {
+  .featured-looki-section__actions {
+    flex-direction: row;
+    justify-content: center;
+    gap: var(--spacing-lg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .featured-looki-section__actions {
+    justify-content: flex-start;
+    width: auto;
+  }
+}
+
+.featured-looki-section__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--spacing-sm);
+  min-height: 48px;
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  border-radius: var(--radius-lg);
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  text-decoration: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  border: 2px solid transparent;
+  transform: translate3d(0, 0, 0);
+  will-change: transform, background-color, color, box-shadow;
+  position: relative;
+  overflow: hidden;
+}
+
+@media (max-width: 479px) {
+  .featured-looki-section__button {
+    min-height: 48px;
+    padding: var(--spacing-md) var(--spacing-lg);
+    width: 100%;
+  }
+}
+
+@media (min-width: 768px) {
+  .featured-looki-section__button {
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-md) var(--spacing-2xl);
+  }
+}
+
+/* Primary Button - Watch Demo */
+.featured-looki-section__button--primary {
+  background: linear-gradient(135deg, #00d4ff, #8b5cf6);
+  color: #ffffff;
+  border: 1px solid rgba(0, 212, 255, 0.5);
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.5),
+              0 0 60px rgba(139, 92, 246, 0.3),
+              0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  font-weight: var(--font-weight-semibold);
+}
+
+.featured-looki-section__play-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  transform: translate3d(0, 0, 0);
+}
+
+@media (min-width: 768px) {
+  .featured-looki-section__play-icon {
+    width: 28px;
+    height: 28px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .featured-looki-section__button--primary:hover {
+    background: linear-gradient(135deg, #00f0ff, #00d4ff);
+    transform: translate3d(0, -2px, 0) scale(1.02);
+    opacity: 0.95;
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.7),
+                0 0 80px rgba(139, 92, 246, 0.5),
+                0 12px 40px rgba(0, 0, 0, 0.3);
+    border-color: rgba(0, 212, 255, 0.8);
+  }
+  
+  .featured-looki-section__button--primary:hover .featured-looki-section__play-icon {
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate3d(2px, 0, 0) scale(1.1);
+  }
+  
+  .featured-looki-section__button--primary:focus-visible {
+    outline: 2px solid var(--color-accent-electric-blue);
+    outline-offset: 3px;
+  }
+}
+
+.featured-looki-section__button--primary:active {
+  transform: translate3d(0, -1px, 0) scale(0.98);
+  transition: transform 0.1s ease;
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.3),
+              0 0 0 1px rgba(255, 255, 255, 0.1) inset;
+}
+
+/* Secondary Button - Visit Website */
+.featured-looki-section__button--secondary {
+  background-color: transparent;
+  color: var(--color-text-primary);
+  border-color: var(--color-border);
+}
+
+.featured-looki-section__globe-icon {
+  font-size: 1.2em;
+  line-height: 1;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .featured-looki-section__button--secondary:hover {
+    background-color: var(--color-bg-secondary);
+    border-color: var(--color-text-secondary);
+    transform: translate3d(0, -2px, 0);
+    opacity: 0.9;
+  }
+  
+  .featured-looki-section__button--secondary:focus-visible {
+    outline: 2px solid var(--color-text-secondary);
+    outline-offset: 2px;
+  }
+}
+
+.featured-looki-section__button--secondary:active {
+  transform: translate3d(0, 0, 0) scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .featured-looki-section {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+    transition: none;
+  }
+  
+  .featured-looki-section--visible {
+    opacity: 1;
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  
+  .featured-looki-section__image-container {
+    transform: translate3d(0, 0, 0) !important;
+    transition: none !important;
+  }
+  
+  .featured-looki-section__image-glow {
+    animation: none;
+    opacity: 0.6 !important;
+  }
+}

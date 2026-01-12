@@ -15,6 +15,20 @@
   transition: opacity 1s cubic-bezier(0.16, 1, 0.3, 1),
               transform 1s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
+  /* Extra top margin for separation from PodcastSection */
+  margin-top: var(--spacing-4xl);
+  /* Subtle top border divider */
+  border-top: 1px solid transparent;
+}
+
+/* Light Mode - Subtle divider */
+[data-theme="light"] .closing-section {
+  border-top-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Dark Mode - Subtle divider */
+[data-theme="dark"] .closing-section {
+  border-top-color: rgba(255, 255, 255, 0.08);
 }
 
 .closing-section--visible {
@@ -26,12 +40,14 @@
 @media (min-width: 768px) {
   .closing-section {
     padding: var(--spacing-4xl) var(--spacing-xl) var(--spacing-3xl);
+    margin-top: var(--spacing-5xl);
   }
 }
 
 @media (min-width: 1024px) {
   .closing-section {
     padding: var(--spacing-5xl) var(--spacing-xl) var(--spacing-4xl);
+    margin-top: var(--spacing-6xl);
   }
 }
 
@@ -60,6 +76,8 @@
   flex-direction: column;
   gap: var(--spacing-4xl);
   align-items: center;
+  /* Additional top padding for visual breathing room after divider */
+  padding-top: var(--spacing-2xl);
 }
 
 @media (min-width: 768px) {

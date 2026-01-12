@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { CategoryJumpNav } from '../components/CategoryJumpNav';
 import { Hero } from '../components/Hero';
+import { FeaturedLookiSection } from '../components/FeaturedLookiSection';
 import { ChapterIntro } from '../components/ChapterIntro';
 import { ProductScrollSection } from '../components/ProductScrollSection';
 import { products } from '../data/products';
@@ -27,6 +28,9 @@ export function Home() {
 
       {/* Hero Section */}
       <Hero />
+
+      {/* Featured Looki L1 Section */}
+      <FeaturedLookiSection />
 
       {/* AI & AUDIO Chapter */}
       {productsByCategory['ai-audio'].length > 0 && (
