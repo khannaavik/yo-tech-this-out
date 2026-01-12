@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from './ThemeProvider';
 import { Logo } from './Logo';
@@ -8,11 +8,16 @@ import '../styles/components/navigation.css';
  * Navigation Component
  * Sticky top navigation bar with logo, mobile menu, and theme toggle
  * Mobile: 3-column layout (hamburger left, logo center, theme toggle right)
+ * Includes dropdown menus for Media and Business sections
  */
 export function Navigation() {
   const { theme, toggleTheme, isDark } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [openDropdown, setOpenDropdown] = useState(null); // 'media' | 'business' | null
+  const [openMobileDropdown, setOpenMobileDropdown] = useState(null); // 'media' | 'business' | null
   const location = useLocation();
+  const mediaDropdownRef = useRef(null);
+  const businessDropdownRef = useRef(null);
 
   // Single function to close menu - used everywhere
   const closeMobileMenu = useCallback(() => {
@@ -57,7 +62,46 @@ export function Navigation() {
   // Handle nav link click - close menu
   const handleNavLinkClick = useCallback(() => {
     closeMobileMenu();
+    setOpenMobileDropdown(null);
   }, [closeMobileMenu]);
+
+  // Check if a path matches any dropdown item
+  const isDropdownItemActive = useCallback((dropdownItems) => {
+    return dropdownItems.some(item => location.pathname === item.path);
+  }, [location.pathname]);
+
+  // Media dropdown items
+  const mediaItems = [
+    { path: '/techfluencers', label: 'Techfluencers' },
+    { path: '/press', label: 'Press' },
+    { path: '/live', label: 'Live' },
+  ];
+
+  // Business dropdown items
+  const businessItems = [
+    { path: '/why', label: 'Why' },
+    { path: '/advertise', label: 'Advertise' },
+  ];
+
+  // Desktop dropdown handlers
+  const handleDropdownMouseEnter = useCallback((dropdown) => {
+    setOpenDropdown(dropdown);
+  }, []);
+
+  const handleDropdownMouseLeave = useCallback(() => {
+    setOpenDropdown(null);
+  }, []);
+
+  // Mobile dropdown handlers
+  const handleMobileDropdownToggle = useCallback((dropdown) => {
+    setOpenMobileDropdown(prev => prev === dropdown ? null : dropdown);
+  }, []);
+
+  // Close dropdowns when route changes
+  useEffect(() => {
+    setOpenDropdown(null);
+    setOpenMobileDropdown(null);
+  }, [location.pathname]);
 
   return (
     <nav className={`navigation ${isMobileMenuOpen ? 'navigation--menu-open' : ''}`} role="navigation" aria-label="Main navigation">
@@ -88,18 +132,85 @@ export function Navigation() {
         <div className="navigation__links navigation__links--desktop">
           <Link to="/" className={`navigation__link ${location.pathname === '/' ? 'navigation__link--active' : ''}`}>Home</Link>
           <Link to="/explore" className={`navigation__link ${location.pathname === '/explore' ? 'navigation__link--active' : ''}`}>Explore</Link>
+          <Link to="/innovation-awards" className={`navigation__link ${location.pathname === '/innovation-awards' ? 'navigation__link--active' : ''}`}>Awards</Link>
+          
+          {/* Media Dropdown */}
+          <div
+            className={`navigation__dropdown ${openDropdown === 'media' ? 'navigation__dropdown--open' : ''} ${isDropdownItemActive(mediaItems) ? 'navigation__dropdown--active' : ''}`}
+            onMouseEnter={() => handleDropdownMouseEnter('media')}
+            onMouseLeave={handleDropdownMouseLeave}
+            ref={mediaDropdownRef}
+          >
+            <button
+              type="button"
+              className={`navigation__dropdown-trigger ${isDropdownItemActive(mediaItems) ? 'navigation__link--active' : ''}`}
+              aria-expanded={openDropdown === 'media'}
+              aria-haspopup="true"
+            >
+              Media
+              <span className="navigation__dropdown-arrow">▼</span>
+            </button>
+            <div className="navigation__dropdown-menu">
+              {mediaItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`navigation__dropdown-link ${location.pathname === item.path ? 'navigation__dropdown-link--active' : ''}`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Business Dropdown */}
+          <div
+            className={`navigation__dropdown ${openDropdown === 'business' ? 'navigation__dropdown--open' : ''} ${isDropdownItemActive(businessItems) ? 'navigation__dropdown--active' : ''}`}
+            onMouseEnter={() => handleDropdownMouseEnter('business')}
+            onMouseLeave={handleDropdownMouseLeave}
+            ref={businessDropdownRef}
+          >
+            <button
+              type="button"
+              className={`navigation__dropdown-trigger ${isDropdownItemActive(businessItems) ? 'navigation__link--active' : ''}`}
+              aria-expanded={openDropdown === 'business'}
+              aria-haspopup="true"
+            >
+              Business
+              <span className="navigation__dropdown-arrow">▼</span>
+            </button>
+            <div className="navigation__dropdown-menu">
+              {businessItems.map((item) => (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`navigation__dropdown-link ${location.pathname === item.path ? 'navigation__dropdown-link--active' : ''}`}
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+
           <Link to="/about" className={`navigation__link ${location.pathname === '/about' ? 'navigation__link--active' : ''}`}>About</Link>
-          <Link to="/why" className={`navigation__link ${location.pathname === '/why' ? 'navigation__link--active' : ''}`}>Why</Link>
-          <Link to="/advertise" className={`navigation__link ${location.pathname === '/advertise' ? 'navigation__link--active' : ''}`}>Advertise</Link>
-          <Link to="/techfluencers" className={`navigation__link ${location.pathname === '/techfluencers' ? 'navigation__link--active' : ''}`}>Techfluencers</Link>
-          <Link to="/press" className={`navigation__link ${location.pathname === '/press' ? 'navigation__link--active' : ''}`}>Press</Link>
-          <Link to="/live" className={`navigation__link ${location.pathname === '/live' ? 'navigation__link--active' : ''}`}>Live</Link>
           <Link to="/contact" className={`navigation__link ${location.pathname === '/contact' ? 'navigation__link--active' : ''}`}>Contact</Link>
         </div>
 
-        {/* Mobile: Extreme Right / Desktop: Right - Theme Toggle Button */}
+        {/* Desktop: Right - Theme Toggle Button */}
         <button
-          className="navigation__theme-toggle"
+          className="navigation__theme-toggle navigation__theme-toggle--desktop"
+          onClick={toggleTheme}
+          aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
+          type="button"
+        >
+          <span className="navigation__theme-icon" aria-hidden="true">
+            {isDark ? '☀️' : '🌙'}
+          </span>
+        </button>
+
+        {/* Mobile: Extreme Right - Theme Toggle Button */}
+        <button
+          className="navigation__theme-toggle navigation__theme-toggle--mobile"
           onClick={toggleTheme}
           aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
           type="button"
@@ -141,12 +252,69 @@ export function Navigation() {
             <div className="navigation__links-content">
               <Link to="/" className={`navigation__link ${location.pathname === '/' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Home</Link>
               <Link to="/explore" className={`navigation__link ${location.pathname === '/explore' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Explore</Link>
+              <Link to="/innovation-awards" className={`navigation__link ${location.pathname === '/innovation-awards' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Awards</Link>
+              
+              {/* Media Dropdown - Mobile */}
+              <div className="navigation__mobile-dropdown">
+                <button
+                  type="button"
+                  className={`navigation__mobile-dropdown-trigger ${isDropdownItemActive(mediaItems) ? 'navigation__link--active' : ''}`}
+                  onClick={() => handleMobileDropdownToggle('media')}
+                  aria-expanded={openMobileDropdown === 'media'}
+                  aria-haspopup="true"
+                >
+                  Media
+                  <span className="navigation__mobile-dropdown-arrow">
+                    {openMobileDropdown === 'media' ? '▲' : '▼'}
+                  </span>
+                </button>
+                {openMobileDropdown === 'media' && (
+                  <div className="navigation__mobile-dropdown-menu">
+                    {mediaItems.map((item) => (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        className={`navigation__mobile-dropdown-link ${location.pathname === item.path ? 'navigation__mobile-dropdown-link--active' : ''}`}
+                        onClick={handleNavLinkClick}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Business Dropdown - Mobile */}
+              <div className="navigation__mobile-dropdown">
+                <button
+                  type="button"
+                  className={`navigation__mobile-dropdown-trigger ${isDropdownItemActive(businessItems) ? 'navigation__link--active' : ''}`}
+                  onClick={() => handleMobileDropdownToggle('business')}
+                  aria-expanded={openMobileDropdown === 'business'}
+                  aria-haspopup="true"
+                >
+                  Business
+                  <span className="navigation__mobile-dropdown-arrow">
+                    {openMobileDropdown === 'business' ? '▲' : '▼'}
+                  </span>
+                </button>
+                {openMobileDropdown === 'business' && (
+                  <div className="navigation__mobile-dropdown-menu">
+                    {businessItems.map((item) => (
+                      <Link
+                        key={item.path}
+                        to={item.path}
+                        className={`navigation__mobile-dropdown-link ${location.pathname === item.path ? 'navigation__mobile-dropdown-link--active' : ''}`}
+                        onClick={handleNavLinkClick}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                  </div>
+                )}
+              </div>
+
               <Link to="/about" className={`navigation__link ${location.pathname === '/about' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>About</Link>
-              <Link to="/why" className={`navigation__link ${location.pathname === '/why' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Why</Link>
-              <Link to="/advertise" className={`navigation__link ${location.pathname === '/advertise' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Advertise</Link>
-              <Link to="/techfluencers" className={`navigation__link ${location.pathname === '/techfluencers' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Techfluencers</Link>
-              <Link to="/press" className={`navigation__link ${location.pathname === '/press' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Press</Link>
-              <Link to="/live" className={`navigation__link ${location.pathname === '/live' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Live</Link>
               <Link to="/contact" className={`navigation__link ${location.pathname === '/contact' ? 'navigation__link--active' : ''}`} onClick={handleNavLinkClick}>Contact</Link>
             </div>
           </div>

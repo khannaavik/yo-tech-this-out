@@ -1,10 +1,13 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { CompanyLink } from './CompanyLink';
 import '../styles/components/product-row.css';
 
 /**
  * ProductRow Component
  * Reusable product row for list/explore views
  * 
+ * @param {string} productId - Product ID (used for slug)
  * @param {string} productName - Name of the product
  * @param {string} companyName - Name of the company
  * @param {string} categoryTag - Category tag/label
@@ -15,6 +18,7 @@ import '../styles/components/product-row.css';
  */
 export function ProductRow(props) {
   const {
+    productId,
     productName,
     companyName,
     categoryTag,
@@ -51,47 +55,85 @@ export function ProductRow(props) {
     setImageLoaded(false);
   };
 
+  const productLink = productId ? `/products/${productId}` : null;
+
   return (
     <article className="product-row">
       <div className="product-row__container">
         {/* Image */}
         <div className="product-row__image-wrapper">
-          <div className="product-row__image-container">
-            {!imageError ? (
-              <img
-                src={resolvedImageSrc}
-                alt={`${productName} by ${companyName}`}
-                className="product-row__image"
-                onLoad={handleImageLoad}
-                onError={handleImageError}
-                loading="lazy"
-                decoding="async"
-                style={{ opacity: imageLoaded ? 1 : 0, transition: 'opacity 0.3s ease' }}
-              />
-            ) : null}
-            {imageError && (
-              <div className="product-row__image-placeholder" aria-label={`${productName} image`}>
-                <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="100" height="100" fill="var(--color-bg-secondary)" opacity="0.5"/>
-                  <path d="M30 40L50 25L70 40V70H30V40Z" stroke="var(--color-text-secondary)" strokeWidth="2" fill="none"/>
-                  <circle cx="50" cy="50" r="8" fill="var(--color-text-secondary)" opacity="0.3"/>
-                </svg>
+          {productLink ? (
+            <Link to={productLink} className="product-row__image-link" aria-label={`View ${productName} details`}>
+              <div className="product-row__image-container">
+                {!imageError ? (
+                  <img
+                    src={resolvedImageSrc}
+                    alt={`${productName} by ${companyName}`}
+                    className="product-row__image"
+                    onLoad={handleImageLoad}
+                    onError={handleImageError}
+                    loading="lazy"
+                    decoding="async"
+                    style={{ opacity: imageLoaded ? 1 : 0, transition: 'opacity 0.3s ease' }}
+                  />
+                ) : null}
+                {imageError && (
+                  <div className="product-row__image-placeholder" aria-label={`${productName} image`}>
+                    <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <rect width="100" height="100" fill="var(--color-bg-secondary)" opacity="0.5"/>
+                      <path d="M30 40L50 25L70 40V70H30V40Z" stroke="var(--color-text-secondary)" strokeWidth="2" fill="none"/>
+                      <circle cx="50" cy="50" r="8" fill="var(--color-text-secondary)" opacity="0.3"/>
+                    </svg>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
+            </Link>
+          ) : (
+            <div className="product-row__image-container">
+              {!imageError ? (
+                <img
+                  src={resolvedImageSrc}
+                  alt={`${productName} by ${companyName}`}
+                  className="product-row__image"
+                  onLoad={handleImageLoad}
+                  onError={handleImageError}
+                  loading="lazy"
+                  decoding="async"
+                  style={{ opacity: imageLoaded ? 1 : 0, transition: 'opacity 0.3s ease' }}
+                />
+              ) : null}
+              {imageError && (
+                <div className="product-row__image-placeholder" aria-label={`${productName} image`}>
+                  <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="100" fill="var(--color-bg-secondary)" opacity="0.5"/>
+                    <path d="M30 40L50 25L70 40V70H30V40Z" stroke="var(--color-text-secondary)" strokeWidth="2" fill="none"/>
+                    <circle cx="50" cy="50" r="8" fill="var(--color-text-secondary)" opacity="0.3"/>
+                  </svg>
+                </div>
+              )}
+            </div>
+          )}
         </div>
 
         {/* Content */}
         <div className="product-row__content">
           <div className="product-row__header">
-            <h3 className="product-row__title">{productName}</h3>
+            {productLink ? (
+              <Link to={productLink} className="product-row__title-link">
+                <h3 className="product-row__title">{productName}</h3>
+              </Link>
+            ) : (
+              <h3 className="product-row__title">{productName}</h3>
+            )}
             {categoryTag && (
               <span className="product-row__category">{categoryTag}</span>
             )}
           </div>
 
           {companyName && (
-            <p className="product-row__company">by {companyName}</p>
+            <p className="product-row__company">
+              by <CompanyLink companyName={companyName} />
+            </p>
           )}
 
           {shortDescription && (

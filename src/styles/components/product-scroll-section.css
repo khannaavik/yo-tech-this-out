@@ -5,7 +5,7 @@
 
 .product-scroll-section {
   width: 100%;
-  padding: var(--spacing-2xl) var(--spacing-md);
+  padding: 3.125rem var(--spacing-md); /* 50px top and bottom */
   opacity: 0;
   transform: translate3d(0, 40px, 0) scale(0.96);
   transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1), 
@@ -22,14 +22,16 @@
     transparent 100%
   );
   border-radius: var(--radius-xl);
-  margin: var(--spacing-md) 0;
+  margin: 0;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  box-sizing: border-box;
 }
 
 /* Mobile - Smaller padding and margins */
 @media (max-width: 479px) {
   .product-scroll-section {
-    padding: var(--spacing-xl) var(--spacing-md);
-    margin: var(--spacing-sm) 0;
+    padding: 3.125rem var(--spacing-md); /* 50px top and bottom */
+    margin: 0;
     border-radius: var(--radius-lg);
   }
 }
@@ -37,34 +39,40 @@
 /* Tablet */
 @media (min-width: 480px) and (max-width: 767px) {
   .product-scroll-section {
-    padding: var(--spacing-2xl) var(--spacing-lg);
-    margin: var(--spacing-md) 0;
+    padding: 3.125rem var(--spacing-lg); /* 50px top and bottom */
+    margin: 0;
   }
 }
 
 /* iPad and small tablets */
 @media (min-width: 768px) and (max-width: 1023px) {
   .product-scroll-section {
-    padding: var(--spacing-3xl) var(--spacing-xl);
-    margin: var(--spacing-lg) 0;
+    padding: 3.125rem var(--spacing-xl); /* 50px top and bottom */
+    margin: 0;
   }
 }
 
 /* Desktop */
 @media (min-width: 1024px) {
   .product-scroll-section {
-    padding: var(--spacing-4xl) var(--spacing-xl);
-    margin: var(--spacing-xl) 0;
+    padding: 3.125rem var(--spacing-xl); /* 50px top and bottom */
+    margin: 0;
     min-height: 80vh; /* Keynote slide feel */
     display: flex;
     align-items: center;
   }
 }
 
-/* Large screens */
+/* Large screens (1440px+) */
 @media (min-width: 1440px) {
   .product-scroll-section {
-    padding: var(--spacing-5xl) var(--spacing-2xl);
+    padding: 3.125rem var(--spacing-2xl); /* 50px top and bottom */
+    margin: 0;
+  }
+  
+  .product-scroll-section__container {
+    max-width: 1400px;
+    gap: var(--spacing-5xl);
   }
 }
 
@@ -717,10 +725,19 @@
 /* Mobile - Ensure comfortable tap targets */
 @media (max-width: 479px) {
   .product-scroll-section__button {
-    min-height: 48px;
+    min-height: 48px; /* Exceeds 44px minimum */
     padding: var(--spacing-md) var(--spacing-lg);
     font-size: var(--font-size-base);
     width: 100%; /* Full width on small screens for easier tapping */
+    max-width: 100%;
+  }
+}
+
+/* Mobile (375px) - Ensure buttons don't overflow */
+@media (max-width: 375px) {
+  .product-scroll-section__button {
+    padding: var(--spacing-md) var(--spacing-md);
+    font-size: var(--font-size-sm);
   }
 }
 
@@ -826,6 +843,15 @@
 .product-scroll-section__button-text {
   position: relative;
   z-index: 1;
+}
+
+.product-scroll-section__button-arrow {
+  display: inline-block;
+  transition: transform 0.3s ease;
+}
+
+.product-scroll-section__button:hover .product-scroll-section__button-arrow {
+  transform: translateX(4px);
 }
 
 /* Secondary Button (Visit Website) */

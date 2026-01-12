@@ -2,6 +2,8 @@ import { useEffect, useRef } from 'react';
 import { products } from '../data/products';
 import { ProductRow } from '../components/ProductRow';
 import { PageLayout } from '../components/PageLayout';
+import { SEO } from '../components/SEO';
+import { getOrganizationJsonLd, getProductJsonLd } from '../utils/seo';
 import '../styles/pages/explore.css';
 
 /**
@@ -26,8 +28,20 @@ export function Explore() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Generate JSON-LD for all products
+  const productJsonLd = products.map(product => getProductJsonLd(product));
+
   return (
     <PageLayout>
+      <SEO
+        title="Explore All Products"
+        description={`Discover ${products.length} breakthrough innovations from CES 2026. Explore AI audio, wearables, health tech, XR, and future living technologies.`}
+        url="/explore"
+        jsonLd={[
+          getOrganizationJsonLd(),
+          ...productJsonLd,
+        ]}
+      />
       <div className="explore-page" ref={containerRef}>
         <div className="explore-page__header">
           <h1 className="explore-page__title">Explore All Products</h1>
@@ -43,6 +57,7 @@ export function Explore() {
           {products.map((product) => (
             <ProductRow
               key={product.id}
+              productId={product.id}
               productName={product.name}
               companyName={product.company}
               categoryTag={product.categoryTag}

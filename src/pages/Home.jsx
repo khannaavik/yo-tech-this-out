@@ -1,10 +1,14 @@
 import { Link } from 'react-router-dom';
+import { SEO } from '../components/SEO';
 import { CategoryJumpNav } from '../components/CategoryJumpNav';
 import { Hero } from '../components/Hero';
+import { HeroIntro } from '../components/HeroIntro';
+import { BestOfCES } from '../components/BestOfCES';
 import { FeaturedLookiSection } from '../components/FeaturedLookiSection';
 import { ChapterIntro } from '../components/ChapterIntro';
 import { ProductScrollSection } from '../components/ProductScrollSection';
 import { products } from '../data/products';
+import { getOrganizationJsonLd, getWebsiteJsonLd } from '../utils/seo';
 import '../styles/pages/home-explore-cta.css';
 
 /**
@@ -23,11 +27,26 @@ export function Home() {
 
   return (
     <>
+      <SEO
+        title="The Innovation Authority"
+        description="Curating breakthrough technologies from CES and beyond. Discover the innovations shaping tomorrow—from AI audio to wearables, health tech, XR, and future living."
+        url="/"
+        jsonLd={[
+          getOrganizationJsonLd(),
+          getWebsiteJsonLd(),
+        ]}
+      />
       {/* Category Jump Navigation */}
       <CategoryJumpNav />
 
       {/* Hero Section */}
       <Hero />
+
+      {/* Hero Intro Section */}
+      <HeroIntro />
+
+      {/* Best of CES Section */}
+      <BestOfCES />
 
       {/* Featured Looki L1 Section */}
       <FeaturedLookiSection />
@@ -44,6 +63,7 @@ export function Home() {
       {productsByCategory['ai-audio'].map((product, index) => (
         <ProductScrollSection
           key={product.id}
+          productId={product.id}
           productName={product.name}
           companyName={product.company}
           categoryTag={product.categoryTag}
@@ -67,6 +87,7 @@ export function Home() {
       {productsByCategory['wearables'].map((product, index) => (
         <ProductScrollSection
           key={product.id}
+          productId={product.id}
           productName={product.name}
           companyName={product.company}
           categoryTag={product.categoryTag}
@@ -90,6 +111,7 @@ export function Home() {
       {productsByCategory['health'].map((product, index) => (
         <ProductScrollSection
           key={product.id}
+          productId={product.id}
           productName={product.name}
           companyName={product.company}
           categoryTag={product.categoryTag}
@@ -113,6 +135,7 @@ export function Home() {
       {productsByCategory['xr'].map((product, index) => (
         <ProductScrollSection
           key={product.id}
+          productId={product.id}
           productName={product.name}
           companyName={product.company}
           categoryTag={product.categoryTag}
@@ -136,6 +159,7 @@ export function Home() {
       {productsByCategory['living'].map((product, index) => (
         <ProductScrollSection
           key={product.id}
+          productId={product.id}
           productName={product.name}
           companyName={product.company}
           categoryTag={product.categoryTag}

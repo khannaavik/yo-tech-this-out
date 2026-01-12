@@ -1,0 +1,15 @@
+/**
+ * Company Link Styles
+ */
+
+.company-link {
+  color: var(--color-accent-electric-blue);
+  text-decoration: none;
+  transition: color var(--transition-base);
+  font-weight: inherit;
+}
+
+.company-link:hover {
+  color: var(--color-text-primary);
+  text-decoration: underline;
+}

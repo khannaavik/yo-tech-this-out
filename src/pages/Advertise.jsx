@@ -2,6 +2,8 @@ import { PageLayout } from '../components/PageLayout';
 import { PageHero } from '../components/PageHero';
 import { PageSection } from '../components/PageSection';
 import { PageCard } from '../components/PageCard';
+import { SEO } from '../components/SEO';
+import { getOrganizationJsonLd } from '../utils/seo';
 import '../styles/pages/advertise.css';
 
 /**
@@ -11,6 +13,12 @@ import '../styles/pages/advertise.css';
 export function Advertise() {
   return (
     <PageLayout>
+      <SEO
+        title="Advertise With Us"
+        description="Reach 200M+ tech enthusiasts through CES-focused content. Premium placements, podcast integrations, and CES activations available."
+        url="/advertise"
+        jsonLd={getOrganizationJsonLd()}
+      />
       {/* Hero Section */}
       <PageHero
         title="Advertise With Us"

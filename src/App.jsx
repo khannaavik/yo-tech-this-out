@@ -6,6 +6,7 @@ import { CursorLighting } from './components/CursorLighting';
 import { GoToTopButton } from './components/GoToTopButton';
 import { CESBadge } from './components/CESBadge';
 import { Navigation } from './components/Navigation';
+import { ScrollToTop } from './components/ScrollToTop';
 import { Home } from './pages/Home';
 import { Why } from './pages/Why';
 import { About } from './pages/About';
@@ -15,6 +16,12 @@ import { Press } from './pages/Press';
 import { Contact } from './pages/Contact';
 import { Live } from './pages/Live';
 import { Explore } from './pages/Explore';
+import { InnovationAwards } from './pages/InnovationAwards';
+import { CompanyProfile } from './pages/CompanyProfile';
+import { ProductDetail } from './pages/ProductDetail';
+import { Privacy } from './pages/Privacy';
+import { Terms } from './pages/Terms';
+import { NotFound } from './pages/NotFound';
 import { PodcastSection } from './components/PodcastSection';
 import { ClosingSection } from './components/ClosingSection';
 import './styles/globals.css';
@@ -28,6 +35,9 @@ function App() {
     <ErrorBoundary>
       <ThemeProvider>
         <Router>
+          {/* Scroll to top on route change */}
+          <ScrollToTop />
+          
           {/* Apple-style loading intro - shown once per session */}
           <LoadingIntro />
           
@@ -40,7 +50,7 @@ function App() {
               <Navigation />
             </ErrorBoundary>
 
-            {/* CES Badge - Only shows on Home page */}
+            {/* CES Badge - Shows on all pages */}
             <ErrorBoundary>
               <CESBadge />
             </ErrorBoundary>
@@ -95,6 +105,37 @@ function App() {
               <Route path="/explore" element={
                 <ErrorBoundary>
                   <Explore />
+                </ErrorBoundary>
+              } />
+              <Route path="/innovation-awards" element={
+                <ErrorBoundary>
+                  <InnovationAwards />
+                </ErrorBoundary>
+              } />
+              <Route path="/companies/:companySlug" element={
+                <ErrorBoundary>
+                  <CompanyProfile />
+                </ErrorBoundary>
+              } />
+              <Route path="/products/:productSlug" element={
+                <ErrorBoundary>
+                  <ProductDetail />
+                </ErrorBoundary>
+              } />
+              <Route path="/privacy" element={
+                <ErrorBoundary>
+                  <Privacy />
+                </ErrorBoundary>
+              } />
+              <Route path="/terms" element={
+                <ErrorBoundary>
+                  <Terms />
+                </ErrorBoundary>
+              } />
+              {/* Catch-all route for 404 pages */}
+              <Route path="*" element={
+                <ErrorBoundary>
+                  <NotFound />
                 </ErrorBoundary>
               } />
             </Routes>

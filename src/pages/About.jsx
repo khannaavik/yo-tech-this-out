@@ -2,6 +2,8 @@ import { PageLayout } from '../components/PageLayout';
 import { PageHero } from '../components/PageHero';
 import { PageSection } from '../components/PageSection';
 import { PageCard } from '../components/PageCard';
+import { SEO } from '../components/SEO';
+import { getOrganizationJsonLd } from '../utils/seo';
 import '../styles/pages/about.css';
 
 /**
@@ -11,6 +13,12 @@ import '../styles/pages/about.css';
 export function About() {
   return (
     <PageLayout>
+      <SEO
+        title="About Us"
+        description="Discover the story behind Yo! Tech This Out. Led by CES Innovation Awards® Judge Mike Johns, we curate breakthrough technologies from CES and beyond."
+        url="/about"
+        jsonLd={getOrganizationJsonLd()}
+      />
       {/* Hero Section */}
       <PageHero
         title="About Us"

@@ -59,20 +59,20 @@
 
 /* Compact mark variant - Larger on mobile to anchor header */
 .logo--mark .logo__image {
-  height: 48px; /* Bigger on mobile */
-  max-width: 65px; /* Increased */
+  height: 56px; /* Much larger on mobile - visually dominant */
+  max-width: 80px; /* Increased */
 }
 
 @media (min-width: 768px) {
   .logo--mark .logo__image {
-    height: 50px; /* Slightly larger */
-    max-width: 70px;
+    height: 60px; /* Even larger on tablet */
+    max-width: 85px;
   }
 }
 
 @media (min-width: 1024px) {
   .logo--mark .logo__image {
-    height: 44px; /* Larger on desktop */
+    height: 44px; /* Standard size on desktop */
     max-width: 65px;
   }
 }

@@ -9,11 +9,8 @@ import '../styles/components/featured-looki-section.css';
  */
 export function FeaturedLookiSection() {
   const [isVisible, setIsVisible] = useState(false);
-  const [floatOffset, setFloatOffset] = useState(0);
   const sectionRef = useRef(null);
-  const imageRef = useRef(null);
   const hasAnimated = useRef(false);
-  const shouldUseMotion = useRef(true);
 
   const product = getProductById('looki-l1');
 
@@ -22,22 +19,6 @@ export function FeaturedLookiSection() {
     return null;
   }
 
-  // Detect reduced motion preference
-  useEffect(() => {
-    if (typeof window === 'undefined') {
-      shouldUseMotion.current = false;
-      return;
-    }
-
-    try {
-      const prefersReducedMotion = window.matchMedia
-        ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
-        : false;
-      shouldUseMotion.current = !prefersReducedMotion;
-    } catch (e) {
-      shouldUseMotion.current = false;
-    }
-  }, []);
 
   // Intersection Observer for scroll reveal
   useEffect(() => {
@@ -90,32 +71,6 @@ export function FeaturedLookiSection() {
     }
   }, []);
 
-  // Subtle floating animation
-  useEffect(() => {
-    if (!shouldUseMotion.current || typeof window === 'undefined') {
-      return;
-    }
-
-    let animationFrame;
-    let startTime = Date.now();
-
-    const animate = () => {
-      const elapsed = (Date.now() - startTime) / 1000; // Convert to seconds
-      // Very slow floating motion: 3 seconds per cycle, 8px range
-      const offset = Math.sin(elapsed * (Math.PI / 3)) * 8;
-      setFloatOffset(offset);
-
-      animationFrame = requestAnimationFrame(animate);
-    };
-
-    animationFrame = requestAnimationFrame(animate);
-
-    return () => {
-      if (animationFrame) {
-        cancelAnimationFrame(animationFrame);
-      }
-    };
-  }, []);
 
   return (
     <section
@@ -127,13 +82,7 @@ export function FeaturedLookiSection() {
         {/* Image Container - Left side on desktop, top on mobile */}
         <div className="featured-looki-section__image-wrapper">
           <div
-            ref={imageRef}
             className={`featured-looki-section__image-container ${isVisible ? 'featured-looki-section__image-container--visible' : ''}`}
-            style={{
-              transform: shouldUseMotion.current
-                ? `translate3d(0, ${floatOffset}px, 0)`
-                : 'translate3d(0, 0, 0)',
-            }}
           >
             {/* Radial glow behind image */}
             <div

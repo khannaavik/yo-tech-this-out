@@ -3,12 +3,11 @@ import '../styles/components/hero.css';
 
 /**
  * Hero Section Component
- * Fullscreen hero with scroll-scrub animations
+ * Fullscreen hero image - purely visual, no text overlay
  */
 export function Hero() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const heroRef = useRef(null);
-  const contentRef = useRef(null);
   const [shouldUseScrub, setShouldUseScrub] = useState(true);
 
   // Detect reduced motion and low-performance devices
@@ -128,44 +127,29 @@ export function Hero() {
     };
   }, [shouldUseScrub]);
 
-  // Calculate scrub values based on scroll progress
-  const titleTranslateY = scrollProgress * -60; // Subtle upward translation
-  const titleOpacity = Math.max(0, 1 - scrollProgress * 1.2); // Gentle fade, never fully disappears abruptly
-  const subtitleOpacity = Math.max(0, 1 - scrollProgress * 1.5);
+  // Calculate scrub values for scroll indicator
 
   return (
     <section 
       className="hero" 
       ref={heroRef}
       aria-label="Hero section"
-      style={{}}
     >
       <div className="hero__container">
-        <div 
-          className="hero__content"
-          ref={contentRef}
-          style={{
-            transform: shouldUseScrub ? `translate3d(0, ${titleTranslateY}px, 0)` : undefined,
-            opacity: shouldUseScrub ? titleOpacity : 1,
-            willChange: shouldUseScrub ? 'transform, opacity' : 'auto',
-          }}
-        >
-          {/* Content removed per requirements */}
+        {/* Container content */}
+      </div>
+      {/* Scroll Indicator - Positioned at bottom center of hero section */}
+      <div 
+        className="hero__scroll-indicator" 
+        aria-hidden="true"
+        style={{
+          opacity: shouldUseScrub ? Math.max(0, 1 - scrollProgress * 2) : 1,
+        }}
+      >
+        <div className="hero__scroll-mouse">
+          <div className="hero__scroll-wheel"></div>
         </div>
-
-        {/* Scroll Indicator */}
-        <div 
-          className="hero__scroll-indicator" 
-          aria-hidden="true"
-          style={{
-            opacity: shouldUseScrub ? Math.max(0, 1 - scrollProgress * 2) : 1,
-          }}
-        >
-          <div className="hero__scroll-mouse">
-            <div className="hero__scroll-wheel"></div>
-          </div>
-          <span className="hero__scroll-text">Scroll</span>
-        </div>
+        <span className="hero__scroll-text">Scroll</span>
       </div>
     </section>
   );

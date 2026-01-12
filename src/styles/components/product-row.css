@@ -51,6 +51,17 @@
   }
 }
 
+.product-row__image-link {
+  display: block;
+  text-decoration: none;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+}
+
+.product-row__image-link:hover {
+  opacity: 0.9;
+  transform: scale(1.02);
+}
+
 .product-row__image-container {
   position: relative;
   width: 100%;
@@ -140,6 +151,16 @@
     gap: var(--spacing-lg);
     margin-bottom: 0;
   }
+}
+
+.product-row__title-link {
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.3s ease;
+}
+
+.product-row__title-link:hover {
+  opacity: 0.8;
 }
 
 .product-row__title {

@@ -1,10 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
+import { CompanyLink } from './CompanyLink';
 import '../styles/components/product-scroll-section.css';
 
 /**
  * ProductScrollSection Component
  * Reusable product showcase section with scroll animations, parallax effects, and video modal
  * 
+ * @param {string} productId - Product ID (used for slug)
  * @param {string} productName - Name of the product
  * @param {string} companyName - Name of the company
  * @param {string} categoryTag - Category tag/label
@@ -17,6 +20,7 @@ import '../styles/components/product-scroll-section.css';
 export function ProductScrollSection(props) {
   // Safe destructuring with defaults
   const {
+    productId,
     productName,
     companyName,
     categoryTag,
@@ -375,7 +379,7 @@ export function ProductScrollSection(props) {
             {/* Company Name */}
             {companyName && (
               <p className="product-scroll-section__company">
-                by {companyName}
+                by <CompanyLink companyName={companyName} />
               </p>
             )}
 
@@ -386,12 +390,22 @@ export function ProductScrollSection(props) {
 
             {/* Action Buttons */}
             <div className="product-scroll-section__actions">
+              {productId && (
+                <Link
+                  to={`/products/${productId}`}
+                  className="product-scroll-section__button product-scroll-section__button--primary"
+                  aria-label={`Learn more about ${productName}`}
+                >
+                  Learn More
+                  <span className="product-scroll-section__button-arrow" aria-hidden="true">→</span>
+                </Link>
+              )}
               {normalizedYoutubeUrl && (
                 <a
                   href={normalizedYoutubeUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="product-scroll-section__button product-scroll-section__button--primary product-scroll-section__button--watch-demo"
+                  className="product-scroll-section__button product-scroll-section__button--secondary product-scroll-section__button--watch-demo"
                   aria-label={`Watch demo video for ${productName}`}
                 >
                   <span className="product-scroll-section__play-icon" aria-hidden="true">

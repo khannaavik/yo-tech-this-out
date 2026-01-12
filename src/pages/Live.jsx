@@ -2,6 +2,8 @@ import { PageLayout } from '../components/PageLayout';
 import { PageHero } from '../components/PageHero';
 import { PageSection } from '../components/PageSection';
 import { PageCard } from '../components/PageCard';
+import { SEO } from '../components/SEO';
+import { getOrganizationJsonLd } from '../utils/seo';
 import '../styles/pages/live.css';
 
 /**
@@ -11,6 +13,12 @@ import '../styles/pages/live.css';
 export function Live() {
   return (
     <PageLayout>
+      <SEO
+        title="CES Live"
+        description="Real-time coverage of CES 2026 on LinkedIn. Join us for live streaming coverage of the latest innovations, insights, and behind-the-scenes moments."
+        url="/live"
+        jsonLd={getOrganizationJsonLd()}
+      />
       {/* Hero Section */}
       <PageHero
         title="CES Live"

@@ -1,4 +1,6 @@
 import { useEffect, useRef } from 'react';
+import { SEO } from '../components/SEO';
+import { getOrganizationJsonLd } from '../utils/seo';
 import '../styles/pages/why.css';
 
 /**
@@ -37,6 +39,12 @@ export function Why() {
 
   return (
     <div className="why-page">
+      <SEO
+        title="Why Yo! Tech This Out"
+        description="The future of tech discovery. We curate, contextualize, and connect breakthrough CES innovations with audiences who will shape tomorrow."
+        url="/why"
+        jsonLd={getOrganizationJsonLd()}
+      />
       {/* Hero Section */}
       <section className="why-hero">
         <div className="why-hero__container">

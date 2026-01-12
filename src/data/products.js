@@ -327,5 +327,10 @@ export const getProductById = (id) => {
   return products.find(product => product.id === id);
 };
 
+// Helper function to get product by slug (product id is used as slug)
+export const getProductBySlug = (slug) => {
+  return products.find(product => product.id === slug);
+};
+
 // Export total count
 export const totalProducts = products.length;

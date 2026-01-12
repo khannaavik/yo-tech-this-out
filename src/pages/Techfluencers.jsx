@@ -2,6 +2,8 @@ import { PageLayout } from '../components/PageLayout';
 import { PageHero } from '../components/PageHero';
 import { PageSection } from '../components/PageSection';
 import { PageCard } from '../components/PageCard';
+import { SEO } from '../components/SEO';
+import { getOrganizationJsonLd } from '../utils/seo';
 import '../styles/pages/techfluencers.css';
 
 /**
@@ -11,6 +13,12 @@ import '../styles/pages/techfluencers.css';
 export function Techfluencers() {
   return (
     <PageLayout>
+      <SEO
+        title="TECHFLUENCERS™"
+        description="Where tech innovation and influence converge. A curated community of creators who authentically amplify innovation, connecting brands with voices that resonate."
+        url="/techfluencers"
+        jsonLd={getOrganizationJsonLd()}
+      />
       {/* Hero Section */}
       <PageHero
         title="TECHFLUENCERS™"

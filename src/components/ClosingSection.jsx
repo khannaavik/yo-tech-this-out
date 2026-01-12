@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { Link } from 'react-router-dom';
 import { Logo } from './Logo';
 import '../styles/components/closing-section.css';
 
@@ -71,42 +72,41 @@ export function ClosingSection() {
 
         {/* Minimal Navigation */}
         <nav className="closing-section__nav" aria-label="Footer navigation">
-          <a 
-            href="#ai-audio" 
+          <Link 
+            to="/explore" 
             className="closing-section__nav-link"
-            onClick={(e) => {
-              e.preventDefault();
-              const element = document.getElementById('ai-audio');
-              if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }
-            }}
           >
             Explore
-          </a>
-          <a 
-            href="#top" 
+          </Link>
+          <Link 
+            to="/" 
             className="closing-section__nav-link"
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: 'smooth' });
-            }}
           >
             Watch Demos
-          </a>
-          <a 
-            href="#xr" 
+          </Link>
+          <Link 
+            to="/about" 
             className="closing-section__nav-link"
-            onClick={(e) => {
-              e.preventDefault();
-              const element = document.getElementById('xr');
-              if (element) {
-                element.scrollIntoView({ behavior: 'smooth', block: 'start' });
-              }
-            }}
           >
             About
-          </a>
+          </Link>
+        </nav>
+
+        {/* Legal Links */}
+        <nav className="closing-section__legal" aria-label="Legal navigation">
+          <Link 
+            to="/privacy" 
+            className="closing-section__legal-link"
+          >
+            Privacy Policy
+          </Link>
+          <span className="closing-section__legal-separator">•</span>
+          <Link 
+            to="/terms" 
+            className="closing-section__legal-link"
+          >
+            Terms of Service
+          </Link>
         </nav>
 
         {/* Brand Signature with Logo */}

@@ -6,7 +6,7 @@
 
 .featured-looki-section {
   width: 100%;
-  padding: var(--spacing-4xl) var(--spacing-md);
+  padding: 3.125rem var(--spacing-md); /* 50px top and bottom */
   opacity: 0;
   transform: translate3d(0, 40px, 0) scale(0.96);
   transition: opacity 1.2s cubic-bezier(0.16, 1, 0.3, 1),
@@ -17,29 +17,43 @@
   z-index: 1;
   /* NO background - transparent section */
   background: transparent;
+  overflow-x: hidden; /* Prevent horizontal overflow */
+  overflow-y: visible; /* Allow vertical overflow - no scrollbar */
+  box-sizing: border-box;
 }
 
 /* Mobile - Smaller padding */
 @media (max-width: 479px) {
   .featured-looki-section {
-    padding: var(--spacing-3xl) var(--spacing-md);
+    padding: 3.125rem var(--spacing-md); /* 50px top and bottom */
   }
 }
 
 /* Tablet */
 @media (min-width: 480px) and (max-width: 767px) {
   .featured-looki-section {
-    padding: var(--spacing-4xl) var(--spacing-lg);
+    padding: 3.125rem var(--spacing-lg); /* 50px top and bottom */
   }
 }
 
 /* Desktop */
 @media (min-width: 1024px) {
   .featured-looki-section {
-    padding: var(--spacing-5xl) var(--spacing-xl);
-    min-height: 80vh;
+    padding: 3.125rem var(--spacing-xl); /* 50px top and bottom */
     display: flex;
     align-items: center;
+    overflow-y: visible; /* Ensure no vertical scrollbar */
+  }
+}
+
+/* Large screens (1440px+) */
+@media (min-width: 1440px) {
+  .featured-looki-section {
+    padding: 3.125rem var(--spacing-2xl); /* 50px top and bottom */
+  }
+  
+  .featured-looki-section__container {
+    max-width: 1400px;
   }
 }
 
@@ -57,6 +71,8 @@
   flex-direction: column;
   gap: var(--spacing-3xl);
   align-items: center;
+  overflow: visible; /* No scrollbar */
+  height: auto; /* Natural height */
 }
 
 @media (min-width: 1024px) {
@@ -71,10 +87,12 @@
 .featured-looki-section__image-wrapper {
   width: 100%;
   flex-shrink: 0;
-  overflow: visible; /* Allow glow to show */
+  overflow: visible; /* Allow glow to show, no scrollbar */
+  overflow-y: visible; /* Explicitly no vertical scrollbar */
   display: flex;
   justify-content: center;
   align-items: center;
+  height: auto; /* Natural height */
 }
 
 @media (min-width: 1024px) {
@@ -94,13 +112,15 @@
   border: none;
   /* NO padding that would create background */
   padding: 0;
-  overflow: visible; /* Allow glow and shadow to show */
+  overflow: visible; /* Allow glow and shadow to show, no scrollbar */
+  overflow-y: visible; /* Explicitly no vertical scrollbar */
   transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
               opacity 0.3s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: transform, opacity;
   transform-style: preserve-3d;
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+  height: auto; /* Natural height */
 }
 
 /* Mobile - 80% width, centered */
@@ -219,6 +239,9 @@
   flex-direction: column;
   gap: var(--spacing-lg);
   text-align: center;
+  overflow: visible; /* No scrollbar */
+  overflow-y: visible; /* Explicitly no vertical scrollbar */
+  height: auto; /* Natural height */
 }
 
 /* Mobile - Tighter spacing */
@@ -265,12 +288,23 @@
 
 /* Headline - Looki L1 */
 .featured-looki-section__headline {
-  font-size: var(--font-size-4xl);
+  font-size: var(--font-size-3xl);
   font-weight: var(--font-weight-semibold);
   line-height: var(--line-height-tight);
   color: var(--color-text-primary);
   letter-spacing: -0.02em;
   margin: 0;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+  padding: 0 var(--spacing-sm);
+}
+
+/* Mobile (375px) */
+@media (min-width: 375px) {
+  .featured-looki-section__headline {
+    font-size: var(--font-size-4xl);
+    padding: 0;
+  }
 }
 
 @media (max-width: 479px) {
@@ -292,6 +326,13 @@
     font-weight: var(--font-weight-medium);
     letter-spacing: -0.015em;
     line-height: 1.2;
+  }
+}
+
+/* Large screens (1440px+) */
+@media (min-width: 1440px) {
+  .featured-looki-section__headline {
+    font-size: var(--font-size-7xl);
   }
 }
 
@@ -513,6 +554,7 @@
   transition: transform 0.1s ease;
 }
 
+
 /* Reduced Motion */
 @media (prefers-reduced-motion: reduce) {
   .featured-looki-section {
@@ -532,7 +574,6 @@
   }
   
   .featured-looki-section__image-glow {
-    animation: none;
     opacity: 0.6 !important;
   }
 }

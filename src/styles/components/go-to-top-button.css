@@ -97,8 +97,8 @@
 /* Responsive adjustments */
 @media (max-width: 767px) {
   .go-to-top-button {
-    width: 52px;
-    height: 52px;
+    width: 52px; /* Exceeds 44px minimum touch target */
+    height: 52px; /* Exceeds 44px minimum touch target */
     bottom: var(--spacing-lg);
     right: var(--spacing-lg);
   }
@@ -106,6 +106,16 @@
   .go-to-top-button svg {
     width: 22px;
     height: 22px;
+  }
+}
+
+/* Very small screens - ensure adequate spacing */
+@media (max-width: 479px) {
+  .go-to-top-button {
+    width: 48px; /* Still exceeds 44px minimum */
+    height: 48px; /* Still exceeds 44px minimum */
+    bottom: var(--spacing-md);
+    right: var(--spacing-md);
   }
 }
 

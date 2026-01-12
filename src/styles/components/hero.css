@@ -76,7 +76,20 @@
 @media (max-width: 767px) {
   .hero {
     background-size: cover;
-    background-position: center;
+    background-position: center center;
+    /* Prevent important visual elements from being cropped */
+    background-attachment: scroll;
+    /* Ensure full image is visible */
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+}
+
+/* Small mobile - Adjust positioning to show important content */
+@media (max-width: 479px) {
+  .hero {
+    background-position: center 30%;
+    /* Slightly adjust to show more of the image center */
   }
 }
 
@@ -116,6 +129,7 @@
   padding-top: 60px; /* Account for sticky nav */
   position: relative;
   z-index: 1; /* Above overlay, below cursor lighting */
+  min-height: 100%; /* Ensure container takes full height for scroll indicator positioning */
 }
 
 @media (min-width: 768px) {
@@ -233,6 +247,110 @@
   }
 }
 
+/* CTA Group */
+.hero__cta-group {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-top: var(--spacing-lg);
+  transition: opacity 0.1s linear;
+}
+
+@media (min-width: 768px) {
+  .hero__cta-group {
+    flex-direction: row;
+    gap: var(--spacing-lg);
+    margin-top: var(--spacing-xl);
+  }
+}
+
+/* CTA Buttons */
+.hero__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  border-radius: var(--radius-lg);
+  transition: all var(--transition-base);
+  cursor: pointer;
+  white-space: nowrap;
+  min-width: 160px;
+}
+
+@media (min-width: 768px) {
+  .hero__cta {
+    padding: var(--spacing-md) var(--spacing-2xl);
+    font-size: var(--font-size-lg);
+    min-width: 180px;
+  }
+}
+
+/* Primary CTA */
+.hero__cta--primary {
+  color: var(--color-text-primary);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.15),
+    rgba(139, 92, 246, 0.15)
+  );
+  border: 1px solid rgba(0, 212, 255, 0.3);
+  box-shadow: 0 4px 20px rgba(0, 212, 255, 0.2),
+              0 0 40px rgba(139, 92, 246, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.hero__cta--primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 30px rgba(0, 212, 255, 0.3),
+              0 0 60px rgba(139, 92, 246, 0.15);
+  border-color: rgba(0, 212, 255, 0.4);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.2),
+    rgba(139, 92, 246, 0.2)
+  );
+}
+
+.hero__cta--primary:active {
+  transform: translateY(0);
+}
+
+/* Secondary CTA */
+.hero__cta--secondary {
+  color: var(--color-text-primary);
+  background: transparent;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.hero__cta--secondary:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+}
+
+.hero__cta--secondary:active {
+  transform: translateY(0);
+}
+
+/* Respect reduced motion for CTAs */
+@media (prefers-reduced-motion: reduce) {
+  .hero__cta {
+    transition: none !important;
+  }
+  
+  .hero__cta:hover {
+    transform: none !important;
+  }
+}
+
 /* Scroll Indicator */
 .hero__scroll-indicator {
   display: flex;
@@ -241,14 +359,18 @@
   gap: var(--spacing-sm);
   animation: fadeIn 1s ease-out 0.5s both;
   position: absolute;
-  bottom: var(--spacing-2xl);
+  bottom: var(--spacing-xl);
   left: 50%;
   transform: translateX(-50%);
+  z-index: 10;
+  opacity: 0.95; /* More visible */
+  pointer-events: none; /* Don't interfere with clicks */
+  width: 100%; /* Full width for centering */
 }
 
 @media (min-width: 768px) {
   .hero__scroll-indicator {
-    bottom: var(--spacing-3xl);
+    bottom: var(--spacing-2xl);
     gap: var(--spacing-md);
   }
 }
@@ -257,18 +379,21 @@
 .hero__scroll-mouse {
   width: 24px;
   height: 40px;
-  border: 2px solid var(--color-text-secondary);
+  border: 2px solid rgba(0, 212, 255, 0.8); /* More visible - bright blue */
   border-radius: var(--radius-full);
   position: relative;
   display: flex;
   justify-content: center;
   padding-top: 8px;
+  box-shadow: 0 0 10px rgba(0, 212, 255, 0.5); /* Glow effect */
 }
 
 @media (min-width: 768px) {
   .hero__scroll-mouse {
     width: 28px;
     height: 48px;
+    border-width: 2.5px;
+    box-shadow: 0 0 15px rgba(0, 212, 255, 0.6);
   }
 }
 
@@ -276,26 +401,36 @@
 .hero__scroll-wheel {
   width: 4px;
   height: 8px;
-  background-color: var(--color-text-secondary);
+  background-color: rgba(0, 212, 255, 0.9); /* More visible - bright blue */
   border-radius: var(--radius-full);
   animation: scrollWheel 2s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(0, 212, 255, 0.8); /* Glow effect */
 }
 
 @media (min-width: 768px) {
   .hero__scroll-wheel {
     width: 5px;
     height: 10px;
+    box-shadow: 0 0 10px rgba(0, 212, 255, 0.9);
   }
 }
 
 /* Scroll Text */
 .hero__scroll-text {
   font-size: var(--font-size-xs);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  letter-spacing: 0.1em;
+  font-weight: var(--font-weight-semibold); /* Bolder */
+  color: rgba(0, 212, 255, 0.9); /* More visible - bright blue */
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   animation: scrollText 2s ease-in-out infinite;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.6); /* Glow effect */
+}
+
+@media (min-width: 768px) {
+  .hero__scroll-text {
+    font-size: var(--font-size-sm);
+    text-shadow: 0 0 15px rgba(0, 212, 255, 0.7);
+  }
 }
 
 /* Animations */

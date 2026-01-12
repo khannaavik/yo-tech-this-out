@@ -5,18 +5,27 @@
 
 .ces-badge {
   position: fixed;
-  /* Desktop: GoToTopButton (56px height + 28px bottom) = 84px, + 24px gap = 108px */
-  bottom: 108px;
+  /* Desktop: GoToTopButton (56px height + 28px bottom) = 84px, + 32px gap = 116px */
+  bottom: 116px;
   right: var(--spacing-xl);
   width: 90px;
   height: auto;
   z-index: 1001; /* Above GoToTopButton (1000), below modals */
-  opacity: 0.95;
-  transition: opacity 0.3s ease,
-              transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0;
+  transform: translateY(20px) scale(0.95);
+  transition: opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+              transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
   cursor: pointer;
   display: block;
   text-decoration: none;
+  pointer-events: none;
+  will-change: opacity, transform;
+}
+
+.ces-badge--visible {
+  opacity: 0.95;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
 }
 
 @media (hover: hover) and (pointer: fine) {
@@ -46,8 +55,8 @@
 /* Tablet - same spacing as desktop */
 @media (min-width: 768px) and (max-width: 1023px) {
   .ces-badge {
-    /* GoToTopButton (56px height + 28px bottom) = 84px, + 24px gap = 108px */
-    bottom: 108px;
+    /* GoToTopButton (56px height + 28px bottom) = 84px, + 32px gap = 116px */
+    bottom: 116px;
     right: var(--spacing-xl);
   }
 }
@@ -55,7 +64,7 @@
 /* Large screens - adjust for larger GoToTopButton spacing */
 @media (min-width: 1440px) {
   .ces-badge {
-    /* GoToTopButton (56px height + 48px bottom) = 104px, + 24px gap = 128px */
+    /* GoToTopButton (56px height + 40px bottom) = 96px, + 32px gap = 128px */
     bottom: 128px;
     right: var(--spacing-2xl);
   }
@@ -65,17 +74,32 @@
 @media (max-width: 767px) {
   .ces-badge {
     width: 60px;
-    /* Mobile: GoToTopButton (52px height + 20px bottom) = 72px, + 24px gap = 96px */
-    bottom: 96px;
+    /* Mobile: GoToTopButton (52px height + 20px bottom) = 72px, + 32px gap = 104px */
+    bottom: 104px;
     right: var(--spacing-lg);
   }
 }
 
-/* Small mobile - same spacing */
+/* Small mobile - ensure no overlap with scroll-to-top button */
 @media (max-width: 479px) {
   .ces-badge {
-    /* GoToTopButton (52px height + 20px bottom) = 72px, + 24px gap = 96px */
-    bottom: 96px;
+    /* GoToTopButton (52px height + 20px bottom) = 72px, + 36px gap = 108px */
+    /* Increased gap on very small screens to prevent overlap */
+    bottom: 108px;
+    right: var(--spacing-md);
+    width: 55px; /* Slightly smaller on very small screens */
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .ces-badge {
+    transition: opacity 0.2s ease;
+    transform: none;
+  }
+  
+  .ces-badge--visible {
+    transform: none;
   }
 }
 
