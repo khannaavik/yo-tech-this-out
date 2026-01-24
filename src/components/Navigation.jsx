@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useRef } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useTheme } from './ThemeProvider';
 import { Logo } from './Logo';
@@ -12,10 +12,11 @@ import '../styles/components/navigation.css';
 export function Navigation() {
   const { toggleTheme, isDark } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState(null); // 'discover' | 'media' | 'startups' | null
+  const [activeMenu, setActiveMenu] = useState(null); // 'discover' | 'media' | 'startups' | null
   const [openMobileSection, setOpenMobileSection] = useState(null);
   const [isInvestorMode, setIsInvestorMode] = useState(false);
   const location = useLocation();
+  const navRef = useRef(null);
 
   const closeMobileMenu = useCallback(() => {
     setIsMobileMenuOpen(false);
@@ -26,10 +27,25 @@ export function Navigation() {
   }, [location, closeMobileMenu]);
 
   useEffect(() => {
+    setActiveMenu(null);
+  }, [location.pathname]);
+
+  useEffect(() => {
     if (typeof window === 'undefined') return;
     const event = new CustomEvent('investor-mode-change', { detail: isInvestorMode });
     window.dispatchEvent(event);
   }, [isInvestorMode]);
+
+  useEffect(() => {
+    const handleOutsideClick = (event) => {
+      if (!navRef.current) return;
+      if (!navRef.current.contains(event.target)) {
+        setActiveMenu(null);
+      }
+    };
+    document.addEventListener('mousedown', handleOutsideClick);
+    return () => document.removeEventListener('mousedown', handleOutsideClick);
+  }, []);
 
   useEffect(() => {
     if (!isMobileMenuOpen) {
@@ -63,7 +79,7 @@ export function Navigation() {
 
   const handleNavLinkClick = useCallback(() => {
     closeMobileMenu();
-    setOpenDropdown(null);
+    setActiveMenu(null);
     setOpenMobileSection(null);
   }, [closeMobileMenu]);
 
@@ -112,7 +128,12 @@ export function Navigation() {
   ];
 
   return (
-    <nav className={`nav nav--sticky ${isMobileMenuOpen ? 'nav--menu-open' : ''}`} role="navigation" aria-label="Main navigation">
+    <nav
+      className={`nav nav--sticky ${isMobileMenuOpen ? 'nav--menu-open' : ''}`}
+      role="navigation"
+      aria-label="Main navigation"
+      ref={navRef}
+    >
       <div className="nav__bar">
         {/* Left: Logo */}
         <div className="nav__left">
@@ -124,14 +145,14 @@ export function Navigation() {
         {/* Center: Desktop Links */}
         <div className="nav__center nav__center--desktop" role="menubar" aria-label="Primary">
           <div
-            className={`nav__dropdown nav__dropdown--mega ${openDropdown === 'discover' ? 'nav__dropdown--open' : ''} ${isDropdownItemActive(discoverGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
-            onMouseEnter={() => setOpenDropdown('discover')}
-            onMouseLeave={() => setOpenDropdown(null)}
+            className={`nav__dropdown nav__dropdown--mega ${activeMenu === 'discover' ? 'nav__dropdown--open' : ''} ${isDropdownItemActive(discoverGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
+            onMouseEnter={() => setActiveMenu('discover')}
+            onMouseLeave={() => setActiveMenu(null)}
           >
             <button
               type="button"
               className={`nav__dropdown-trigger ${isDropdownItemActive(discoverGroups.flatMap((group) => group.items)) ? 'nav__link--active' : ''}`}
-              aria-expanded={openDropdown === 'discover'}
+              aria-expanded={activeMenu === 'discover'}
               aria-haspopup="true"
             >
               Discover
@@ -165,14 +186,14 @@ export function Navigation() {
           </Link>
 
           <div
-            className={`nav__dropdown nav__dropdown--mega ${openDropdown === 'media' ? 'nav__dropdown--open' : ''} ${isDropdownItemActive(mediaGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
-            onMouseEnter={() => setOpenDropdown('media')}
-            onMouseLeave={() => setOpenDropdown(null)}
+            className={`nav__dropdown nav__dropdown--mega ${activeMenu === 'media' ? 'nav__dropdown--open' : ''} ${isDropdownItemActive(mediaGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
+            onMouseEnter={() => setActiveMenu('media')}
+            onMouseLeave={() => setActiveMenu(null)}
           >
             <button
               type="button"
               className={`nav__dropdown-trigger ${isDropdownItemActive(mediaGroups.flatMap((group) => group.items)) ? 'nav__link--active' : ''}`}
-              aria-expanded={openDropdown === 'media'}
+              aria-expanded={activeMenu === 'media'}
               aria-haspopup="true"
             >
               Media
@@ -198,14 +219,14 @@ export function Navigation() {
           </div>
 
           <div
-            className={`nav__dropdown nav__dropdown--mega ${openDropdown === 'startups' ? 'nav__dropdown--open' : ''} ${isDropdownItemActive(startupGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
-            onMouseEnter={() => setOpenDropdown('startups')}
-            onMouseLeave={() => setOpenDropdown(null)}
+            className={`nav__dropdown nav__dropdown--mega ${activeMenu === 'startups' ? 'nav__dropdown--open' : ''} ${isDropdownItemActive(startupGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
+            onMouseEnter={() => setActiveMenu('startups')}
+            onMouseLeave={() => setActiveMenu(null)}
           >
             <button
               type="button"
               className={`nav__dropdown-trigger ${isDropdownItemActive(startupGroups.flatMap((group) => group.items)) ? 'nav__link--active' : ''}`}
-              aria-expanded={openDropdown === 'startups'}
+              aria-expanded={activeMenu === 'startups'}
               aria-haspopup="true"
             >
               For Startups
