@@ -145,7 +145,7 @@ export function Navigation() {
         {/* Center: Desktop Links */}
         <div className="nav__center nav__center--desktop" role="menubar" aria-label="Primary">
           <div
-            className={`nav__dropdown nav__dropdown--mega ${activeMenu === 'discover' ? 'nav__dropdown--open' : ''} ${isDropdownItemActive(discoverGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
+            className={`nav__dropdown ${isDropdownItemActive(discoverGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
             onMouseEnter={() => setActiveMenu('discover')}
             onMouseLeave={() => setActiveMenu(null)}
           >
@@ -158,23 +158,6 @@ export function Navigation() {
               Discover
               <span className="nav__dropdown-arrow" aria-hidden="true">▼</span>
             </button>
-            <div className="nav__dropdown-menu nav__dropdown-menu--mega" role="menu">
-              {discoverGroups.map((group) => (
-                <div key={group.title} className="nav__dropdown-group">
-                  <p className="nav__dropdown-heading">{group.title}</p>
-                  {group.items.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className={`nav__dropdown-link ${isActivePath(item.path) ? 'nav__dropdown-link--active' : ''}`}
-                      role="menuitem"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              ))}
-            </div>
           </div>
 
           <Link
@@ -186,7 +169,7 @@ export function Navigation() {
           </Link>
 
           <div
-            className={`nav__dropdown nav__dropdown--mega ${activeMenu === 'media' ? 'nav__dropdown--open' : ''} ${isDropdownItemActive(mediaGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
+            className={`nav__dropdown ${isDropdownItemActive(mediaGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
             onMouseEnter={() => setActiveMenu('media')}
             onMouseLeave={() => setActiveMenu(null)}
           >
@@ -199,27 +182,10 @@ export function Navigation() {
               Media
               <span className="nav__dropdown-arrow" aria-hidden="true">▼</span>
             </button>
-            <div className="nav__dropdown-menu nav__dropdown-menu--mega" role="menu">
-              {mediaGroups.map((group) => (
-                <div key={group.title} className="nav__dropdown-group">
-                  <p className="nav__dropdown-heading">{group.title}</p>
-                  {group.items.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className={`nav__dropdown-link ${isActivePath(item.path) ? 'nav__dropdown-link--active' : ''}`}
-                      role="menuitem"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              ))}
-            </div>
           </div>
 
           <div
-            className={`nav__dropdown nav__dropdown--mega ${activeMenu === 'startups' ? 'nav__dropdown--open' : ''} ${isDropdownItemActive(startupGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
+            className={`nav__dropdown ${isDropdownItemActive(startupGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
             onMouseEnter={() => setActiveMenu('startups')}
             onMouseLeave={() => setActiveMenu(null)}
           >
@@ -232,23 +198,6 @@ export function Navigation() {
               For Startups
               <span className="nav__dropdown-arrow" aria-hidden="true">▼</span>
             </button>
-            <div className="nav__dropdown-menu nav__dropdown-menu--mega" role="menu">
-              {startupGroups.map((group) => (
-                <div key={group.title} className="nav__dropdown-group">
-                  <p className="nav__dropdown-heading">{group.title}</p>
-                  {group.items.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className={`nav__dropdown-link ${isActivePath(item.path) ? 'nav__dropdown-link--active' : ''}`}
-                      role="menuitem"
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              ))}
-            </div>
           </div>
         </div>
 
@@ -293,6 +242,69 @@ export function Navigation() {
           </button>
         </div>
       </div>
+
+      {/* Single Anchored Mega-Menu */}
+      {activeMenu && (
+        <div
+          className="nav__mega-menu"
+          onMouseEnter={() => setActiveMenu(activeMenu)}
+          onMouseLeave={() => setActiveMenu(null)}
+        >
+          <div className="nav__mega-menu-content">
+            {activeMenu === 'discover' &&
+              discoverGroups.map((group) => (
+                <div key={group.title} className="nav__dropdown-group">
+                  <p className="nav__dropdown-heading">{group.title}</p>
+                  {group.items.map((item) => (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      className={`nav__dropdown-link ${isActivePath(item.path) ? 'nav__dropdown-link--active' : ''}`}
+                      role="menuitem"
+                      onClick={handleNavLinkClick}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              ))}
+            {activeMenu === 'media' &&
+              mediaGroups.map((group) => (
+                <div key={group.title} className="nav__dropdown-group">
+                  <p className="nav__dropdown-heading">{group.title}</p>
+                  {group.items.map((item) => (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      className={`nav__dropdown-link ${isActivePath(item.path) ? 'nav__dropdown-link--active' : ''}`}
+                      role="menuitem"
+                      onClick={handleNavLinkClick}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              ))}
+            {activeMenu === 'startups' &&
+              startupGroups.map((group) => (
+                <div key={group.title} className="nav__dropdown-group">
+                  <p className="nav__dropdown-heading">{group.title}</p>
+                  {group.items.map((item) => (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      className={`nav__dropdown-link ${isActivePath(item.path) ? 'nav__dropdown-link--active' : ''}`}
+                      role="menuitem"
+                      onClick={handleNavLinkClick}
+                    >
+                      {item.label}
+                    </Link>
+                  ))}
+                </div>
+              ))}
+          </div>
+        </div>
+      )}
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
