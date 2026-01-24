@@ -94,6 +94,7 @@ const defaultFilterState = {
 export function ProductGrid({ products = mockProducts }) {
   const [filters, setFilters] = useState(defaultFilterState);
   const [isInvestorMode, setIsInvestorMode] = useState(false);
+  const fundingMatch = /kickstarter|investor ready/i;
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -115,42 +116,30 @@ export function ProductGrid({ products = mockProducts }) {
   }, [products, filters]);
 
   return (
-    <section className="v2-product-grid">
+    <section className={`v2-product-grid ${isInvestorMode ? 'v2-product-grid--investor' : ''}`}>
       <ProductFilters value={filters} onChange={setFilters} />
       {isInvestorMode && (
-        <div
-          style={{
-            textTransform: 'uppercase',
-            letterSpacing: '0.18em',
-            fontSize: '0.72rem',
-            color: 'rgba(245, 247, 255, 0.65)',
-            marginBottom: '1.5rem',
-          }}
-        >
-          Funding Spotlight
-        </div>
+        <div className="v2-product-grid__spotlight">Funding Spotlight</div>
       )}
       <div className="v2-product-grid__rail">
         {filteredProducts.map((product) => {
-          const fundingMatch = /kickstarter|investor ready/i;
           const isFunding =
             fundingMatch.test(product.status || '') ||
             (product.badges || []).some((badge) => fundingMatch.test(badge));
-          const tileStyle = isInvestorMode
-            ? isFunding
-              ? {
-                  transform: 'scale(1.01)',
-                }
-              : {
-                  opacity: 0.55,
-                  filter: 'grayscale(10%)',
-                }
-            : undefined;
           const displayBadges =
-            isInvestorMode && isFunding ? ['Funding Spotlight', ...(product.badges || [])] : product.badges;
+            isInvestorMode && isFunding
+              ? ['Funding Spotlight', ...(product.badges || [])]
+              : product.badges;
+          const tileClassName = [
+            'v2-product-grid__tile',
+            isInvestorMode && isFunding ? 'is-funding' : '',
+            isInvestorMode && !isFunding ? 'is-muted' : '',
+          ]
+            .filter(Boolean)
+            .join(' ');
 
           return (
-            <div key={product.id} className="v2-product-grid__tile" style={tileStyle}>
+            <div key={product.id} className={tileClassName}>
               <ProductTile {...product} badges={displayBadges} />
             </div>
           );

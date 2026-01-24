@@ -94,8 +94,8 @@ export function Home() {
       <section
         style={{
           padding: '3.5rem 0',
-          background: '#0a0b0f',
-          color: '#f5f7ff',
+          background: 'var(--color-bg-primary, #0a0b0f)',
+          color: 'var(--color-text-primary, #f5f7ff)',
         }}
       >
         <div
@@ -127,7 +127,13 @@ export function Home() {
             >
               Feature on Yo!
             </h2>
-            <p style={{ margin: 0, fontSize: '1.05rem', color: 'rgba(245, 247, 255, 0.75)' }}>
+            <p
+              style={{
+                margin: 0,
+                fontSize: '1.05rem',
+                color: 'var(--color-text-secondary, rgba(245, 247, 255, 0.75))',
+              }}
+            >
               We help startups get discovered, reviewed, and funded — globally.
             </p>
           </div>
@@ -140,7 +146,7 @@ export function Home() {
               display: 'grid',
               gap: '0.65rem',
               fontSize: '0.98rem',
-              color: 'rgba(245, 247, 255, 0.8)',
+              color: 'var(--color-text-secondary, rgba(245, 247, 255, 0.8))',
             }}
           >
             <li>Feature in our innovation grid</li>
@@ -152,8 +158,8 @@ export function Home() {
             <button
               type="button"
               style={{
-                background: '#f5f7ff',
-                color: '#0a0b0f',
+                background: 'var(--color-text-primary, #f5f7ff)',
+                color: 'var(--color-bg-primary, #0a0b0f)',
                 border: 'none',
                 padding: '0.85rem 1.6rem',
                 fontWeight: 600,
@@ -167,8 +173,8 @@ export function Home() {
               type="button"
               style={{
                 background: 'transparent',
-                color: '#f5f7ff',
-                border: '1px solid rgba(245, 247, 255, 0.4)',
+                color: 'var(--color-text-primary, #f5f7ff)',
+                border: '1px solid var(--color-border, rgba(245, 247, 255, 0.4))',
                 padding: '0.85rem 1.6rem',
                 fontWeight: 600,
                 letterSpacing: '0.02em',

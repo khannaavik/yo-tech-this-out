@@ -29,6 +29,15 @@
   background: linear-gradient(180deg, rgba(5, 6, 10, 0.7) 0%, rgba(5, 6, 10, 0.9) 55%, rgba(5, 6, 10, 0.98) 100%);
 }
 
+[data-theme="light"] .cinematic-hero__overlay {
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.5) 0%,
+    rgba(245, 245, 242, 0.75) 55%,
+    rgba(245, 245, 242, 0.92) 100%
+  );
+}
+
 .cinematic-hero__content {
   position: relative;
   z-index: 2;

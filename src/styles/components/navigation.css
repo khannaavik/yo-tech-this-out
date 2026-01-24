@@ -584,6 +584,112 @@
   }
 }
 
+/* Minimal polish for v2 nav menu visuals */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  background: rgba(8, 9, 14, 0.85);
+}
+
+.nav__bar {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0.9rem 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+}
+
+.nav__center--desktop {
+  display: none;
+}
+
+@media (min-width: 1024px) {
+  .nav__center--desktop {
+    display: flex;
+    align-items: center;
+    gap: 1.6rem;
+  }
+}
+
+.nav__link,
+.nav__dropdown-trigger {
+  color: inherit;
+  text-decoration: none;
+  font-size: 0.95rem;
+  letter-spacing: 0.02em;
+}
+
+.nav__link--active,
+.nav__dropdown--active .nav__dropdown-trigger {
+  color: var(--color-accent-electric-blue);
+}
+
+.nav__dropdown-menu {
+  background: rgba(12, 13, 18, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 18px 40px rgba(5, 6, 12, 0.35);
+  border-radius: 0.75rem;
+}
+
+.nav__dropdown-link {
+  color: inherit;
+}
+
+.nav__dropdown-link--active {
+  color: var(--color-accent-electric-blue);
+}
+
+.nav__overlay {
+  background: rgba(6, 7, 10, 0.7);
+}
+
+.nav__panel {
+  background: rgba(10, 11, 16, 0.96);
+  padding: 2.25rem 1.5rem;
+  width: min(420px, 92vw);
+  margin: 4rem auto;
+  border-radius: 1.5rem;
+  box-shadow: 0 30px 60px rgba(5, 6, 12, 0.45);
+}
+
+.nav__mobile-links {
+  display: grid;
+  gap: 0.75rem;
+  text-align: center;
+}
+
+.nav__mobile-link {
+  text-decoration: none;
+  color: inherit;
+  padding: 0.85rem 1rem;
+  border-radius: 0.9rem;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+[data-theme="light"] .nav {
+  background: rgba(250, 250, 248, 0.9);
+}
+
+[data-theme="light"] .nav__dropdown-menu {
+  background: #ffffff;
+  border-color: rgba(18, 19, 26, 0.08);
+  box-shadow: 0 18px 40px rgba(18, 19, 26, 0.12);
+}
+
+[data-theme="light"] .nav__panel {
+  background: #ffffff;
+  box-shadow: 0 24px 50px rgba(18, 19, 26, 0.16);
+}
+
+[data-theme="light"] .nav__mobile-link {
+  background: rgba(18, 19, 26, 0.04);
+}
+
 /* Theme Toggle - Base styles */
 .navigation__theme-toggle {
   display: flex;
