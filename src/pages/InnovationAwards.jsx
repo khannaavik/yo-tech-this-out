@@ -3,6 +3,7 @@ import { PageHero } from '../components/PageHero';
 import { PageSection } from '../components/PageSection';
 import { SEO } from '../components/SEO';
 import { CompanyLink } from '../components/CompanyLink';
+import { ProductTile } from '../components/ProductTile';
 import { getOrganizationJsonLd } from '../utils/seo';
 import { getProductById } from '../data/products';
 import '../styles/pages/innovation-awards.css';
@@ -13,37 +14,58 @@ import '../styles/pages/innovation-awards.css';
  * Focus on company, product, video, and editorial insight
  */
 
-// CES Innovation Award winners with editorial insights
+const bestOfCes = [
+  'galaxy-buds3-pro',
+  'sony-xr-display',
+  'bravia-theater-quad',
+  'viv-ring',
+];
+
 const awardWinners = [
   {
     productId: 'galaxy-buds3-pro',
-    awardType: 'Best of Innovation',
+    awardType: 'CES Innovation Award',
     insight: 'Samsung\'s AI-powered audio represents a fundamental shift in how we experience sound. The adaptive intelligence doesn\'t just cancel noise—it understands context and optimizes in real-time.',
   },
   {
     productId: 'bravia-theater-quad',
-    awardType: 'Innovation Award',
+    awardType: 'CES Innovation Award',
     insight: 'Sony reimagines home entertainment with quad-channel audio that creates true spatial immersion. This isn\'t an upgrade—it\'s a new category of cinematic experience.',
   },
   {
     productId: 'viv-ring',
-    awardType: 'Innovation Award',
+    awardType: 'CES Innovation Award',
     insight: 'VIV Health proves that comprehensive health monitoring can be elegant and unobtrusive. The smart ring category finally has its benchmark product.',
   },
   {
     productId: 'sony-xr-display',
-    awardType: 'Best of Innovation',
+    awardType: 'CES Innovation Award',
     insight: 'Professional creators now have an XR headset that matches their standards. Sony bridges the gap between virtual and physical workspaces with stunning fidelity.',
   },
   {
     productId: 'frenz-brainband',
-    awardType: 'Innovation Award',
+    awardType: 'CES Innovation Award',
     insight: 'Earable\'s neurotechnology approach to sleep and focus represents a new frontier in wearable wellness. Science meets design in a breakthrough form factor.',
   },
   {
     productId: 'maono-ai-mic',
-    awardType: 'Innovation Award',
+    awardType: 'CES Innovation Award',
     insight: 'Content creators get professional-grade audio with AI that adapts to their voice. Maono democratizes broadcast-quality sound for the creator economy.',
+  },
+];
+
+const pavilions = [
+  {
+    title: 'Korea Innovation Pavilion',
+    description: 'Cinematic hardware and deep-tech startups redefining mobility, displays, and AI.',
+  },
+  {
+    title: 'Japan Innovation Pavilion',
+    description: 'Precision engineering meets human-centered design for the next decade of living.',
+  },
+  {
+    title: 'Europe Innovation Pavilion',
+    description: 'Sustainable breakthroughs and industrial-grade innovation with global impact.',
   },
 ];
 
@@ -51,77 +73,76 @@ export function InnovationAwards() {
   return (
     <PageLayout>
       <SEO
-        title="CES Innovation Awards"
-        description="Celebrating the most impactful innovations from CES 2026. Explore award-winning products that represent the pinnacle of technological achievement and design excellence."
+        title="The Global Innovation Authority"
+        description="From CES Innovation Award winners to breakthrough startups shaping what’s next."
         url="/innovation-awards"
         jsonLd={getOrganizationJsonLd()}
       />
 
       {/* Hero Section */}
       <PageHero
-        title="CES Innovation Awards"
-        subtitle="Recognizing Excellence in Innovation"
-        description="The products that set the standard. These award winners represent the pinnacle of technological achievement, design excellence, and market impact."
+        title="The Global Innovation Authority"
+        subtitle="CES & Innovation Authority Hub"
+        description="From CES Innovation Award winners to breakthrough startups shaping what’s next."
       />
 
-      {/* Awards Gallery */}
-      <PageSection title="Award Winners" noPadding>
+      {/* Best of CES */}
+      <PageSection title="Best of CES" noPadding>
+        <div className="innovation-awards__about">
+          <p className="innovation-awards__about-text">
+            Best of CES highlights the products that define the show — category leaders with real market impact and
+            undeniable momentum.
+          </p>
+        </div>
         <div className="innovation-awards__gallery">
-          {awardWinners.map((award, index) => {
+          {bestOfCes.map((productId) => {
+            const product = getProductById(productId);
+            if (!product) return null;
+            return (
+              <ProductTile
+                key={product.id}
+                productSlug={product.id}
+                title={product.name}
+                categoryLabel={product.categoryTag || 'Innovation'}
+                regionLabel={product.regionLabel || 'Global'}
+                hookLine={product.description || 'Best of CES selection.'}
+                ratingEmojis={['🔥', '🧠', '✨', '🚀']}
+                viewCount={28400}
+                videoSrc="/assets/hero/home-hero.mp4"
+                posterSrc={product.image}
+                badges={['Best of CES']}
+                className="innovation-awards__tile"
+              />
+            );
+          })}
+        </div>
+      </PageSection>
+
+      {/* CES Innovation Awards */}
+      <PageSection title="CES Innovation Awards">
+        <div className="innovation-awards__about">
+          <p className="innovation-awards__about-text">
+            The CES Innovation Awards celebrate standout design and engineering across consumer technology. These winners
+            are the benchmarks for what the industry believes is next.
+          </p>
+        </div>
+        <div className="innovation-awards__gallery">
+          {awardWinners.map((award) => {
             const product = getProductById(award.productId);
             if (!product) return null;
-
             return (
               <article key={product.id} className="innovation-awards__card">
-                <div className="innovation-awards__badge-wrapper">
-                  <img
-                    src="/badges/ces-innovation-2026.png"
-                    alt="CES Innovation Awards 2026"
-                    className="innovation-awards__badge"
-                  />
-                  {award.awardType === 'Best of Innovation' && (
-                    <span className="innovation-awards__badge-label">Best of Innovation</span>
-                  )}
-                </div>
-
                 <div className="innovation-awards__card-content">
                   <div className="innovation-awards__header">
                     <span className="innovation-awards__company">
                       <CompanyLink companyName={product.company} />
                     </span>
                     <h3 className="innovation-awards__product-name">{product.name}</h3>
-                    <span className="innovation-awards__category">{product.categoryTag}</span>
+                    <span className="innovation-awards__category">{award.awardType}</span>
                   </div>
-
-                  {product.youtube && product.youtube.includes('watch?v=') && (
-                    <div className="innovation-awards__video">
-                      <iframe
-                        src={`https://www.youtube.com/embed/${product.youtube.split('watch?v=')[1].split('&')[0]}`}
-                        title={`${product.name} by ${product.company}`}
-                        frameBorder="0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                        className="innovation-awards__video-iframe"
-                      />
-                    </div>
-                  )}
-
                   <div className="innovation-awards__insight">
                     <p className="innovation-awards__insight-text">{award.insight}</p>
                   </div>
-
-                  {product.website && (
-                    <a
-                      href={product.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="innovation-awards__link"
-                      aria-label={`Visit ${product.company} website`}
-                    >
-                      Learn More
-                      <span className="innovation-awards__link-arrow">→</span>
-                    </a>
-                  )}
                 </div>
               </article>
             );
@@ -129,18 +150,29 @@ export function InnovationAwards() {
         </div>
       </PageSection>
 
-      {/* About the Awards */}
-      <PageSection title="About CES Innovation Awards" variant="centered">
+      {/* Global Innovation Pavilions */}
+      <PageSection title="Global Innovation Pavilions">
+        <div className="innovation-awards__gallery">
+          {pavilions.map((pavilion) => (
+            <article key={pavilion.title} className="innovation-awards__card">
+              <div className="innovation-awards__card-content">
+                <h3 className="innovation-awards__product-name">{pavilion.title}</h3>
+                <p className="innovation-awards__insight-text">{pavilion.description}</p>
+                <button type="button" className="innovation-awards__link">
+                  Explore Innovations <span className="innovation-awards__link-arrow">→</span>
+                </button>
+              </div>
+            </article>
+          ))}
+        </div>
+      </PageSection>
+
+      {/* Authority Close */}
+      <PageSection title="Authority" variant="centered">
         <div className="innovation-awards__about">
           <p className="innovation-awards__about-text">
-            The CES Innovation Awards program recognizes outstanding design and engineering in consumer technology products. 
-            Winners are selected by a panel of industry experts, including CES Innovation Awards® Judge Mike Johns, 
-            who evaluate products based on engineering, functionality, aesthetics, and user value.
-          </p>
-          <p className="innovation-awards__about-text">
-            Products featured here represent the highest standards of innovation—technologies that don't just improve 
-            existing categories, but define new ones. These are the breakthroughs that will shape how we live, work, 
-            and experience the world.
+            Yo! Tech This Out curates, validates, and amplifies the world’s most important innovations — beyond press
+            releases.
           </p>
         </div>
       </PageSection>

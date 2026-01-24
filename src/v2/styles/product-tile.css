@@ -1,0 +1,211 @@
+.v2-product-tile {
+  display: grid;
+  grid-template-rows: 0.68fr 0.32fr;
+  gap: 0;
+  background: #0a0b0f;
+  color: #f5f7ff;
+  text-decoration: none;
+  padding: 0;
+  border: none;
+  border-radius: 0;
+  min-height: 460px;
+  transition: transform 220ms ease, box-shadow 220ms ease;
+}
+
+.v2-product-tile.is-touch {
+  transform: none;
+  box-shadow: none;
+}
+
+.v2-product-tile.is-touch .v2-product-tile__video {
+  display: none;
+}
+
+.v2-product-tile.is-touch .v2-product-tile__image {
+  opacity: 1;
+}
+
+.v2-product-tile__media {
+  position: relative;
+  overflow: hidden;
+  min-height: 280px;
+}
+
+.v2-product-tile__image,
+.v2-product-tile__video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.v2-product-tile__media::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 11, 15, 0) 55%,
+    rgba(10, 11, 15, 0.65) 100%
+  );
+  pointer-events: none;
+}
+
+.v2-product-tile__image {
+  transition: opacity 320ms ease;
+}
+
+.v2-product-tile__video {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 360ms ease;
+}
+
+.v2-product-tile__body {
+  display: grid;
+  gap: 0.8rem;
+  padding: 1.35rem 1.5rem 1.6rem;
+}
+
+.v2-product-tile__title h3 {
+  margin: 0;
+  font-size: clamp(1.2rem, 2vw, 1.6rem);
+  letter-spacing: -0.01em;
+  font-weight: 650;
+}
+
+.v2-product-tile__title p {
+  margin: 0.2rem 0 0;
+  color: rgba(245, 247, 255, 0.65);
+  font-size: 0.95rem;
+  font-weight: 400;
+}
+
+.v2-product-tile__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgba(245, 247, 255, 0.6);
+}
+
+.v2-product-tile__rating {
+  display: flex;
+  gap: 0.65rem;
+  font-size: 1.25rem;
+}
+
+.v2-product-tile__views {
+  font-size: 0.85rem;
+  color: rgba(245, 247, 255, 0.45);
+}
+
+.v2-product-tile__hook {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.5;
+  font-style: italic;
+  color: rgba(245, 247, 255, 0.75);
+}
+
+.v2-product-tile__badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  font-size: 0.82rem;
+  color: rgba(245, 247, 255, 0.72);
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+.v2-product-tile__badges span {
+  font-weight: 500;
+}
+
+.v2-product-tile__badges span[data-tone='ces'] {
+  font-size: 0.95rem;
+  color: #ffe7a6;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+.v2-product-tile__badges span[data-tone='funding'] {
+  font-size: 0.86rem;
+  color: rgba(168, 220, 255, 0.9);
+  font-weight: 600;
+}
+
+.v2-product-tile__badges span[data-tone='region'] {
+  font-size: 0.72rem;
+  color: rgba(245, 247, 255, 0.45);
+  font-weight: 400;
+}
+
+@keyframes emoji-bounce {
+  0% {
+    transform: translateY(0);
+  }
+  40% {
+    transform: translateY(-6px);
+  }
+  60% {
+    transform: translateY(0);
+  }
+  80% {
+    transform: translateY(-3px);
+  }
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .v2-product-tile:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 18px 36px rgba(5, 6, 12, 0.35);
+    cursor: pointer;
+  }
+
+  .v2-product-tile.is-hovering .v2-product-tile__video {
+    opacity: 1;
+  }
+
+  .v2-product-tile.is-hovering .v2-product-tile__image {
+    opacity: 0.2;
+  }
+
+  .v2-product-tile:hover .v2-product-tile__rating span {
+    animation: emoji-bounce 520ms ease;
+  }
+
+  .v2-product-tile:hover .v2-product-tile__rating span:nth-child(1) {
+    animation-delay: 0ms;
+  }
+
+  .v2-product-tile:hover .v2-product-tile__rating span:nth-child(2) {
+    animation-delay: 60ms;
+  }
+
+  .v2-product-tile:hover .v2-product-tile__rating span:nth-child(3) {
+    animation-delay: 120ms;
+  }
+
+  .v2-product-tile:hover .v2-product-tile__rating span:nth-child(4) {
+    animation-delay: 180ms;
+  }
+}
+
+@media (max-width: 768px) {
+  .v2-product-tile {
+    transform: none;
+    box-shadow: none;
+    min-height: 380px;
+  }
+
+  .v2-product-tile__video {
+    display: none;
+  }
+}
