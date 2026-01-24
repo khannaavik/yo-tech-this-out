@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import '../../styles/product-grid.css';
 
 const FILTER_GROUPS = [
@@ -26,78 +26,84 @@ const buildInitialState = () =>
   }, {});
 
 export function ProductFilters({ value, onChange }) {
-  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isPanelOpen, setIsPanelOpen] = useState(false);
   const filters = useMemo(() => value ?? buildInitialState(), [value]);
+  const [draftFilters, setDraftFilters] = useState(filters);
+
+  useEffect(() => {
+    if (!isPanelOpen) {
+      setDraftFilters(filters);
+    }
+  }, [filters, isPanelOpen]);
 
   const handleSelect = (groupId, option) => {
-    const next = { ...filters, [groupId]: option };
-    onChange?.(next);
+    setDraftFilters((prev) => ({ ...prev, [groupId]: option }));
+  };
+
+  const handleApply = () => {
+    onChange?.(draftFilters);
+    setIsPanelOpen(false);
+  };
+
+  const handleClear = () => {
+    const reset = buildInitialState();
+    setDraftFilters(reset);
+    onChange?.(reset);
   };
 
   const activeCount = Object.values(filters).filter((val) => val !== 'All').length;
 
   return (
     <section className="v2-product-filters" aria-label="Product filters">
-      <div className="v2-product-filters__bar">
-        <div className="v2-product-filters__title">
-          <span>Filters</span>
-          {activeCount > 0 && <em>{activeCount} active</em>}
-        </div>
-
+      <div className="v2-product-filters__refine">
         <button
-          className="v2-product-filters__mobile-toggle"
+          className="v2-product-filters__refine-button"
           type="button"
-          onClick={() => setIsMobileOpen(true)}
+          onClick={() => setIsPanelOpen(true)}
         >
-          Edit filters
+          Refine
         </button>
-
-        <div className="v2-product-filters__groups">
-          {FILTER_GROUPS.map((group) => (
-            <div key={group.id} className="v2-product-filters__group">
-              <span className="v2-product-filters__label">{group.label}</span>
-              <div className="v2-product-filters__options">
-                {['All', ...group.options].map((option) => {
-                  const isActive = filters[group.id] === option;
-                  return (
-                    <button
-                      key={option}
-                      type="button"
-                      className={`v2-product-filters__option ${isActive ? 'is-active' : ''}`}
-                      onClick={() => handleSelect(group.id, option)}
-                    >
-                      {option}
-                    </button>
-                  );
-                })}
-              </div>
-            </div>
-          ))}
-        </div>
+        {activeCount > 0 && (
+          <span className="v2-product-filters__count">{activeCount} active</span>
+        )}
       </div>
 
-      {isMobileOpen && (
-        <div className="v2-product-filters__sheet">
-          <div className="v2-product-filters__sheet-overlay" onClick={() => setIsMobileOpen(false)} />
-          <div className="v2-product-filters__sheet-panel">
-            <div className="v2-product-filters__sheet-header">
-              <h3>Filters</h3>
-              <button type="button" onClick={() => setIsMobileOpen(false)}>
+      {isPanelOpen && (
+        <div className="v2-product-filters__panel">
+          <div className="v2-product-filters__panel-overlay" onClick={() => setIsPanelOpen(false)} />
+          <div className="v2-product-filters__panel-sheet">
+            <div className="v2-product-filters__panel-header">
+              <div>
+                <p className="v2-product-filters__panel-eyebrow">Refine</p>
+                <h3>Filter the grid</h3>
+              </div>
+              <button type="button" onClick={() => setIsPanelOpen(false)}>
                 Close
               </button>
             </div>
-            <div className="v2-product-filters__sheet-body">
+
+            <div className="v2-product-filters__panel-body">
               {FILTER_GROUPS.map((group) => (
-                <div key={group.id} className="v2-product-filters__sheet-group">
+                <div key={group.id} className="v2-product-filters__panel-group">
                   <span className="v2-product-filters__label">{group.label}</span>
-                  <div className="v2-product-filters__sheet-options">
+                  <div
+                    className={
+                      group.id === 'status'
+                        ? 'v2-product-filters__segmented'
+                        : 'v2-product-filters__chips'
+                    }
+                  >
                     {['All', ...group.options].map((option) => {
-                      const isActive = filters[group.id] === option;
+                      const isActive = draftFilters[group.id] === option;
                       return (
                         <button
                           key={option}
                           type="button"
-                          className={`v2-product-filters__sheet-option ${isActive ? 'is-active' : ''}`}
+                          className={
+                            group.id === 'status'
+                              ? `v2-product-filters__segment ${isActive ? 'is-active' : ''}`
+                              : `v2-product-filters__chip ${isActive ? 'is-active' : ''}`
+                          }
                           onClick={() => handleSelect(group.id, option)}
                         >
                           {option}
@@ -108,9 +114,13 @@ export function ProductFilters({ value, onChange }) {
                 </div>
               ))}
             </div>
-            <div className="v2-product-filters__sheet-actions">
-              <button type="button" onClick={() => setIsMobileOpen(false)}>
-                View results
+
+            <div className="v2-product-filters__panel-actions">
+              <button type="button" className="v2-product-filters__clear" onClick={handleClear}>
+                Clear
+              </button>
+              <button type="button" className="v2-product-filters__apply" onClick={handleApply}>
+                Apply
               </button>
             </div>
           </div>
