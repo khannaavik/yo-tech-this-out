@@ -83,6 +83,10 @@ export function Navigation() {
     setOpenMobileSection(null);
   }, [closeMobileMenu]);
 
+  const handleDropdownTriggerClick = useCallback((menu) => {
+    setActiveMenu((prev) => (prev === menu ? null : menu));
+  }, []);
+
   const isActivePath = useCallback((path) => location.pathname === path, [location.pathname]);
 
   const isDropdownItemActive = useCallback((dropdownItems) => {
@@ -145,7 +149,7 @@ export function Navigation() {
         {/* Center: Desktop Links */}
         <div className="nav__center nav__center--desktop" role="menubar" aria-label="Primary">
           <div
-            className={`nav__dropdown ${isDropdownItemActive(discoverGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
+            className={`nav__dropdown ${activeMenu === 'discover' ? 'nav__dropdown--open' : ''} ${isDropdownItemActive(discoverGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
             onMouseEnter={() => setActiveMenu('discover')}
             onMouseLeave={() => setActiveMenu(null)}
           >
@@ -154,10 +158,33 @@ export function Navigation() {
               className={`nav__dropdown-trigger ${isDropdownItemActive(discoverGroups.flatMap((group) => group.items)) ? 'nav__link--active' : ''}`}
               aria-expanded={activeMenu === 'discover'}
               aria-haspopup="true"
+              onClick={() => handleDropdownTriggerClick('discover')}
             >
               Discover
               <span className="nav__dropdown-arrow" aria-hidden="true">▼</span>
             </button>
+            {activeMenu === 'discover' && (
+              <div className="nav__dropdown-panel" onMouseEnter={() => setActiveMenu('discover')} onMouseLeave={() => setActiveMenu(null)}>
+                <div className="nav__dropdown-panel-inner">
+                  {discoverGroups.map((group) => (
+                    <div key={group.title} className="nav__dropdown-group">
+                      <p className="nav__dropdown-heading">{group.title}</p>
+                      {group.items.map((item) => (
+                        <Link
+                          key={item.path}
+                          to={item.path}
+                          className={`nav__dropdown-link ${isActivePath(item.path) ? 'nav__dropdown-link--active' : ''}`}
+                          role="menuitem"
+                          onClick={handleNavLinkClick}
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           <Link
@@ -169,7 +196,7 @@ export function Navigation() {
           </Link>
 
           <div
-            className={`nav__dropdown ${isDropdownItemActive(mediaGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
+            className={`nav__dropdown ${activeMenu === 'media' ? 'nav__dropdown--open' : ''} ${isDropdownItemActive(mediaGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
             onMouseEnter={() => setActiveMenu('media')}
             onMouseLeave={() => setActiveMenu(null)}
           >
@@ -178,14 +205,37 @@ export function Navigation() {
               className={`nav__dropdown-trigger ${isDropdownItemActive(mediaGroups.flatMap((group) => group.items)) ? 'nav__link--active' : ''}`}
               aria-expanded={activeMenu === 'media'}
               aria-haspopup="true"
+              onClick={() => handleDropdownTriggerClick('media')}
             >
               Media
               <span className="nav__dropdown-arrow" aria-hidden="true">▼</span>
             </button>
+            {activeMenu === 'media' && (
+              <div className="nav__dropdown-panel" onMouseEnter={() => setActiveMenu('media')} onMouseLeave={() => setActiveMenu(null)}>
+                <div className="nav__dropdown-panel-inner">
+                  {mediaGroups.map((group) => (
+                    <div key={group.title} className="nav__dropdown-group">
+                      <p className="nav__dropdown-heading">{group.title}</p>
+                      {group.items.map((item) => (
+                        <Link
+                          key={item.path}
+                          to={item.path}
+                          className={`nav__dropdown-link ${isActivePath(item.path) ? 'nav__dropdown-link--active' : ''}`}
+                          role="menuitem"
+                          onClick={handleNavLinkClick}
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
 
           <div
-            className={`nav__dropdown ${isDropdownItemActive(startupGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
+            className={`nav__dropdown ${activeMenu === 'startups' ? 'nav__dropdown--open' : ''} ${isDropdownItemActive(startupGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
             onMouseEnter={() => setActiveMenu('startups')}
             onMouseLeave={() => setActiveMenu(null)}
           >
@@ -194,10 +244,33 @@ export function Navigation() {
               className={`nav__dropdown-trigger ${isDropdownItemActive(startupGroups.flatMap((group) => group.items)) ? 'nav__link--active' : ''}`}
               aria-expanded={activeMenu === 'startups'}
               aria-haspopup="true"
+              onClick={() => handleDropdownTriggerClick('startups')}
             >
               For Startups
               <span className="nav__dropdown-arrow" aria-hidden="true">▼</span>
             </button>
+            {activeMenu === 'startups' && (
+              <div className="nav__dropdown-panel" onMouseEnter={() => setActiveMenu('startups')} onMouseLeave={() => setActiveMenu(null)}>
+                <div className="nav__dropdown-panel-inner">
+                  {startupGroups.map((group) => (
+                    <div key={group.title} className="nav__dropdown-group">
+                      <p className="nav__dropdown-heading">{group.title}</p>
+                      {group.items.map((item) => (
+                        <Link
+                          key={item.path}
+                          to={item.path}
+                          className={`nav__dropdown-link ${isActivePath(item.path) ? 'nav__dropdown-link--active' : ''}`}
+                          role="menuitem"
+                          onClick={handleNavLinkClick}
+                        >
+                          {item.label}
+                        </Link>
+                      ))}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
         </div>
 
@@ -242,69 +315,6 @@ export function Navigation() {
           </button>
         </div>
       </div>
-
-      {/* Single Anchored Mega-Menu */}
-      {activeMenu && (
-        <div
-          className="nav__mega-menu"
-          onMouseEnter={() => setActiveMenu(activeMenu)}
-          onMouseLeave={() => setActiveMenu(null)}
-        >
-          <div className="nav__mega-menu-content">
-            {activeMenu === 'discover' &&
-              discoverGroups.map((group) => (
-                <div key={group.title} className="nav__dropdown-group">
-                  <p className="nav__dropdown-heading">{group.title}</p>
-                  {group.items.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className={`nav__dropdown-link ${isActivePath(item.path) ? 'nav__dropdown-link--active' : ''}`}
-                      role="menuitem"
-                      onClick={handleNavLinkClick}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              ))}
-            {activeMenu === 'media' &&
-              mediaGroups.map((group) => (
-                <div key={group.title} className="nav__dropdown-group">
-                  <p className="nav__dropdown-heading">{group.title}</p>
-                  {group.items.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className={`nav__dropdown-link ${isActivePath(item.path) ? 'nav__dropdown-link--active' : ''}`}
-                      role="menuitem"
-                      onClick={handleNavLinkClick}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              ))}
-            {activeMenu === 'startups' &&
-              startupGroups.map((group) => (
-                <div key={group.title} className="nav__dropdown-group">
-                  <p className="nav__dropdown-heading">{group.title}</p>
-                  {group.items.map((item) => (
-                    <Link
-                      key={item.path}
-                      to={item.path}
-                      className={`nav__dropdown-link ${isActivePath(item.path) ? 'nav__dropdown-link--active' : ''}`}
-                      role="menuitem"
-                      onClick={handleNavLinkClick}
-                    >
-                      {item.label}
-                    </Link>
-                  ))}
-                </div>
-              ))}
-          </div>
-        </div>
-      )}
 
       {/* Mobile Menu Overlay */}
       {isMobileMenuOpen && (
