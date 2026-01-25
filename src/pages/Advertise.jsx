@@ -20,19 +20,24 @@ export function Advertise() {
       <section className="startups">
         {/* Hero */}
         <header className="startups__hero">
-          <p className="startups__eyebrow">For Startups</p>
-          <h1 className="startups__title">For Startups Shaping the Future</h1>
-          <p className="startups__subtitle">
-            Yo! is a curated innovation authority for CES winners and ambitious builders — a
-            place where serious products are discovered and trusted.
-          </p>
-          <div className="startups__cta-row">
-            <a className="startups__cta startups__cta--primary" href="mailto:hello@yotechthisout.com?subject=Apply%20to%20be%20Featured">
-              Apply to Be Featured
-            </a>
-            <a className="startups__cta startups__cta--ghost" href="mailto:hello@yotechthisout.com?subject=Book%20a%20Call">
-              Book a Call
-            </a>
+          <div className="startups__hero-card">
+            <p className="startups__eyebrow">For Startups</p>
+            <h1 className="startups__title">For Startups Shaping the Future</h1>
+            <p className="startups__subtitle">
+              Yo! is a curated innovation authority for CES winners and ambitious builders — a
+              place where serious products are discovered and trusted.
+            </p>
+            <div className="startups__cta-row">
+              <a className="startups__cta startups__cta--primary" href="mailto:hello@yotechthisout.com?subject=Apply%20to%20be%20Featured">
+                Apply to Be Featured
+              </a>
+              <a className="startups__cta startups__cta--ghost" href="mailto:hello@yotechthisout.com?subject=Book%20a%20Call">
+                Book a Call
+              </a>
+            </div>
+            <p className="startups__trust">
+              Trusted by CES winners, investors, and founders worldwide.
+            </p>
           </div>
         </header>
 
@@ -41,20 +46,48 @@ export function Advertise() {
           <h2 className="startups__section-title">Why Startups Choose Yo!</h2>
           <div className="startups__value-grid">
             <article className="startups__value-card">
-              <h3>Cross-border visibility</h3>
-              <p>Get discovered beyond your home market by press, investors, and early adopters.</p>
+              <span className="startups__value-check" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.667 5L7.5 14.167 3.333 10" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+              <div>
+                <h3>Cross-border visibility</h3>
+                <p>Get discovered beyond your home market by press, investors, and early adopters.</p>
+              </div>
             </article>
             <article className="startups__value-card">
-              <h3>Cultural translation</h3>
-              <p>Editorial storytelling with visual + emoji UX that travels across languages.</p>
+              <span className="startups__value-check" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.667 5L7.5 14.167 3.333 10" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+              <div>
+                <h3>Cultural translation</h3>
+                <p>Editorial storytelling with visual + emoji UX that travels across languages.</p>
+              </div>
             </article>
             <article className="startups__value-card">
-              <h3>CES-aligned authority</h3>
-              <p>Signal credibility with an innovation feed inspired by CES winners.</p>
+              <span className="startups__value-check" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.667 5L7.5 14.167 3.333 10" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+              <div>
+                <h3>CES-aligned authority</h3>
+                <p>Signal credibility with an innovation feed inspired by CES winners.</p>
+              </div>
             </article>
             <article className="startups__value-card">
-              <h3>Investor discovery</h3>
-              <p>Visibility that reaches global investors looking beyond familiar markets.</p>
+              <span className="startups__value-check" aria-hidden="true">
+                <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path d="M16.667 5L7.5 14.167 3.333 10" stroke="currentColor" strokeWidth="2.25" strokeLinecap="round" strokeLinejoin="round" />
+                </svg>
+              </span>
+              <div>
+                <h3>Investor discovery</h3>
+                <p>Visibility that reaches global investors looking beyond familiar markets.</p>
+              </div>
             </article>
           </div>
         </section>
