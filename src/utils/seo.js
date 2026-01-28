@@ -35,7 +35,7 @@ export function getOrganizationJsonLd() {
  * Generate Product JSON-LD
  */
 export function getProductJsonLd(product) {
-  const productUrl = `${SITE_URL}/explore#${product.id}`;
+  const productUrl = `${SITE_URL}/products#${product.id}`;
   const productImage = product.image.startsWith('http') 
     ? product.image 
     : `${SITE_URL}${product.image}`;
@@ -73,7 +73,7 @@ export function getWebsiteJsonLd() {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: `${SITE_URL}/explore?search={search_term_string}`,
+        urlTemplate: `${SITE_URL}/products?search={search_term_string}`,
       },
       'query-input': 'required name=search_term_string',
     },

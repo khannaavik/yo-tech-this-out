@@ -1,90 +1,79 @@
+import { useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { CinematicHero } from '../sections/CinematicHero';
 import { ProductGrid } from '../features/products/ProductGrid';
+import { products } from '../../data/products';
 import '../styles/home.css';
 
-const mockProducts = [
-  {
-    id: 'nebula-pulse',
-    image: '/products/placeholder.png',
-    video: '/assets/hero/home-hero.mp4',
-    productName: 'Nebula Pulse',
-    companyName: 'Aurora Labs',
-    category: 'XR / Wearables',
-    region: 'Global',
-    emojiRating: ['🔥', '🔥', '😍'],
-    views: 18400,
-    hook: 'Cinematic headset tuned for creators',
-    badges: ['CES Winner', 'Kickstarter', 'Global'],
-    status: 'Kickstarter',
-  },
-  {
-    id: 'looki-l1',
-    image: '/products/looki-l1/product.png',
-    productName: 'Looki L1',
-    companyName: 'Looki',
-    category: 'Smart Home',
-    region: 'North America',
-    emojiRating: ['✨', '🔥', '💡'],
-    views: 9200,
-    hook: 'A smarter portal for every room',
-    badges: ['CES Honoree', 'In Market', 'North America'],
-    status: 'In Market',
-  },
-  {
-    id: 'osmotex',
-    image: '/products/osmotex-jacket/product.png',
-    productName: 'Osmotex Jacket',
-    companyName: 'Osmotex',
-    category: 'Health',
-    region: 'Europe',
-    emojiRating: ['🧊', '🔥', '😍'],
-    views: 46200,
-    hook: 'Adaptive thermal layers for any climate',
-    badges: ['Investor Ready', 'Europe'],
-    status: 'Investor Ready',
-  },
-  {
-    id: 'q-vision-pro',
-    image: '/products/q-vision-pro/product.png',
-    productName: 'Q Vision Pro',
-    companyName: 'Q Vision',
-    category: 'AI',
-    region: 'Asia-Pacific',
-    emojiRating: ['🤖', '✨', '🚀'],
-    views: 31800,
-    hook: 'Ambient intelligence for the modern home',
-    badges: ['Prototype', 'Asia-Pacific'],
-    status: 'Prototype',
-  },
-  {
-    id: 'viv-ring',
-    image: '/products/viv-ring/product.png',
-    productName: 'Viv Ring',
-    companyName: 'Viv',
-    category: 'Health',
-    region: 'Global',
-    emojiRating: ['💫', '🔥', '❤️'],
-    views: 27100,
-    hook: 'Biometric signal clarity, always on',
-    badges: ['CES Honoree', 'In Market', 'Global'],
-    status: 'In Market',
-  },
-  {
-    id: 'sportrack-xr',
-    image: '/products/sportrack-xr/product.png',
-    productName: 'Sportrack XR',
-    companyName: 'Sportrack',
-    category: 'Mobility',
-    region: 'North America',
-    emojiRating: ['⚡', '🔥', '🎯'],
-    views: 13300,
-    hook: 'Motion-first training for athletes',
-    badges: ['Kickstarter', 'North America'],
-    status: 'Kickstarter',
-  },
-];
+// Category mapping for ProductGrid
+const categoryMap = {
+  'ai-audio': 'AI',
+  'wearables': 'XR / Wearables',
+  'health': 'Health',
+  'xr': 'XR / Wearables',
+  'living': 'Smart Home',
+};
+
+// Transform product data to ProductGrid format
+const transformProduct = (product) => {
+  const isBike = /bike|ebike|mobility/i.test(product.categoryTag);
+  const region = 'Global'; // Default region
+  const status = product.website ? 'In Market' : 'Prototype';
+  
+  const badges = [];
+  if (product.categoryTag && /ces/i.test(product.categoryTag)) {
+    badges.push('CES Honoree');
+  }
+  if (isBike) {
+    badges.push('Mobility');
+  }
+  
+  return {
+    id: product.id,
+    image: product.image || '/products/placeholder.png',
+    video: null,
+    productName: product.name,
+    companyName: product.company,
+    category: categoryMap[product.category] || 'Smart Home',
+    region: region,
+    emojiRating: ['🔥', '✨', '💡'],
+    views: Math.floor(Math.random() * 50000) + 5000,
+    hook: product.description || '',
+    badges: badges,
+    status: status,
+  };
+};
 
 export function Home() {
+  // Get all bike products (categoryTag includes Bike, eBike, or Mobility)
+  const bikeProducts = useMemo(() => {
+    return products
+      .filter((product) => {
+        const tag = product.categoryTag || '';
+        return /bike|ebike|mobility/i.test(tag);
+      })
+      .map(transformProduct);
+  }, []);
+
+  // Get 4 premium editorial products (CES winners, featured products)
+  const premiumProducts = useMemo(() => {
+    const premiumIds = [
+      'galaxy-buds3-pro', // CES Winner
+      'viv-ring', // CES Winner, Featured
+      'sony-xr-display', // CES Winner
+      'looki-l1', // Featured flagship
+    ];
+    
+    return products
+      .filter((product) => premiumIds.includes(product.id))
+      .map(transformProduct);
+  }, []);
+
+  // Combine bikes + premium products
+  const featuredProducts = useMemo(() => {
+    return [...premiumProducts, ...bikeProducts];
+  }, [premiumProducts, bikeProducts]);
+
   return (
     <main>
       <CinematicHero
@@ -146,7 +135,16 @@ export function Home() {
         </div>
       </section>
 
-      <ProductGrid products={mockProducts} />
+      <ProductGrid products={featuredProducts} />
+
+      {/* View All Products CTA */}
+      <section className="home-view-all" aria-label="View all products">
+        <div className="home-view-all__container">
+          <Link to="/products" className="home-view-all__button">
+            View All Products
+          </Link>
+        </div>
+      </section>
 
       <div style={{ height: '5rem' }} aria-hidden="true" />
     </main>

@@ -1,4 +1,4 @@
-import { useParams, Link, Navigate } from 'react-router-dom';
+import { useParams, Link } from 'react-router-dom';
 import { PageLayout } from '../components/PageLayout';
 import { PageHero } from '../components/PageHero';
 import { PageSection } from '../components/PageSection';
@@ -17,9 +17,9 @@ export function CompanyProfile() {
   const { companySlug } = useParams();
   const company = getCompanyBySlug(companySlug);
 
-  // Redirect to 404 if company not found
+  // Show 404 if company not found
   if (!company) {
-    return <Navigate to="/company-not-found" replace />;
+    return <NotFound />;
   }
 
   const profile = getCompanyProfile(company.name);

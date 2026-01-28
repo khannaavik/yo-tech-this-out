@@ -1,0 +1,107 @@
+Yo! Tech This Out - Launch Asset Requests
+Date: 2026-01-28
+
+Use this list to collect missing links, files, and IDs.
+
+PRIORITY (LAUNCH-BLOCKERS)
+1) Press article URLs (Press page)
+   - TechCrunch article URL
+   - The Verge article URL
+   - Engadget article URL
+
+2) Press kit ZIP file
+   - Provide file: /public/assets/press/yo-tech-this-out-press-kit.zip
+   - Or provide updated download URL/path
+
+3) Hero video MP4
+   - Provide file: /public/assets/hero/home-hero.mp4
+   - Used by: Home hero, ProductDetail hero, v2 Home, v2 ProductTile
+
+4) Contact form backend
+   - Formspree form ID to replace YOUR_FORM_ID
+   - Example target: https://formspree.io/f/{FORM_ID}
+
+5) ProductDetail mock URLs (replace example.com or remove mock data)
+   - ProductDetail mock website URL
+   - ProductDetail mock Kickstarter URL
+   - ProductDetail mock investor URL
+   - ProductDetail mock funding URL
+
+6) v2 Home CTAs (non-functional buttons)
+   - "Apply to Be Featured" target (URL or mailto)
+   - "Book a Call" target (URL or mailto)
+
+7) Magazine article links (5 cards)
+   - Article URL for each editorial card on Magazine page
+
+
+CONTENT COMPLETENESS
+8) Social embeds (optional but recommended)
+   - Embedded feed URLs or embed codes for:
+     - LinkedIn
+     - YouTube
+     - Instagram
+     - X (Twitter)
+
+9) Product website URLs (20 items)
+   - Acoustic Eye
+   - TD Square
+   - buddy-in
+   - H-Flex Wearable Robot
+   - WHSP Ring
+   - FaceHeart Cardio Mirror
+   - Oclean X Ultra
+   - Withings Omnia
+   - Realbotix Humanoids
+   - Bio Leg
+   - Sony XR Display
+   - SPORTRACK XR
+   - Q-Vision Pro
+   - booxtory
+   - Osmotex Jacket
+   - GhostPass
+   - Diton D9 eBike
+   - Jaguar PRO eBike
+   - Akez ZX eBike
+   - ShowStoppers Concept Bike
+
+10) Product YouTube/video links (24 items)
+   - Acoustic Eye
+   - TD Square
+   - buddy-in
+   - SwipeVideo
+   - Clicks Keyboard (2026)
+   - Fender Audio ELIE 6
+   - WHSP Ring
+   - Agadexo Lowback
+   - Bio Leg
+   - Coro Breastfeeding Monitor
+   - SPORTRACK XR
+   - Q-Vision Pro
+   - Zenith HUD Glasses
+   - Epomaker Mechanical Keyboard
+   - booxtory
+   - Osmotex Jacket
+   - GhostPass
+   - Birdbuddy Smart Feeder
+   - Botslab W101
+   - DESLOC V150 Plus
+   - Diton D9 eBike
+   - Jaguar PRO eBike
+   - Akez ZX eBike
+   - ShowStoppers Concept Bike
+
+11) Product funding / investor data (all products)
+   - Funding status
+   - Funding amount
+   - Funding progress
+   - Funding days remaining
+   - Funding URL (campaign link)
+   - Investor URL
+   - Investor-ready flag (yes/no)
+
+12) YouTube search URLs to replace with direct links
+   - VIV Ring (currently YouTube search URL)
+   - H-Flex Wearable Robot (currently YouTube search URL)
+   - Nearthlab DFR Station (currently YouTube search URL)
+

@@ -9,12 +9,16 @@ import { AppShell } from './v2/app/AppShell';
 import { AppRoutes } from './v2/app/routes';
 import { Why } from './pages/Why';
 import { About } from './pages/About';
+import { WhatWeDo } from './pages/WhatWeDo';
+import { Magazine } from './pages/Magazine';
+import { Podcast } from './pages/Podcast';
+import { Social } from './pages/Social';
 import { Advertise } from './pages/Advertise';
 import { Techfluencers } from './pages/Techfluencers';
 import { Press } from './pages/Press';
 import { Contact } from './pages/Contact';
 import { Live } from './pages/Live';
-import { Explore } from './pages/Explore';
+import { Products } from './pages/Products';
 import { InnovationAwards } from './pages/InnovationAwards';
 import { CompanyProfile } from './pages/CompanyProfile';
 import { ProductDetail } from './pages/ProductDetail';
@@ -60,6 +64,26 @@ function App() {
                     <About />
                   </ErrorBoundary>
                 } />
+                <Route path="/what-we-do" element={
+                  <ErrorBoundary>
+                    <WhatWeDo />
+                  </ErrorBoundary>
+                } />
+                <Route path="/magazine" element={
+                  <ErrorBoundary>
+                    <Magazine />
+                  </ErrorBoundary>
+                } />
+                <Route path="/podcast" element={
+                  <ErrorBoundary>
+                    <Podcast />
+                  </ErrorBoundary>
+                } />
+                <Route path="/social" element={
+                  <ErrorBoundary>
+                    <Social />
+                  </ErrorBoundary>
+                } />
                 <Route path="/advertise" element={
                   <ErrorBoundary>
                     <Advertise />
@@ -85,9 +109,9 @@ function App() {
                     <Live />
                   </ErrorBoundary>
                 } />
-                <Route path="/explore" element={
+                <Route path="/products" element={
                   <ErrorBoundary>
-                    <Explore />
+                    <Products />
                   </ErrorBoundary>
                 } />
                 <Route path="/innovation-awards" element={

@@ -44,7 +44,7 @@ export function NotFound() {
               <p className="not-found-suggestions-title">You might be looking for:</p>
               <ul className="not-found-links">
                 <li>
-                  <Link to="/explore">Explore Products</Link>
+                  <Link to="/products">Products</Link>
                 </li>
                 <li>
                   <Link to="/about">About Us</Link>

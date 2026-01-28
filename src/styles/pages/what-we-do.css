@@ -1,0 +1,562 @@
+/**
+ * What We Do Page Styles
+ * Strategic, founder-friendly design with big sections and clean spacing
+ * Mobile-first approach
+ */
+
+/* ============================================
+   HERO SECTION
+   ============================================ */
+
+.what-we-do-hero {
+  padding: var(--spacing-5xl) var(--spacing-md);
+  text-align: center;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-hero {
+    padding: var(--spacing-5xl) var(--spacing-xl);
+  }
+}
+
+.what-we-do-hero__headline {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-xl) 0;
+  letter-spacing: -0.03em;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-hero__headline {
+    font-size: var(--font-size-6xl);
+    margin-bottom: var(--spacing-2xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .what-we-do-hero__headline {
+    font-size: var(--font-size-7xl);
+  }
+}
+
+.what-we-do-hero__subhead {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-medium);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin: 0;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-hero__subhead {
+    font-size: var(--font-size-2xl);
+    line-height: 1.6;
+  }
+}
+
+/* ============================================
+   SERVICES SECTION
+   ============================================ */
+
+.what-we-do-services {
+  padding: var(--spacing-5xl) var(--spacing-md);
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-services {
+    padding: var(--spacing-5xl) var(--spacing-xl);
+  }
+}
+
+.what-we-do-services__header {
+  text-align: center;
+  margin-bottom: var(--spacing-5xl);
+  max-width: 900px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.what-we-do-services__title {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-xl) 0;
+  letter-spacing: -0.03em;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-services__title {
+    font-size: var(--font-size-5xl);
+    margin-bottom: var(--spacing-2xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .what-we-do-services__title {
+    font-size: var(--font-size-6xl);
+  }
+}
+
+.what-we-do-services__intro {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-services__intro {
+    font-size: var(--font-size-xl);
+    line-height: 1.7;
+  }
+}
+
+.what-we-do-services__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-3xl);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-services__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .what-we-do-services__grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Make the last item span full width on 2-column layout */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .what-we-do-services__grid .what-we-do-service-card:last-child {
+    grid-column: 1 / -1;
+    max-width: 600px;
+    margin: 0 auto;
+  }
+}
+
+.what-we-do-service-card {
+  text-align: center;
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform var(--transition-base);
+}
+
+@media (min-width: 768px) {
+  .what-we-do-service-card {
+    padding: var(--spacing-4xl) var(--spacing-2xl);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .what-we-do-service-card:hover {
+    transform: translateY(-4px);
+  }
+}
+
+.what-we-do-service-card__icon {
+  font-size: 64px;
+  margin-bottom: var(--spacing-xl);
+  filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.3));
+  line-height: 1;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-service-card__icon {
+    font-size: 80px;
+    margin-bottom: var(--spacing-2xl);
+  }
+}
+
+.what-we-do-service-card__title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-lg) 0;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-service-card__title {
+    font-size: var(--font-size-2xl);
+    margin-bottom: var(--spacing-xl);
+  }
+}
+
+.what-we-do-service-card__text {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-service-card__text {
+    font-size: var(--font-size-lg);
+    line-height: 1.7;
+  }
+}
+
+/* ============================================
+   MEDIA-FOR-EQUITY SECTION
+   ============================================ */
+
+.what-we-do-equity {
+  padding: var(--spacing-5xl) var(--spacing-md);
+  max-width: 1400px;
+  margin: 0 auto;
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 212, 255, 0.02) 50%,
+    transparent 100%
+  );
+}
+
+@media (min-width: 768px) {
+  .what-we-do-equity {
+    padding: var(--spacing-5xl) var(--spacing-xl);
+  }
+}
+
+.what-we-do-equity__header {
+  text-align: center;
+  margin-bottom: var(--spacing-5xl);
+}
+
+.what-we-do-equity__title {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-md) 0;
+  letter-spacing: -0.03em;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-equity__title {
+    font-size: var(--font-size-5xl);
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .what-we-do-equity__title {
+    font-size: var(--font-size-6xl);
+  }
+}
+
+.what-we-do-equity__subtitle {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+  color: var(--color-accent-electric-blue);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-equity__subtitle {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+.what-we-do-equity__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5xl);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 1024px) {
+  .what-we-do-equity__content {
+    display: grid;
+    grid-template-columns: minmax(320px, 520px) minmax(360px, 1fr);
+    align-items: start;
+    gap: var(--spacing-4xl);
+  }
+}
+
+.what-we-do-equity__visual {
+  flex: 1;
+  width: 100%;
+}
+
+.what-we-do-equity-visual {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-2xl);
+  padding: var(--spacing-4xl) var(--spacing-xl);
+  border-radius: var(--radius-2xl);
+  background: rgba(8, 9, 14, 0.65);
+  border: 1px solid rgba(0, 212, 255, 0.12);
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.35);
+}
+
+@media (min-width: 768px) {
+  .what-we-do-equity-visual {
+    flex-direction: column;
+    justify-content: flex-start;
+    gap: var(--spacing-2xl);
+  }
+}
+
+.what-we-do-equity-visual__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-md);
+  flex: 1;
+  max-width: 240px;
+}
+
+.what-we-do-equity-visual__icon {
+  font-size: 64px;
+  filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.4));
+  line-height: 1;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-equity-visual__icon {
+    font-size: 80px;
+  }
+}
+
+.what-we-do-equity-visual__label {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+  text-align: center;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-equity-visual__label {
+    font-size: var(--font-size-xl);
+  }
+}
+
+.what-we-do-equity-visual__arrow {
+  font-size: var(--font-size-3xl);
+  color: var(--color-accent-electric-blue);
+  font-weight: var(--font-weight-bold);
+  transform: rotate(90deg);
+  opacity: 0.8;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-equity-visual__arrow {
+    transform: rotate(90deg);
+    font-size: var(--font-size-3xl);
+  }
+}
+
+.what-we-do-equity__explanation {
+  flex: 1;
+  width: 100%;
+}
+
+.what-we-do-equity-card {
+  padding: var(--spacing-4xl) var(--spacing-xl);
+  background: rgba(12, 14, 20, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 22px 55px rgba(0, 0, 0, 0.35);
+}
+
+@media (min-width: 768px) {
+  .what-we-do-equity-card {
+    padding: var(--spacing-5xl) var(--spacing-2xl);
+  }
+}
+
+.what-we-do-equity-card__title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-2xl) 0;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-equity-card__title {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-3xl);
+  }
+}
+
+.what-we-do-equity-card__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xl);
+}
+
+.what-we-do-equity-card__point {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.what-we-do-equity-card__point-title {
+  font-size: var(--font-size-xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-equity-card__point-title {
+    font-size: var(--font-size-2xl);
+  }
+}
+
+.what-we-do-equity-card__point-text {
+  font-size: var(--font-size-base);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-equity-card__point-text {
+    font-size: var(--font-size-lg);
+    line-height: 1.7;
+  }
+}
+
+/* ============================================
+   CTA SECTION
+   ============================================ */
+
+.what-we-do-cta {
+  padding: var(--spacing-5xl) var(--spacing-md);
+  text-align: center;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-cta {
+    padding: var(--spacing-5xl) var(--spacing-xl);
+  }
+}
+
+.what-we-do-cta__title {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-xl) 0;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-cta__title {
+    font-size: var(--font-size-5xl);
+    margin-bottom: var(--spacing-2xl);
+  }
+}
+
+.what-we-do-cta__text {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-3xl) 0;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-cta__text {
+    font-size: var(--font-size-xl);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-4xl);
+  }
+}
+
+.what-we-do-cta__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: var(--spacing-lg) var(--spacing-2xl);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-semibold);
+  color: #ffffff;
+  background: linear-gradient(135deg, #00d4ff, #8b5cf6);
+  border: 1px solid rgba(0, 212, 255, 0.5);
+  border-radius: var(--radius-full);
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 0 30px rgba(0, 212, 255, 0.5),
+              0 0 60px rgba(139, 92, 246, 0.3),
+              0 8px 32px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: transform var(--transition-base),
+              box-shadow var(--transition-base);
+  letter-spacing: 0.02em;
+  min-width: 200px;
+}
+
+@media (min-width: 768px) {
+  .what-we-do-cta__button {
+    padding: var(--spacing-xl) var(--spacing-3xl);
+    font-size: var(--font-size-xl);
+    min-width: 240px;
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .what-we-do-cta__button:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 0 40px rgba(0, 212, 255, 0.7),
+                0 0 80px rgba(139, 92, 246, 0.5),
+                0 12px 40px rgba(0, 0, 0, 0.3);
+  }
+}
+
+.what-we-do-cta__button:active {
+  transform: translateY(0) scale(0.98);
+  transition: transform 0.1s ease;
+}
+
+.what-we-do-cta__button:focus-visible {
+  outline: 2px solid var(--color-accent-electric-blue);
+  outline-offset: 4px;
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .what-we-do-service-card,
+  .what-we-do-cta__button {
+    transition: none !important;
+  }
+  
+  .what-we-do-service-card:hover {
+    transform: none !important;
+  }
+  
+  .what-we-do-cta__button:hover {
+    transform: none !important;
+  }
+}

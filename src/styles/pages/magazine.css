@@ -1,0 +1,344 @@
+/**
+ * Magazine Page Styles
+ * Editorial, magazine-style layout with large headlines and subtle hover effects
+ */
+
+/* ============================================
+   MAGAZINE GRID
+   ============================================ */
+
+.magazine-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-3xl);
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: var(--spacing-4xl) var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .magazine-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4xl);
+    padding: var(--spacing-5xl) var(--spacing-xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .magazine-grid {
+    gap: var(--spacing-5xl);
+  }
+}
+
+/* Make first card span full width on tablet/desktop */
+@media (min-width: 768px) {
+  .magazine-card:first-child {
+    grid-column: 1 / -1;
+  }
+}
+
+/* ============================================
+   MAGAZINE CARD
+   ============================================ */
+
+.magazine-card {
+  cursor: pointer;
+  padding: var(--spacing-3xl) var(--spacing-xl);
+  display: flex;
+  flex-direction: column;
+  min-height: 400px;
+}
+
+@media (min-width: 768px) {
+  .magazine-card {
+    padding: var(--spacing-4xl) var(--spacing-2xl);
+    min-height: 450px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .magazine-card {
+    padding: var(--spacing-5xl) var(--spacing-3xl);
+    min-height: 500px;
+  }
+}
+
+/* First card gets larger treatment */
+.magazine-card:first-child {
+  min-height: 500px;
+}
+
+@media (min-width: 768px) {
+  .magazine-card:first-child {
+    min-height: 600px;
+  }
+}
+
+/* Category Label */
+.magazine-card__category {
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent-electric-blue);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: var(--spacing-lg);
+  display: inline-block;
+}
+
+@media (min-width: 768px) {
+  .magazine-card__category {
+    font-size: var(--font-size-base);
+    margin-bottom: var(--spacing-xl);
+  }
+}
+
+/* Headline */
+.magazine-card__headline {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-xl) 0;
+  letter-spacing: -0.02em;
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .magazine-card__headline {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-2xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .magazine-card__headline {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+/* First card gets even larger headline */
+.magazine-card:first-child .magazine-card__headline {
+  font-size: var(--font-size-3xl);
+}
+
+@media (min-width: 768px) {
+  .magazine-card:first-child .magazine-card__headline {
+    font-size: var(--font-size-5xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .magazine-card:first-child .magazine-card__headline {
+    font-size: var(--font-size-6xl);
+  }
+}
+
+/* Excerpt */
+.magazine-card__excerpt {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-2xl) 0;
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .magazine-card__excerpt {
+    font-size: var(--font-size-xl);
+    line-height: 1.7;
+    margin-bottom: var(--spacing-3xl);
+  }
+}
+
+/* Meta Information */
+.magazine-card__meta {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-xl);
+  padding-top: var(--spacing-xl);
+  border-top: 1px solid rgba(0, 212, 255, 0.1);
+}
+
+@media (min-width: 768px) {
+  .magazine-card__meta {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--spacing-md);
+  }
+}
+
+.magazine-card__author {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-text-primary);
+}
+
+@media (min-width: 768px) {
+  .magazine-card__author {
+    font-size: var(--font-size-lg);
+  }
+}
+
+.magazine-card__details {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+
+@media (min-width: 768px) {
+  .magazine-card__details {
+    font-size: var(--font-size-base);
+  }
+}
+
+.magazine-card__separator {
+  opacity: 0.5;
+}
+
+.magazine-card__date,
+.magazine-card__read-time {
+  display: inline-block;
+}
+
+/* CTA */
+.magazine-card__cta {
+  margin-top: auto;
+}
+
+.magazine-card__read-more {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-accent-electric-blue);
+  display: inline-flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  transition: gap var(--transition-base);
+}
+
+@media (min-width: 768px) {
+  .magazine-card__read-more {
+    font-size: var(--font-size-lg);
+  }
+}
+
+/* Hover Effects */
+@media (hover: hover) and (pointer: fine) {
+  .magazine-card:hover {
+    transform: translate3d(0, -6px, 0);
+  }
+
+  .magazine-card:hover .magazine-card__read-more {
+    gap: var(--spacing-md);
+  }
+
+  .magazine-card:hover .magazine-card__headline {
+    color: var(--color-accent-electric-blue);
+    transition: color var(--transition-base);
+  }
+}
+
+/* ============================================
+   CATEGORY TAGS
+   ============================================ */
+
+.magazine-categories {
+  text-align: center;
+  padding: var(--spacing-5xl) var(--spacing-md);
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .magazine-categories {
+    padding: var(--spacing-5xl) var(--spacing-xl);
+  }
+}
+
+.magazine-categories__intro {
+  font-size: var(--font-size-lg);
+  color: var(--color-text-secondary);
+  margin: 0 0 var(--spacing-2xl) 0;
+}
+
+@media (min-width: 768px) {
+  .magazine-categories__intro {
+    font-size: var(--font-size-xl);
+    margin-bottom: var(--spacing-3xl);
+  }
+}
+
+.magazine-categories__tags {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--spacing-lg);
+}
+
+@media (min-width: 768px) {
+  .magazine-categories__tags {
+    gap: var(--spacing-xl);
+  }
+}
+
+.magazine-category-tag {
+  display: inline-block;
+  padding: var(--spacing-md) var(--spacing-xl);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-primary);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.05),
+    rgba(139, 92, 246, 0.05)
+  );
+  border: 1px solid rgba(0, 212, 255, 0.15);
+  border-radius: var(--radius-full);
+  transition: all var(--transition-base);
+  cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .magazine-category-tag {
+    font-size: var(--font-size-lg);
+    padding: var(--spacing-lg) var(--spacing-2xl);
+  }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .magazine-category-tag:hover {
+    background: linear-gradient(
+      135deg,
+      rgba(0, 212, 255, 0.1),
+      rgba(139, 92, 246, 0.1)
+    );
+    border-color: rgba(0, 212, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(0, 212, 255, 0.15);
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .magazine-card,
+  .magazine-card__read-more,
+  .magazine-card__headline,
+  .magazine-category-tag {
+    transition: none !important;
+  }
+
+  .magazine-card:hover {
+    transform: none !important;
+  }
+
+  .magazine-card:hover .magazine-card__read-more {
+    gap: var(--spacing-sm) !important;
+  }
+
+  .magazine-category-tag:hover {
+    transform: none !important;
+  }
+}

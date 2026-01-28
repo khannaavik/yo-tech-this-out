@@ -1,247 +1,103 @@
 /**
  * About Page Styles
- * Editorial storytelling layout with rich visual treatment
+ * Cinematic, editorial layout with large typography and section-based design
+ * Mobile-first approach with generous spacing
  */
 
-/* Content Typography */
-.about-content {
-  max-width: 800px;
-  margin: 0 auto;
-}
+/* ============================================
+   SECTION 1: About Yo! Tech This Out
+   ============================================ */
 
-.about-lead {
-  font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-relaxed);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--spacing-lg) 0;
-}
-
-@media (min-width: 768px) {
-  .about-lead {
-    font-size: var(--font-size-2xl);
-    margin-bottom: var(--spacing-xl);
-  }
-}
-
-.about-content p {
-  font-size: var(--font-size-lg);
-  line-height: var(--line-height-relaxed);
-  color: var(--color-text-secondary);
-  margin: 0 0 var(--spacing-lg) 0;
-}
-
-@media (min-width: 768px) {
-  .about-content p {
-    font-size: var(--font-size-xl);
-    line-height: 1.7;
-    margin-bottom: var(--spacing-xl);
-  }
-}
-
-.about-content p:last-child {
-  margin-bottom: 0;
-}
-
-/* Leadership Section */
-.about-leadership {
-  max-width: 900px;
-  margin: 0 auto;
-}
-
-.about-leadership-card {
-  text-align: left;
-}
-
-.about-leadership-content h3 {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--spacing-sm) 0;
-  letter-spacing: -0.02em;
-}
-
-@media (min-width: 768px) {
-  .about-leadership-content h3 {
-    font-size: var(--font-size-4xl);
-    margin-bottom: var(--spacing-md);
-  }
-}
-
-.about-leadership-role {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-normal);
-  color: var(--color-accent-electric-blue);
-  margin: 0 0 var(--spacing-lg) 0;
-  letter-spacing: 0.02em;
-}
-
-@media (min-width: 768px) {
-  .about-leadership-role {
-    font-size: var(--font-size-xl);
-    margin-bottom: var(--spacing-xl);
-  }
-}
-
-.about-leadership-content p {
-  font-size: var(--font-size-base);
-  line-height: var(--line-height-relaxed);
-  color: var(--color-text-secondary);
-  margin: 0 0 var(--spacing-lg) 0;
-}
-
-@media (min-width: 768px) {
-  .about-leadership-content p {
-    font-size: var(--font-size-lg);
-    line-height: 1.7;
-    margin-bottom: var(--spacing-xl);
-  }
-}
-
-.about-leadership-content p:last-child {
-  margin-bottom: 0;
-}
-
-/* Signature Quote */
-.about-signature-quote {
-  width: 100%;
+.about-section-1 {
   padding: var(--spacing-4xl) var(--spacing-md);
-  text-align: center;
+  max-width: 1400px;
+  margin: 0 auto;
 }
 
 @media (min-width: 768px) {
-  .about-signature-quote {
+  .about-section-1 {
     padding: var(--spacing-5xl) var(--spacing-xl);
   }
 }
 
-.about-quote {
-  font-size: var(--font-size-3xl);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--spacing-md) 0;
-  padding: 0;
-  border: none;
-  background: linear-gradient(135deg, #00d4ff, #8b5cf6);
-  background-size: 200% 200%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: gradientShift 3s ease infinite;
-  filter: drop-shadow(0 0 20px rgba(0, 212, 255, 0.2));
-  letter-spacing: -0.02em;
-  font-style: italic;
+.about-section-1__intro {
+  text-align: center;
+  margin-bottom: var(--spacing-5xl);
 }
 
 @media (min-width: 768px) {
-  .about-quote {
-    font-size: var(--font-size-4xl);
-    margin-bottom: var(--spacing-lg);
+  .about-section-1__intro {
+    margin-bottom: var(--spacing-5xl);
+  }
+}
+
+.about-section-1__title {
+  font-size: var(--font-size-4xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-xl) 0;
+  letter-spacing: -0.03em;
+}
+
+@media (min-width: 768px) {
+  .about-section-1__title {
+    font-size: var(--font-size-6xl);
+    margin-bottom: var(--spacing-2xl);
   }
 }
 
 @media (min-width: 1024px) {
-  .about-quote {
-    font-size: var(--font-size-5xl);
+  .about-section-1__title {
+    font-size: var(--font-size-7xl);
   }
 }
 
-.about-quote-attribution {
-  font-size: var(--font-size-base);
-  font-weight: var(--font-weight-medium);
-  color: var(--color-text-secondary);
-  margin: 0;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  opacity: 0.8;
-}
-
-@media (min-width: 768px) {
-  .about-quote-attribution {
-    font-size: var(--font-size-lg);
-  }
-}
-
-/* Podcast Grid */
-.about-podcast {
-  max-width: 1000px;
-  margin: 0 auto;
-}
-
-.about-podcast-grid {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: var(--spacing-xl);
-  margin-top: var(--spacing-2xl);
-}
-
-@media (min-width: 768px) {
-  .about-podcast-grid {
-    grid-template-columns: repeat(3, 1fr);
-    gap: var(--spacing-xl);
-  }
-}
-
-.about-podcast-item {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.about-podcast-icon {
-  font-size: 48px;
-  margin-bottom: var(--spacing-md);
-  filter: drop-shadow(0 0 10px rgba(0, 212, 255, 0.3));
-}
-
-@media (min-width: 768px) {
-  .about-podcast-icon {
-    font-size: 64px;
-    margin-bottom: var(--spacing-lg);
-  }
-}
-
-.about-podcast-item h3 {
+.about-section-1__lead {
   font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
-  line-height: var(--line-height-tight);
-  color: var(--color-text-primary);
-  margin: 0 0 var(--spacing-md) 0;
-  letter-spacing: -0.01em;
-}
-
-@media (min-width: 768px) {
-  .about-podcast-item h3 {
-    font-size: var(--font-size-2xl);
-    margin-bottom: var(--spacing-lg);
-  }
-}
-
-.about-podcast-item p {
-  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
   line-height: var(--line-height-relaxed);
   color: var(--color-text-secondary);
   margin: 0;
+  max-width: 800px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 @media (min-width: 768px) {
-  .about-podcast-item p {
-    font-size: var(--font-size-lg);
-    line-height: 1.7;
+  .about-section-1__lead {
+    font-size: var(--font-size-2xl);
+    line-height: 1.6;
   }
 }
 
-/* Focus Section */
-.about-focus {
-  max-width: 900px;
+.about-section-1__content {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-3xl);
+  max-width: 1200px;
   margin: 0 auto;
 }
 
-.about-focus .page-card h3 {
+@media (min-width: 768px) {
+  .about-section-1__content {
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--spacing-4xl);
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-section-1__content {
+    gap: var(--spacing-5xl);
+  }
+}
+
+.about-section-1__block {
+  display: flex;
+  flex-direction: column;
+}
+
+.about-section-1__block-title {
   font-size: var(--font-size-2xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
@@ -251,153 +107,288 @@
 }
 
 @media (min-width: 768px) {
-  .about-focus .page-card h3 {
+  .about-section-1__block-title {
     font-size: var(--font-size-3xl);
     margin-bottom: var(--spacing-xl);
   }
 }
 
-.about-focus .page-card p {
-  font-size: var(--font-size-base);
+.about-section-1__block-text {
+  font-size: var(--font-size-lg);
   line-height: var(--line-height-relaxed);
   color: var(--color-text-secondary);
-  margin: 0 0 var(--spacing-lg) 0;
+  margin: 0;
 }
 
 @media (min-width: 768px) {
-  .about-focus .page-card p {
-    font-size: var(--font-size-lg);
+  .about-section-1__block-text {
+    font-size: var(--font-size-xl);
     line-height: 1.7;
-    margin-bottom: var(--spacing-xl);
   }
 }
 
-.about-focus .page-card p:last-child {
-  margin-bottom: 0;
-}
+/* ============================================
+   SECTION 2: Meet the Founder – Mike Johns
+   ============================================ */
 
-/* Timeline */
-.about-timeline {
-  max-width: 800px;
+.about-section-2 {
+  padding: var(--spacing-5xl) var(--spacing-md);
+  max-width: 1400px;
   margin: 0 auto;
-  position: relative;
-  padding: var(--spacing-xl) 0;
-}
-
-/* Timeline line - starts at first item dot, ends at last item dot */
-.about-timeline::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: calc(var(--spacing-xl) + 28px); /* Container padding + first item dot center (20px + 8px) */
-  bottom: auto;
-  width: 2px;
-  height: calc(100% - var(--spacing-xl) - var(--spacing-xl) - 56px); /* Total height minus top/bottom padding and dot positions */
   background: linear-gradient(
-    to bottom,
-    rgba(0, 212, 255, 0.3),
-    rgba(139, 92, 246, 0.3)
+    180deg,
+    transparent 0%,
+    rgba(0, 212, 255, 0.02) 50%,
+    transparent 100%
   );
-  transform: translateX(-50%);
-  z-index: 0; /* Behind timeline items */
-}
-
-@media (max-width: 767px) {
-  .about-timeline::before {
-    left: 20px;
-    top: calc(var(--spacing-xl) + 28px);
-    height: calc(100% - var(--spacing-xl) - var(--spacing-xl) - 56px);
-  }
-}
-
-.about-timeline-item {
-  position: relative;
-  margin-bottom: var(--spacing-4xl);
-  display: flex;
-  align-items: flex-start;
-  gap: var(--spacing-xl);
-  z-index: 1; /* Above timeline line */
-}
-
-.about-timeline-item:last-child {
-  margin-bottom: 0;
-}
-
-@media (max-width: 767px) {
-  .about-timeline-item {
-    flex-direction: column;
-    gap: var(--spacing-md);
-    padding-left: var(--spacing-3xl);
-  }
-  
-  /* On mobile, ensure content doesn't overlap with left-aligned line */
-  .about-timeline-content {
-    margin-left: 0;
-    width: 100%;
-  }
 }
 
 @media (min-width: 768px) {
-  .about-timeline-item {
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .about-timeline-item:nth-child(odd) {
-    flex-direction: row-reverse;
+  .about-section-2 {
+    padding: var(--spacing-5xl) var(--spacing-xl);
   }
 }
 
-.about-timeline-item::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  top: 20px;
-  width: 16px;
-  height: 16px;
-  border-radius: 50%;
-  background: linear-gradient(135deg, #00d4ff, #8b5cf6);
-  border: 3px solid var(--color-bg-primary);
-  transform: translateX(-50%);
-  box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
-  z-index: 2; /* Above timeline line */
+.about-section-2__header {
+  text-align: center;
+  margin-bottom: var(--spacing-5xl);
 }
 
-@media (max-width: 767px) {
-  .about-timeline-item::before {
-    left: 20px;
+@media (min-width: 768px) {
+  .about-section-2__header {
+    margin-bottom: var(--spacing-5xl);
   }
 }
 
-.about-timeline-date {
-  flex-shrink: 0;
-  font-size: var(--font-size-lg);
+.about-section-2__title {
+  font-size: var(--font-size-4xl);
   font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-md) 0;
+  letter-spacing: -0.03em;
+}
+
+@media (min-width: 768px) {
+  .about-section-2__title {
+    font-size: var(--font-size-6xl);
+    margin-bottom: var(--spacing-lg);
+  }
+}
+
+@media (min-width: 1024px) {
+  .about-section-2__title {
+    font-size: var(--font-size-7xl);
+  }
+}
+
+.about-section-2__subtitle {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
   color: var(--color-accent-electric-blue);
-  padding: var(--spacing-md) var(--spacing-lg);
+  margin: 0;
+  letter-spacing: -0.01em;
+}
+
+@media (min-width: 768px) {
+  .about-section-2__subtitle {
+    font-size: var(--font-size-4xl);
+  }
+}
+
+.about-section-2__content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-5xl);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .about-section-2__content {
+    gap: var(--spacing-5xl);
+  }
+}
+
+/* Portrait Placeholder */
+.about-section-2__portrait {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .about-section-2__portrait {
+    max-width: 500px;
+  }
+}
+
+.about-portrait-placeholder {
+  width: 100%;
+  aspect-ratio: 3 / 4;
   background: linear-gradient(
     135deg,
     rgba(0, 212, 255, 0.1),
     rgba(139, 92, 246, 0.1)
   );
   border-radius: var(--radius-lg);
-  border: 1px solid rgba(0, 212, 255, 0.2);
-  min-width: 140px;
-  text-align: center;
+  border: 2px dashed rgba(0, 212, 255, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-portrait-placeholder__text {
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-text-secondary);
+  opacity: 0.6;
 }
 
 @media (min-width: 768px) {
-  .about-timeline-date {
+  .about-portrait-placeholder__text {
     font-size: var(--font-size-xl);
-    padding: var(--spacing-lg) var(--spacing-xl);
-    min-width: 180px;
   }
 }
 
-.about-timeline-content {
+/* Philosophy Card */
+.about-section-2__philosophy {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.about-philosophy-card {
+  text-align: center;
+  padding: var(--spacing-4xl) var(--spacing-xl);
+}
+
+@media (min-width: 768px) {
+  .about-philosophy-card {
+    padding: var(--spacing-5xl) var(--spacing-2xl);
+  }
+}
+
+.about-philosophy-quote {
+  font-size: var(--font-size-3xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-xl) 0;
+  letter-spacing: -0.02em;
+  font-style: italic;
+  background: linear-gradient(135deg, #00d4ff, #8b5cf6);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+@media (min-width: 768px) {
+  .about-philosophy-quote {
+    font-size: var(--font-size-5xl);
+    margin-bottom: var(--spacing-2xl);
+  }
+}
+
+.about-philosophy-text {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .about-philosophy-text {
+    font-size: var(--font-size-xl);
+    line-height: 1.7;
+  }
+}
+
+/* Credibility Timeline */
+.about-section-2__credibility {
+  width: 100%;
+}
+
+.about-credibility-timeline {
+  position: relative;
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: var(--spacing-xl) 0;
+}
+
+/* Timeline line */
+.about-credibility-timeline::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: calc(var(--spacing-xl) + 24px);
+  bottom: calc(var(--spacing-xl) + 24px);
+  width: 2px;
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 212, 255, 0.3),
+    rgba(139, 92, 246, 0.3)
+  );
+  z-index: 0;
+}
+
+@media (min-width: 768px) {
+  .about-credibility-timeline::before {
+    left: 50%;
+    transform: translateX(-50%);
+  }
+}
+
+.about-credibility-item {
+  position: relative;
+  margin-bottom: var(--spacing-4xl);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--spacing-xl);
+  z-index: 1;
+  padding-left: var(--spacing-3xl);
+}
+
+@media (min-width: 768px) {
+  .about-credibility-item {
+    padding-left: 0;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  .about-credibility-item:nth-child(odd) {
+    flex-direction: row-reverse;
+  }
+}
+
+.about-credibility-item:last-child {
+  margin-bottom: 0;
+}
+
+.about-credibility-item__marker {
+  position: absolute;
+  left: 20px;
+  top: 24px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #00d4ff, #8b5cf6);
+  border: 3px solid var(--color-bg-primary);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.5);
+  z-index: 2;
+  transform: translateX(-50%);
+}
+
+@media (min-width: 768px) {
+  .about-credibility-item__marker {
+    left: 50%;
+  }
+}
+
+.about-credibility-item__content {
   flex: 1;
-  padding: var(--spacing-lg);
+  padding: var(--spacing-xl);
   background: linear-gradient(
     135deg,
     rgba(0, 212, 255, 0.03),
@@ -405,19 +396,18 @@
   );
   border-radius: var(--radius-lg);
   border: 1px solid rgba(0, 212, 255, 0.1);
-  position: relative;
-  z-index: 1; /* Above timeline line, below dot */
 }
 
 @media (min-width: 768px) {
-  .about-timeline-content {
-    padding: var(--spacing-xl);
+  .about-credibility-item__content {
+    max-width: 45%;
+    padding: var(--spacing-2xl);
   }
 }
 
-.about-timeline-content h3 {
+.about-credibility-item__title {
   font-size: var(--font-size-xl);
-  font-weight: var(--font-weight-semibold);
+  font-weight: var(--font-weight-bold);
   line-height: var(--line-height-tight);
   color: var(--color-text-primary);
   margin: 0 0 var(--spacing-md) 0;
@@ -425,13 +415,13 @@
 }
 
 @media (min-width: 768px) {
-  .about-timeline-content h3 {
+  .about-credibility-item__title {
     font-size: var(--font-size-2xl);
     margin-bottom: var(--spacing-lg);
   }
 }
 
-.about-timeline-content p {
+.about-credibility-item__text {
   font-size: var(--font-size-base);
   line-height: var(--line-height-relaxed);
   color: var(--color-text-secondary);
@@ -439,55 +429,62 @@
 }
 
 @media (min-width: 768px) {
-  .about-timeline-content p {
+  .about-credibility-item__text {
     font-size: var(--font-size-lg);
     line-height: 1.7;
   }
 }
 
-/* Vision Card */
-.about-vision-card {
-  text-align: center;
+/* Bridge Card */
+.about-section-2__bridge {
   max-width: 900px;
   margin: 0 auto;
 }
 
-.about-vision-text {
-  font-size: var(--font-size-lg);
-  line-height: var(--line-height-relaxed);
-  color: var(--color-text-primary);
-  margin: 0;
-  font-weight: var(--font-weight-medium);
+.about-bridge-card {
+  text-align: center;
+  padding: var(--spacing-4xl) var(--spacing-xl);
 }
 
 @media (min-width: 768px) {
-  .about-vision-text {
+  .about-bridge-card {
+    padding: var(--spacing-5xl) var(--spacing-2xl);
+  }
+}
+
+.about-bridge-title {
+  font-size: var(--font-size-2xl);
+  font-weight: var(--font-weight-bold);
+  line-height: var(--line-height-tight);
+  color: var(--color-text-primary);
+  margin: 0 0 var(--spacing-xl) 0;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .about-bridge-title {
+    font-size: var(--font-size-3xl);
+    margin-bottom: var(--spacing-2xl);
+  }
+}
+
+.about-bridge-text {
+  font-size: var(--font-size-lg);
+  line-height: var(--line-height-relaxed);
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .about-bridge-text {
     font-size: var(--font-size-xl);
-    line-height: 1.8;
-  }
-}
-
-@media (min-width: 1024px) {
-  .about-vision-text {
-    font-size: var(--font-size-2xl);
-  }
-}
-
-/* Gradient Animation */
-@keyframes gradientShift {
-  0%, 100% {
-    background-position: 0% 50%;
-  }
-  50% {
-    background-position: 100% 50%;
+    line-height: 1.7;
   }
 }
 
 /* Respect reduced motion */
 @media (prefers-reduced-motion: reduce) {
-  .about-quote {
+  .about-philosophy-quote {
     animation: none !important;
-    filter: none !important;
   }
 }
-

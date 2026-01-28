@@ -1,0 +1,19 @@
+/**
+ * Products Page Styles
+ * Page wrapper for v2 ProductGrid
+ */
+
+.products-page {
+  width: 100%;
+  min-height: 100vh;
+}
+
+.products-page__grid {
+  padding: 0 var(--spacing-md);
+}
+
+@media (min-width: 768px) {
+  .products-page__grid {
+    padding: 0 var(--spacing-xl);
+  }
+}

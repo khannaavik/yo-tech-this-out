@@ -5,16 +5,16 @@ import { Logo } from './Logo';
 import '../styles/components/navigation.css';
 
 /**
- * Navigation Component (v2 structure only)
- * Desktop: left logo, center nav, right theme toggle
- * Mobile: centered logo, larger scale, centered menu items
+ * Navigation Component
+ * Top-level navigation with dropdown menus for additional pages
+ * Desktop: left logo, center nav
+ * Mobile: centered logo, centered menu items
  */
 export function Navigation() {
   const { toggleTheme, isDark } = useTheme();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [activeMenu, setActiveMenu] = useState(null); // 'discover' | 'media' | 'startups' | null
+  const [activeMenu, setActiveMenu] = useState(null);
   const [openMobileSection, setOpenMobileSection] = useState(null);
-  const [isInvestorMode, setIsInvestorMode] = useState(false);
   const location = useLocation();
   const navRef = useRef(null);
 
@@ -29,12 +29,6 @@ export function Navigation() {
   useEffect(() => {
     setActiveMenu(null);
   }, [location.pathname]);
-
-  useEffect(() => {
-    if (typeof window === 'undefined') return;
-    const event = new CustomEvent('investor-mode-change', { detail: isInvestorMode });
-    window.dispatchEvent(event);
-  }, [isInvestorMode]);
 
   useEffect(() => {
     const handleOutsideClick = (event) => {
@@ -73,10 +67,6 @@ export function Navigation() {
     setIsMobileMenuOpen((prev) => !prev);
   }, []);
 
-  const toggleInvestorMode = useCallback(() => {
-    setIsInvestorMode((prev) => !prev);
-  }, []);
-
   const handleNavLinkClick = useCallback(() => {
     closeMobileMenu();
     setActiveMenu(null);
@@ -87,47 +77,72 @@ export function Navigation() {
     setActiveMenu((prev) => (prev === menu ? null : menu));
   }, []);
 
-  const isActivePath = useCallback((path) => location.pathname === path, [location.pathname]);
-
-  const isDropdownItemActive = useCallback((dropdownItems) => {
-    return dropdownItems.some(item => location.pathname === item.path);
+  const isActivePath = useCallback((path) => {
+    if (path === '/') {
+      return location.pathname === '/';
+    }
+    return location.pathname.startsWith(path);
   }, [location.pathname]);
 
-  const discoverGroups = [
-    {
-      title: 'Explore',
+  const isDropdownItemActive = useCallback((items) => {
+    return items.some(item => isActivePath(item.path));
+  }, [isActivePath]);
+
+  // Navigation structure with dropdowns
+  const navItems = [
+    { path: '/', label: 'Home', type: 'link' },
+    { 
+      path: '/products', 
+      label: 'Products', 
+      type: 'dropdown',
       items: [
-        { path: '/explore', label: 'Explore' },
-        { path: '/', label: 'Home' },
-      ],
+        { path: '/products', label: 'All Products' },
+        { path: '/innovation-awards', label: 'Innovation Awards' },
+      ]
     },
-    {
-      title: 'About Yo!',
+    { 
+      path: '/what-we-do', 
+      label: 'What We Do', 
+      type: 'dropdown',
+      items: [
+        { path: '/what-we-do', label: 'What We Do' },
+        { path: '/why', label: 'Why Yo!' },
+        { path: '/advertise', label: 'Packages' },
+      ]
+    },
+    { path: '/magazine', label: 'Magazine', type: 'link' },
+    { 
+      path: '/podcast', 
+      label: 'Podcast', 
+      type: 'dropdown',
+      items: [
+        { path: '/podcast', label: 'Podcast' },
+        { path: '/live', label: 'Live' },
+      ]
+    },
+    { 
+      path: '/about', 
+      label: 'About', 
+      type: 'dropdown',
       items: [
         { path: '/about', label: 'About' },
         { path: '/contact', label: 'Contact' },
-      ],
-    },
-  ];
-
-  const mediaGroups = [
-    {
-      title: 'Media',
-      items: [
-        { path: '/techfluencers', label: 'Techfluencers' },
         { path: '/press', label: 'Press' },
-        { path: '/live', label: 'Live' },
-      ],
+      ]
     },
-  ];
-
-  const startupGroups = [
-    {
-      title: 'For Startups',
+    { 
+      path: '/social', 
+      label: 'Social', 
+      type: 'dropdown',
       items: [
-        { path: '/advertise', label: 'Packages' },
-        { path: '/why', label: 'Why Yo!' },
-      ],
+        { path: '/social', label: 'Social' },
+        { path: '/techfluencers', label: 'Techfluencers' },
+      ]
+    },
+    { 
+      path: 'https://news.yotechthisout.com/', 
+      label: 'News', 
+      type: 'external',
     },
   ];
 
@@ -139,7 +154,7 @@ export function Navigation() {
       ref={navRef}
     >
       <div className="nav__bar">
-        {/* Left: Logo */}
+        {/* Left: Logo (Desktop) / Center: Logo (Mobile) */}
         <div className="nav__left">
           <Link to="/" className="nav__logo-link" aria-label="Home" onClick={handleNavLinkClick}>
             <Logo variant="full" className="nav__logo" />
@@ -148,146 +163,81 @@ export function Navigation() {
 
         {/* Center: Desktop Links */}
         <div className="nav__center nav__center--desktop" role="menubar" aria-label="Primary">
-          <div
-            className={`nav__dropdown ${activeMenu === 'discover' ? 'nav__dropdown--open' : ''} ${isDropdownItemActive(discoverGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
-            onMouseEnter={() => setActiveMenu('discover')}
-            onMouseLeave={() => setActiveMenu(null)}
-          >
-            <button
-              type="button"
-              className={`nav__dropdown-trigger ${isDropdownItemActive(discoverGroups.flatMap((group) => group.items)) ? 'nav__link--active' : ''}`}
-              aria-expanded={activeMenu === 'discover'}
-              aria-haspopup="true"
-              onClick={() => handleDropdownTriggerClick('discover')}
-            >
-              Discover
-              <span className="nav__dropdown-arrow" aria-hidden="true">▼</span>
-            </button>
-            {activeMenu === 'discover' && (
-              <div className="nav__dropdown-panel" onMouseEnter={() => setActiveMenu('discover')} onMouseLeave={() => setActiveMenu(null)}>
-                <div className="nav__dropdown-panel-inner">
-                  {discoverGroups.map((group) => (
-                    <div key={group.title} className="nav__dropdown-group">
-                      <p className="nav__dropdown-heading">{group.title}</p>
-                      {group.items.map((item) => (
+          {navItems.map((item) => {
+            if (item.type === 'link') {
+              return (
+                <Link
+                  key={item.path}
+                  to={item.path}
+                  className={`nav__link ${isActivePath(item.path) ? 'nav__link--active' : ''}`}
+                  role="menuitem"
+                >
+                  {item.label}
+                </Link>
+              );
+            }
+
+            if (item.type === 'external') {
+              return (
+                <a
+                  key={item.path}
+                  href={item.path}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="nav__link nav__link--external"
+                  role="menuitem"
+                >
+                  {item.label}
+                  <span className="nav__external-icon" aria-hidden="true">↗</span>
+                </a>
+              );
+            }
+
+            // Dropdown menu
+            const isActive = isDropdownItemActive(item.items);
+            const isOpen = activeMenu === item.path;
+
+            return (
+              <div
+                key={item.path}
+                className={`nav__dropdown ${isOpen ? 'nav__dropdown--open' : ''} ${isActive ? 'nav__dropdown--active' : ''}`}
+                onMouseEnter={() => setActiveMenu(item.path)}
+                onMouseLeave={() => setActiveMenu(null)}
+              >
+                <button
+                  type="button"
+                  className={`nav__dropdown-trigger ${isActive ? 'nav__link--active' : ''}`}
+                  aria-expanded={isOpen}
+                  aria-haspopup="true"
+                  onClick={() => handleDropdownTriggerClick(item.path)}
+                >
+                  {item.label}
+                  <span className="nav__dropdown-arrow" aria-hidden="true">▼</span>
+                </button>
+                {isOpen && (
+                  <div className="nav__dropdown-panel" onMouseEnter={() => setActiveMenu(item.path)} onMouseLeave={() => setActiveMenu(null)}>
+                    <div className="nav__dropdown-panel-inner">
+                      {item.items.map((subItem) => (
                         <Link
-                          key={item.path}
-                          to={item.path}
-                          className={`nav__dropdown-link ${isActivePath(item.path) ? 'nav__dropdown-link--active' : ''}`}
+                          key={subItem.path}
+                          to={subItem.path}
+                          className={`nav__dropdown-link ${isActivePath(subItem.path) ? 'nav__dropdown-link--active' : ''}`}
                           role="menuitem"
                           onClick={handleNavLinkClick}
                         >
-                          {item.label}
+                          {subItem.label}
                         </Link>
                       ))}
                     </div>
-                  ))}
-                </div>
+                  </div>
+                )}
               </div>
-            )}
-          </div>
-
-          <Link
-            to="/innovation-awards"
-            className={`nav__link ${isActivePath('/innovation-awards') ? 'nav__link--active' : ''}`}
-            role="menuitem"
-          >
-            Awards
-          </Link>
-
-          <div
-            className={`nav__dropdown ${activeMenu === 'media' ? 'nav__dropdown--open' : ''} ${isDropdownItemActive(mediaGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
-            onMouseEnter={() => setActiveMenu('media')}
-            onMouseLeave={() => setActiveMenu(null)}
-          >
-            <button
-              type="button"
-              className={`nav__dropdown-trigger ${isDropdownItemActive(mediaGroups.flatMap((group) => group.items)) ? 'nav__link--active' : ''}`}
-              aria-expanded={activeMenu === 'media'}
-              aria-haspopup="true"
-              onClick={() => handleDropdownTriggerClick('media')}
-            >
-              Media
-              <span className="nav__dropdown-arrow" aria-hidden="true">▼</span>
-            </button>
-            {activeMenu === 'media' && (
-              <div className="nav__dropdown-panel" onMouseEnter={() => setActiveMenu('media')} onMouseLeave={() => setActiveMenu(null)}>
-                <div className="nav__dropdown-panel-inner">
-                  {mediaGroups.map((group) => (
-                    <div key={group.title} className="nav__dropdown-group">
-                      <p className="nav__dropdown-heading">{group.title}</p>
-                      {group.items.map((item) => (
-                        <Link
-                          key={item.path}
-                          to={item.path}
-                          className={`nav__dropdown-link ${isActivePath(item.path) ? 'nav__dropdown-link--active' : ''}`}
-                          role="menuitem"
-                          onClick={handleNavLinkClick}
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-
-          <div
-            className={`nav__dropdown ${activeMenu === 'startups' ? 'nav__dropdown--open' : ''} ${isDropdownItemActive(startupGroups.flatMap((group) => group.items)) ? 'nav__dropdown--active' : ''}`}
-            onMouseEnter={() => setActiveMenu('startups')}
-            onMouseLeave={() => setActiveMenu(null)}
-          >
-            <button
-              type="button"
-              className={`nav__dropdown-trigger ${isDropdownItemActive(startupGroups.flatMap((group) => group.items)) ? 'nav__link--active' : ''}`}
-              aria-expanded={activeMenu === 'startups'}
-              aria-haspopup="true"
-              onClick={() => handleDropdownTriggerClick('startups')}
-            >
-              For Startups
-              <span className="nav__dropdown-arrow" aria-hidden="true">▼</span>
-            </button>
-            {activeMenu === 'startups' && (
-              <div className="nav__dropdown-panel" onMouseEnter={() => setActiveMenu('startups')} onMouseLeave={() => setActiveMenu(null)}>
-                <div className="nav__dropdown-panel-inner">
-                  {startupGroups.map((group) => (
-                    <div key={group.title} className="nav__dropdown-group">
-                      <p className="nav__dropdown-heading">{group.title}</p>
-                      {group.items.map((item) => (
-                        <Link
-                          key={item.path}
-                          to={item.path}
-                          className={`nav__dropdown-link ${isActivePath(item.path) ? 'nav__dropdown-link--active' : ''}`}
-                          role="menuitem"
-                          onClick={handleNavLinkClick}
-                        >
-                          {item.label}
-                        </Link>
-                      ))}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
+            );
+          })}
         </div>
 
-        {/* Right: Theme Toggle + Investor Mode */}
+        {/* Right: Theme Toggle */}
         <div className="nav__right">
-          <button
-            type="button"
-            onClick={toggleInvestorMode}
-            role="switch"
-            aria-checked={isInvestorMode}
-            className="nav__investor-toggle"
-          >
-            Investor Mode
-            <span className={`nav__investor-switch ${isInvestorMode ? 'is-on' : ''}`} aria-hidden="true">
-              <span className="nav__investor-knob" />
-            </span>
-          </button>
           <button
             className="nav__theme-toggle"
             onClick={toggleTheme}
@@ -321,101 +271,84 @@ export function Navigation() {
         <div className="nav__overlay" onClick={closeMobileMenu} aria-hidden="true">
           <div className="nav__panel" onClick={(e) => e.stopPropagation()}>
             <div className="nav__mobile-links" role="menu" aria-label="Mobile navigation">
-              <Link to="/innovation-awards" className={`nav__mobile-link ${isActivePath('/innovation-awards') ? 'nav__link--active' : ''}`} onClick={handleNavLinkClick} role="menuitem">Awards</Link>
+              {navItems.map((item) => {
+                if (item.type === 'link') {
+                  return (
+                    <Link
+                      key={item.path}
+                      to={item.path}
+                      className={`nav__mobile-link ${isActivePath(item.path) ? 'nav__mobile-link--active' : ''}`}
+                      onClick={handleNavLinkClick}
+                      role="menuitem"
+                    >
+                      {item.label}
+                    </Link>
+                  );
+                }
 
-              <div className="nav__mobile-accordion">
-                <button
-                  type="button"
-                  className="nav__mobile-accordion-trigger"
-                  onClick={() => setOpenMobileSection(openMobileSection === 'discover' ? null : 'discover')}
-                  aria-expanded={openMobileSection === 'discover'}
-                >
-                  Discover
-                  <span className="nav__mobile-accordion-arrow" aria-hidden="true">▼</span>
-                </button>
-                {openMobileSection === 'discover' && (
-                  <div className="nav__mobile-accordion-panel">
-                    {discoverGroups.flatMap((group) => group.items).map((item) => (
-                      <Link
-                        key={item.path}
-                        to={item.path}
-                        className={`nav__mobile-link ${isActivePath(item.path) ? 'nav__link--active' : ''}`}
-                        onClick={handleNavLinkClick}
-                        role="menuitem"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
+                if (item.type === 'external') {
+                  return (
+                    <a
+                      key={item.path}
+                      href={item.path}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="nav__mobile-link nav__mobile-link--external"
+                      onClick={handleNavLinkClick}
+                      role="menuitem"
+                    >
+                      {item.label}
+                      <span className="nav__external-icon" aria-hidden="true">↗</span>
+                    </a>
+                  );
+                }
+
+                // Mobile dropdown/accordion
+                const isOpen = openMobileSection === item.path;
+                const isActive = isDropdownItemActive(item.items);
+
+                return (
+                  <div key={item.path} className="nav__mobile-accordion">
+                    <button
+                      type="button"
+                      className={`nav__mobile-accordion-trigger ${isActive ? 'nav__mobile-accordion-trigger--active' : ''}`}
+                      onClick={() => setOpenMobileSection(openMobileSection === item.path ? null : item.path)}
+                      aria-expanded={isOpen}
+                    >
+                      {item.label}
+                      <span className="nav__mobile-accordion-arrow" aria-hidden="true">▼</span>
+                    </button>
+                    {isOpen && (
+                      <div className="nav__mobile-accordion-panel">
+                        {item.items.map((subItem) => (
+                          <Link
+                            key={subItem.path}
+                            to={subItem.path}
+                            className={`nav__mobile-link nav__mobile-link--sub ${isActivePath(subItem.path) ? 'nav__mobile-link--active' : ''}`}
+                            onClick={handleNavLinkClick}
+                            role="menuitem"
+                          >
+                            {subItem.label}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
                   </div>
-                )}
-              </div>
+                );
+              })}
 
-              <div className="nav__mobile-accordion">
+              {/* Mobile Theme Toggle */}
+              <div className="nav__mobile-theme-toggle">
                 <button
+                  className="nav__theme-toggle nav__theme-toggle--mobile"
+                  onClick={toggleTheme}
+                  aria-label={`Switch to ${isDark ? 'light' : 'dark'} theme`}
                   type="button"
-                  className="nav__mobile-accordion-trigger"
-                  onClick={() => setOpenMobileSection(openMobileSection === 'media' ? null : 'media')}
-                  aria-expanded={openMobileSection === 'media'}
                 >
-                  Media
-                  <span className="nav__mobile-accordion-arrow" aria-hidden="true">▼</span>
-                </button>
-                {openMobileSection === 'media' && (
-                  <div className="nav__mobile-accordion-panel">
-                    {mediaGroups.flatMap((group) => group.items).map((item) => (
-                      <Link
-                        key={item.path}
-                        to={item.path}
-                        className={`nav__mobile-link ${isActivePath(item.path) ? 'nav__link--active' : ''}`}
-                        onClick={handleNavLinkClick}
-                        role="menuitem"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div className="nav__mobile-accordion">
-                <button
-                  type="button"
-                  className="nav__mobile-accordion-trigger"
-                  onClick={() => setOpenMobileSection(openMobileSection === 'startups' ? null : 'startups')}
-                  aria-expanded={openMobileSection === 'startups'}
-                >
-                  For Startups
-                  <span className="nav__mobile-accordion-arrow" aria-hidden="true">▼</span>
-                </button>
-                {openMobileSection === 'startups' && (
-                  <div className="nav__mobile-accordion-panel">
-                    {startupGroups.flatMap((group) => group.items).map((item) => (
-                      <Link
-                        key={item.path}
-                        to={item.path}
-                        className={`nav__mobile-link ${isActivePath(item.path) ? 'nav__link--active' : ''}`}
-                        onClick={handleNavLinkClick}
-                        role="menuitem"
-                      >
-                        {item.label}
-                      </Link>
-                    ))}
-                  </div>
-                )}
-              </div>
-
-              <div className="nav__mobile-toggles">
-                <button
-                  type="button"
-                  onClick={toggleInvestorMode}
-                  role="switch"
-                  aria-checked={isInvestorMode}
-                  className="nav__investor-toggle"
-                >
-                  Investor Mode
-                  <span className={`nav__investor-switch ${isInvestorMode ? 'is-on' : ''}`} aria-hidden="true">
-                    <span className="nav__investor-knob" />
+                  <span className="nav__theme-icon" aria-hidden="true">
+                    {isDark ? '☀️' : '🌙'}
                   </span>
+                  <span className="nav__theme-label">{isDark ? 'Light Mode' : 'Dark Mode'}</span>
                 </button>
               </div>
             </div>
@@ -425,4 +358,3 @@ export function Navigation() {
     </nav>
   );
 }
-

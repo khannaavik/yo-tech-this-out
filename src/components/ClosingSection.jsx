@@ -73,10 +73,10 @@ export function ClosingSection() {
         {/* Minimal Navigation */}
         <nav className="closing-section__nav" aria-label="Footer navigation">
           <Link 
-            to="/explore" 
+            to="/products" 
             className="closing-section__nav-link"
           >
-            Explore
+            Products
           </Link>
           <Link 
             to="/" 

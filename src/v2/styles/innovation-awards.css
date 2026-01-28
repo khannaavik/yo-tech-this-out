@@ -1,0 +1,442 @@
+/**
+ * Innovation Awards Page Styles
+ * Global authority showcase - cinematic, confident, editorial
+ */
+
+/* PART 1: Cinematic Hero */
+.innovation-awards-hero {
+  position: relative;
+  width: 100%;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(4rem, 10vw, 8rem) clamp(1.5rem, 5vw, 3rem);
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.08) 0%,
+    rgba(139, 92, 246, 0.08) 50%,
+    rgba(0, 212, 255, 0.06) 100%
+  );
+  overflow: hidden;
+  animation: innovation-awards-hero-fade 800ms ease-out both;
+}
+
+[data-theme="light"] .innovation-awards-hero {
+  background: linear-gradient(
+    135deg,
+    rgba(0, 212, 255, 0.04) 0%,
+    rgba(139, 92, 246, 0.04) 50%,
+    rgba(0, 212, 255, 0.03) 100%
+  );
+}
+
+@keyframes innovation-awards-hero-fade {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.innovation-awards-hero__container {
+  max-width: 1000px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.innovation-awards-hero__headline {
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.innovation-awards-hero__subheadline {
+  font-size: clamp(1.25rem, 3vw, 1.75rem);
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1.4;
+  margin: 0;
+  color: var(--color-text-primary);
+  opacity: 0.9;
+}
+
+.innovation-awards-hero__supporting {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  font-weight: 400;
+  line-height: 1.6;
+  margin: 0;
+  color: var(--color-text-secondary);
+  opacity: 0.75;
+}
+
+/* PART 2: Best of CES - Featured Editorial Block */
+.innovation-awards-best-of {
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5vw, 3rem);
+  background: var(--color-bg-primary);
+}
+
+.innovation-awards-best-of__intro {
+  max-width: 800px;
+  margin: 0 auto 3rem;
+  text-align: center;
+}
+
+.innovation-awards-best-of__intro-text {
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin: 0;
+  font-weight: 400;
+}
+
+.innovation-awards-best-of__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (min-width: 768px) {
+  .innovation-awards-best-of__grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .innovation-awards-best-of__grid {
+    gap: 3rem;
+  }
+}
+
+.innovation-awards-best-of__tile-link {
+  text-decoration: none;
+  display: block;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .innovation-awards-best-of__tile-link:hover {
+    transform: translateY(-4px);
+  }
+
+  /* Dark mode hover glow */
+  .innovation-awards-best-of__tile-link:hover .v2-product-tile {
+    box-shadow: 
+      0 12px 48px rgba(5, 6, 12, 0.5),
+      0 0 0 1px rgba(100, 150, 255, 0.15),
+      0 0 60px rgba(100, 150, 255, 0.2),
+      0 0 100px rgba(150, 100, 255, 0.1);
+  }
+
+  /* Light mode hover */
+  [data-theme="light"] .innovation-awards-best-of__tile-link:hover .v2-product-tile {
+    box-shadow: 
+      0 12px 48px rgba(18, 19, 26, 0.2),
+      0 0 0 1px rgba(107, 92, 255, 0.12),
+      0 0 60px rgba(107, 92, 255, 0.1);
+  }
+}
+
+/* PART 3: CES Innovation Awards Grid */
+.innovation-awards-grid {
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.5rem, 5vw, 3rem);
+  background: var(--color-bg-primary);
+}
+
+.innovation-awards-grid__container {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+@media (min-width: 640px) {
+  .innovation-awards-grid__container {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 2rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .innovation-awards-grid__container {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2.5rem;
+  }
+}
+
+.innovation-awards-grid__tile-link {
+  text-decoration: none;
+  display: block;
+  border-radius: 12px;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .innovation-awards-grid__tile-link:hover {
+    transform: translateY(-3px);
+  }
+
+  .innovation-awards-grid__tile-link:hover .v2-product-tile {
+    box-shadow: 
+      0 8px 32px rgba(5, 6, 12, 0.4),
+      0 0 0 1px rgba(100, 150, 255, 0.1),
+      0 0 40px rgba(100, 150, 255, 0.15);
+  }
+
+  [data-theme="light"] .innovation-awards-grid__tile-link:hover .v2-product-tile {
+    box-shadow: 
+      0 8px 32px rgba(18, 19, 26, 0.15),
+      0 0 0 1px rgba(107, 92, 255, 0.08),
+      0 0 40px rgba(107, 92, 255, 0.06);
+  }
+}
+
+/* PART 4: Global Authority Section */
+.innovation-awards-authority {
+  padding: clamp(4rem, 8vw, 6rem) clamp(1.5rem, 5vw, 3rem);
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-primary) 0%,
+    rgba(0, 212, 255, 0.03) 50%,
+    var(--color-bg-primary) 100%
+  );
+  position: relative;
+}
+
+[data-theme="light"] .innovation-awards-authority {
+  background: linear-gradient(
+    180deg,
+    var(--color-bg-primary) 0%,
+    rgba(0, 212, 255, 0.02) 50%,
+    var(--color-bg-primary) 100%
+  );
+}
+
+.innovation-awards-authority::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: min(800px, 90%);
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 212, 255, 0.2) 20%,
+    rgba(139, 92, 246, 0.2) 80%,
+    transparent 100%
+  );
+}
+
+[data-theme="light"] .innovation-awards-authority::before {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(0, 212, 255, 0.15) 20%,
+    rgba(139, 92, 246, 0.15) 80%,
+    transparent 100%
+  );
+}
+
+.innovation-awards-authority__container {
+  max-width: 900px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+}
+
+.innovation-awards-authority__headline {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.innovation-awards-authority__text {
+  font-size: clamp(1.1rem, 2.5vw, 1.35rem);
+  line-height: 1.7;
+  color: var(--color-text-secondary);
+  margin: 0;
+  font-weight: 400;
+}
+
+/* PART 5: Refined CTA */
+.innovation-awards-cta {
+  padding: clamp(4rem, 8vw, 6rem) clamp(1.5rem, 5vw, 3rem);
+  background: var(--color-bg-primary);
+}
+
+.innovation-awards-cta__container {
+  max-width: 700px;
+  margin: 0 auto;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+}
+
+.innovation-awards-cta__headline {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  margin: 0;
+  color: var(--color-text-primary);
+}
+
+.innovation-awards-cta__actions {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  align-items: center;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .innovation-awards-cta__actions {
+    flex-direction: row;
+    gap: 1.25rem;
+  }
+}
+
+.innovation-awards-cta__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem 2.5rem;
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+  border-radius: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, border-color 0.2s ease;
+  cursor: pointer;
+  min-width: min(240px, 100%);
+}
+
+.innovation-awards-cta__button:hover {
+  transform: translateY(-2px);
+}
+
+.innovation-awards-cta__button:active {
+  transform: translateY(0);
+}
+
+.innovation-awards-cta__button:focus-visible {
+  outline: 2px solid rgba(0, 212, 255, 0.6);
+  outline-offset: 3px;
+}
+
+.innovation-awards-cta__button--primary {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: var(--color-text-primary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.innovation-awards-cta__button--primary:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.25);
+}
+
+[data-theme="light"] .innovation-awards-cta__button--primary {
+  background: rgba(18, 19, 26, 0.08);
+  border-color: rgba(18, 19, 26, 0.15);
+  color: var(--color-text-primary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .innovation-awards-cta__button--primary:hover {
+  background: rgba(18, 19, 26, 0.12);
+  border-color: rgba(18, 19, 26, 0.25);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.12);
+}
+
+.innovation-awards-cta__button--secondary {
+  background: transparent;
+  border: 1.5px solid rgba(255, 255, 255, 0.2);
+  color: var(--color-text-primary);
+}
+
+.innovation-awards-cta__button--secondary:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+[data-theme="light"] .innovation-awards-cta__button--secondary {
+  border-color: rgba(18, 19, 26, 0.2);
+  color: var(--color-text-primary);
+}
+
+[data-theme="light"] .innovation-awards-cta__button--secondary:hover {
+  background: rgba(18, 19, 26, 0.05);
+  border-color: rgba(18, 19, 26, 0.35);
+}
+
+[data-theme="light"] .innovation-awards-cta__button:focus-visible {
+  outline-color: rgba(107, 92, 255, 0.6);
+}
+
+/* Responsive polish */
+@media (max-width: 480px) {
+  .innovation-awards-hero {
+    min-height: 50vh;
+    padding: 3rem 1.25rem;
+  }
+
+  .innovation-awards-best-of,
+  .innovation-awards-grid {
+    padding: 2.5rem 1.25rem;
+  }
+
+  .innovation-awards-authority,
+  .innovation-awards-cta {
+    padding: 3rem 1.25rem;
+  }
+
+  .innovation-awards-cta__button {
+    width: 100%;
+    max-width: 320px;
+  }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .innovation-awards-hero {
+    animation: none;
+  }
+
+  .innovation-awards-best-of__tile-link,
+  .innovation-awards-grid__tile-link,
+  .innovation-awards-cta__button {
+    transition: none;
+  }
+
+  .innovation-awards-best-of__tile-link:hover,
+  .innovation-awards-grid__tile-link:hover,
+  .innovation-awards-cta__button:hover {
+    transform: none;
+  }
+}

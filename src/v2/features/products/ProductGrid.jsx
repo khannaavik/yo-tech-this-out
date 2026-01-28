@@ -1,23 +1,10 @@
 import { useEffect, useMemo, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { ProductTile } from '../../components/ProductTile';
 import { ProductFilters } from './ProductFilters';
 import '../../styles/product-grid.css';
 
 const mockProducts = [
-  {
-    id: 'nebula-pulse',
-    image: '/products/placeholder.png',
-    video: '/assets/hero/home-hero.mp4',
-    productName: 'Nebula Pulse',
-    companyName: 'Aurora Labs',
-    category: 'XR / Wearables',
-    region: 'Global',
-    emojiRating: ['🔥', '🔥', '😍'],
-    views: 18400,
-    hook: 'Cinematic headset tuned for creators',
-    badges: ['CES Winner', 'Kickstarter', 'Global'],
-    status: 'Kickstarter',
-  },
   {
     id: 'looki-l1',
     image: '/products/looki-l1/product.png',
@@ -139,9 +126,14 @@ export function ProductGrid({ products = mockProducts }) {
             .join(' ');
 
           return (
-            <div key={product.id} className={tileClassName}>
+            <Link 
+              key={product.id} 
+              to={`/products/${product.id}`}
+              className={tileClassName}
+              aria-label={`View ${product.productName} details`}
+            >
               <ProductTile {...product} badges={displayBadges} />
-            </div>
+            </Link>
           );
         })}
       </div>

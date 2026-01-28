@@ -19,7 +19,7 @@ export function HeroIntro() {
           health tech, XR, and future living.
         </p>
         <div className="hero-intro__actions">
-          <Link to="/explore" className="hero-intro__button hero-intro__button--primary">
+          <Link to="/products" className="hero-intro__button hero-intro__button--primary">
             Explore Innovation
           </Link>
           <a 
@@ -31,7 +31,7 @@ export function HeroIntro() {
               if (element) {
                 element.scrollIntoView({ behavior: 'smooth', block: 'start' });
               } else {
-                window.location.href = '/explore';
+                window.location.href = '/products';
               }
             }}
           >
